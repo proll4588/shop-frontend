@@ -1,7 +1,7 @@
 const ShopLayout = ({}) => {
     return (
         <div className='ShopLayout'>
-            <div className='ShopLayout__container'>ShopLayout</div>
+            <div className='ShopLayout__container'></div>
         </div>
     )
 }
