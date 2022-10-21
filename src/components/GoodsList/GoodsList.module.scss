@@ -1,0 +1,27 @@
+.GoodsList {
+    & {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+    &__container {
+        display: flex;
+        flex-direction: column;
+    }
+    &__head {
+        height: 50px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    &__goodsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    &__sortSelector {
+        width: 300px;
+    }
+}

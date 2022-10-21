@@ -1,0 +1,35 @@
+.Checkbox {
+    & {
+    }
+    &__container {
+        display: flex;
+        align-items: center;
+    }
+    &__box {
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--color-border-1);
+        border-radius: 4px;
+
+        cursor: pointer;
+
+        &_checked {
+            background-color: var(--color-accent);
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__icon {
+        font-size: 16px;
+        color: var(--color-light-text);
+    }
+    &__lable {
+        user-select: none;
+        margin-left: 16px;
+        font-size: 14px;
+        color: var(--color-light-text);
+        cursor: pointer;
+    }
+}

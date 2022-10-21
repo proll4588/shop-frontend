@@ -1,0 +1,43 @@
+.GoodCardTypeSwitcher {
+    & {
+    }
+    &__container {
+    }
+    &__icon {
+        font-size: 30px;
+        color: var(--color-light-text);
+    }
+    &__container {
+        display: flex;
+        gap: 10px;
+
+        position: relative;
+    }
+    &__iconContainer {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        box-sizing: content-box;
+
+        cursor: pointer;
+    }
+    &__line {
+        width: 40px;
+        height: 2px;
+
+        background: var(--color-border-2);
+
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        transition: left var(--trans-time);
+        &_selected {
+            left: 50px;
+        }
+    }
+}

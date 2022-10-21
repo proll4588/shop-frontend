@@ -1,0 +1,67 @@
+.Header {
+    & {
+        height: 150px;
+        width: 100%;
+    }
+    &__container {
+        height: 100%;
+        width: 100%;
+    }
+    &__up {
+        height: 30px;
+        width: 100%;
+
+        border-bottom: 1px solid var(--color-border-1);
+    }
+    &__upContainer {
+        height: 100%;
+        max-width: 1280px;
+        margin: auto;
+
+        padding: 0 20px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        color: var(--color-light-text);
+    }
+    &__main {
+        height: 120px;
+        width: 100%;
+
+        border-bottom: 1px solid var(--color-border-1);
+    }
+    &__mainContainer {
+        height: 100%;
+        max-width: 1280px;
+        margin: auto;
+
+        padding: 0 20px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__sity {
+        margin-right: 50px;
+    }
+    &__sitySelect {
+    }
+    &__logo {
+        color: var(--color-light-text);
+        width: 170px;
+        margin-right: 10px;
+    }
+    &__iconCardList {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-left: 10px;
+    }
+    &__logoIcon {
+        font-size: 70px;
+    }
+}

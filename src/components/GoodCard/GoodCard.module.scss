@@ -1,0 +1,164 @@
+.GoodCard {
+    & {
+        width: 300px;
+        height: 480px;
+
+        padding: 20px;
+
+        border: 2px solid var(--color-border-1);
+        border-radius: 10px;
+    }
+    &__container {
+        width: 100%;
+        height: 100%;
+
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__photo {
+        width: 250px;
+        height: 250px;
+    }
+    &__name {
+        color: var(--color-light-text);
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    &__price {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+    &__priceMain {
+        color: var(--color-light-text);
+        font-size: 18px;
+        &::after {
+            content: '₽';
+        }
+    }
+    &__priceSecond {
+        color: var(--color-grey-text);
+        font-size: 16px;
+        &::after {
+            content: '₽';
+        }
+        text-decoration: line-through;
+    }
+    &__type {
+        color: var(--color-grey-text);
+        font-size: 14px;
+    }
+
+    &__nameContainer {
+    }
+    &__line {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 6px;
+    }
+    &__brand {
+        color: var(--color-grey-text);
+        font-size: 14px;
+    }
+}
+
+.FullGoodCard {
+    & {
+        // width: 950px;
+        height: 310px;
+
+        border: 2px solid var(--color-border-1);
+        border-radius: 10px;
+    }
+    &__container {
+        width: 100%;
+        height: 100%;
+
+        padding: 25px;
+
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__photoContainer {
+        width: 260px;
+        height: 260px;
+
+        border-radius: 10px;
+        overflow: hidden;
+
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        margin-right: 25px;
+    }
+    &__photo {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__infoContainer {
+        flex-shrink: 1;
+        flex-grow: 0;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__name {
+        font-size: 16px;
+        color: var(--color-light-text);
+    }
+    &__rating {
+    }
+    &__description {
+        color: var(--color-grey-text);
+        text-align: justify;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -moz-box;
+        -moz-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        line-clamp: 5;
+        box-orient: vertical;
+    }
+    &__price {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+    &__priceMain {
+        color: var(--color-light-text);
+        font-size: 16px;
+        &::after {
+            content: '₽';
+        }
+    }
+    &__priceSecond {
+        color: var(--color-grey-text);
+        font-size: 14px;
+        &::after {
+            content: '₽';
+        }
+        text-decoration: line-through;
+    }
+    &__inputsContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+}

@@ -1,0 +1,12 @@
+.Stars {
+    & {
+        display: inline-block;
+    }
+    &__container {
+    }
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

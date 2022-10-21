@@ -1,0 +1,84 @@
+.FiltersMenuElements {
+    & {
+        display: inline-block;
+        width: 280px;
+    }
+    &__container {
+    }
+    &__head {
+        height: 80px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        cursor: pointer;
+    }
+
+    &__title {
+        user-select: none;
+        font-size: 18px;
+        color: var(--color-light-text);
+    }
+    &__icon {
+        font-size: 18px;
+        color: var(--color-grey-text);
+    }
+    &__line {
+        width: 100%;
+        height: 1px;
+
+        background: var(--color-border-1);
+    }
+    &__main {
+        margin-bottom: 24px;
+    }
+}
+
+.CheckboxList {
+    & {
+        display: flex;
+        flex-direction: column;
+        // gap: 18px;
+    }
+    // &__containerElement {
+    //     padding: 9px 4px;
+
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: flex-start;
+
+    //     &:hover {
+    //         background: var(--color-gray-4);
+    //     }
+    // }
+    &__checkBox {
+        cursor: pointer;
+
+        padding: 9px 9px;
+
+        border-radius: 8px;
+
+        &:hover {
+            background: var(--color-gray-4);
+        }
+    }
+}
+
+.RangeMenu {
+    & {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__input {
+        width: 120px;
+    }
+    &__text {
+        font-size: 20px;
+        color: var(--color-grey-text);
+    }
+}

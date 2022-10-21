@@ -1,0 +1,43 @@
+.Rating {
+    & {
+    }
+    &__container {
+    }
+
+    &__YellowStar {
+        color: var(--color-yellow);
+    }
+    &__grayStar {
+        color: var(--color-gray-2);
+    }
+    &__starContainer {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__text {
+        color: var(--color-grey-text);
+        margin-left: 10px;
+    }
+    &__rating {
+        color: var(--color-light-text);
+        margin-left: 4px;
+    }
+    &__fullContainer {
+        display: inline-flex;
+    }
+    &__ratingContainer {
+        display: inline-flex;
+        align-items: center;
+
+        padding: 4px;
+
+        background: var(--color-border-1);
+
+        border-radius: 4px;
+    }
+    &__miniContainer {
+        display: flex;
+        align-items: center;
+    }
+}

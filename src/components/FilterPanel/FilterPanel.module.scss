@@ -1,0 +1,12 @@
+.FilterPanel {
+    & {
+        width: 300px;
+        margin-top: 10px;
+    }
+    &__container {
+        width: 100%;
+    }
+    &__applyBtn {
+        width: 280px;
+    }
+}
