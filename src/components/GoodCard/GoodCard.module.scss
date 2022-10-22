@@ -19,6 +19,10 @@
     &__photo {
         width: 250px;
         height: 250px;
+
+        background: var(--color-gray-5);
+
+        border-radius: 10px;
     }
     &__name {
         color: var(--color-light-text);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import ControlLayout from './ControlLayout/ControlLayout'
+import GoodPage from './pages/GoodPage/GoodPage'
 import ShopLayout from './ShopLayout/ShopLayout'
 
 export enum appTypes {
@@ -13,7 +14,8 @@ const App = () => {
 
     return (
         <div className='App'>
-            {appType === appTypes.SHOP ? <ShopLayout /> : <ControlLayout />}
+            {/* {appType === appTypes.SHOP ? <ShopLayout /> : <ControlLayout />} */}
+            <GoodPage />
         </div>
     )
 }

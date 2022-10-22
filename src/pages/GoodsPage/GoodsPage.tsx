@@ -50,6 +50,7 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     return (
         <div className={styles.GoodsPage}>
             {/* TODO: ХЗ надо или нет. Занимает много места */}
+            {/* если оставлять то перенести в layout */}
             <RouteTitle
                 path={'Main / Catalog'}
                 title={'Catalog'}
