@@ -1,17 +1,15 @@
 .CategoriesPanel {
     & {
-        display: block;
         position: relative;
-    }
-    &__container {
-        display: inline-block;
+        display: block;
+
         width: 300px;
     }
 
     &__title {
         position: relative;
 
-        width: 300px;
+        width: 100%;
         height: 50px;
 
         display: flex;
@@ -32,7 +30,6 @@
     &__titleName {
         font-size: 14px;
         font-weight: bold;
-
         color: var(--color-light-text);
 
         width: 200px;
@@ -44,6 +41,8 @@
 
     &__listContainer {
         position: relative;
+
+        width: 100%;
 
         display: flex;
         flex-direction: column;
@@ -69,9 +68,10 @@
         font-weight: bold;
 
         width: 200px;
-        //text-align: center;
-        cursor: pointer;
+
         color: var(--color-grey-text);
+
+        cursor: pointer;
 
         &_selected {
             color: var(--color-light-text);
@@ -79,9 +79,10 @@
     }
     &__arrowIcon {
         position: absolute;
-        font-size: 20px;
 
         right: 30px;
+
+        font-size: 20px;
         color: var(--color-grey-text);
     }
 }
