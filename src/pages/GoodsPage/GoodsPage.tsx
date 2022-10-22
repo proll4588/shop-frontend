@@ -17,6 +17,7 @@ import GoodsPageProps from './GoodsPage.props'
 
 /* Запросы */
 import { GET_DATA_FOR_GOODS_PAGE } from '../../apollo/fetchs'
+import RouteTitle from '../../components/RouteTitle/RouteTitle'
 
 /*
  * Компонент-страниц. Отвечает за отображение страницы с товарами
@@ -48,6 +49,11 @@ const GoodsPage: FC<GoodsPageProps> = () => {
 
     return (
         <div className={styles.GoodsPage}>
+            {/* TODO: ХЗ надо или нет. Занимает много места */}
+            <RouteTitle
+                path={'Main / Catalog'}
+                title={'Catalog'}
+            />
             <div className={styles.GoodsPage__container}>
                 <div className={styles.GoodsPage__FilterPanel}>
                     {brands && (
