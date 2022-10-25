@@ -9,15 +9,21 @@ const NO_PHOTO =
 
 //TODO: Разделить на два компонента
 const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
-    const { main_photo, name, sub_type_goods, brands, prices, description } =
-        data
+    const {
+        main_photo,
+        name,
+        sub_type_goods,
+        brands,
+        current_price,
+        description,
+    } = data
 
     if (!isFull)
         return (
             <div className={styles.GoodCard}>
                 <div className={styles.GoodCard__container}>
                     <img
-                        src={main_photo ? main_photo : NO_PHOTO}
+                        src={main_photo ? main_photo.photo : NO_PHOTO}
                         alt={name}
                         className={styles.GoodCard__photo}
                     />
@@ -42,20 +48,20 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
                     </div>
 
                     <div className={styles.GoodCard__price}>
-                        {prices.discount !== null ? (
+                        {current_price.discount !== null ? (
                             <>
                                 <div className={styles.FullGoodCard__priceMain}>
-                                    {prices.discount}
+                                    {current_price.discount}
                                 </div>
                                 <div
                                     className={styles.FullGoodCard__priceSecond}
                                 >
-                                    {prices.price}
+                                    {current_price.price}
                                 </div>
                             </>
                         ) : (
                             <div className={styles.FullGoodCard__priceMain}>
-                                {prices.price}
+                                {current_price.price}
                             </div>
                         )}
                     </div>
@@ -69,7 +75,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
                 <div className={styles.FullGoodCard__container}>
                     <div className={styles.FullGoodCard__photoContainer}>
                         <img
-                            src={main_photo ? main_photo : NO_PHOTO}
+                            src={main_photo ? main_photo.photo : NO_PHOTO}
                             alt={name}
                             className={styles.FullGoodCard__photo}
                         />
@@ -91,21 +97,21 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
                                 {description}
                             </div>
                             <div className={styles.FullGoodCard__price}>
-                                {prices.discount !== null ? (
+                                {current_price.discount !== null ? (
                                     <>
                                         <div
                                             className={
                                                 styles.FullGoodCard__priceMain
                                             }
                                         >
-                                            {prices.discount}
+                                            {current_price.discount}
                                         </div>
                                         <div
                                             className={
                                                 styles.FullGoodCard__priceSecond
                                             }
                                         >
-                                            {prices.price}
+                                            {current_price.price}
                                         </div>
                                     </>
                                 ) : (
@@ -114,7 +120,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
                                             styles.FullGoodCard__priceMain
                                         }
                                     >
-                                        {prices.price}
+                                        {current_price.price}
                                     </div>
                                 )}
                             </div>

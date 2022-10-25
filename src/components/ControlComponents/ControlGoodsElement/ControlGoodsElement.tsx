@@ -3,7 +3,7 @@ import styles from './ControlGoodsElement.module.scss'
 import ControlGoodsElementProps from './ControlGoodsElement.props'
 
 const ControlGoodsElement: FC<ControlGoodsElementProps> = ({ data }) => {
-    const { id, name, brands, sub_type_goods, prices } = data
+    const { id, name, brands, sub_type_goods, current_price } = data
     return (
         <div className={styles.ControlGoodsElement}>
             <div className={styles.ControlGoodsElement__container}>
@@ -16,7 +16,7 @@ const ControlGoodsElement: FC<ControlGoodsElementProps> = ({ data }) => {
                     {sub_type_goods.name}
                 </div>
                 <div className={styles.ControlGoodsElement__price}>
-                    {prices.price}
+                    {current_price.price}
                 </div>
             </div>
         </div>
