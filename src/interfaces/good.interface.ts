@@ -4,10 +4,21 @@ export interface IGood {
     id: number
     name: string
     description: string
-    main_photo: string
+
+    main_photo: IPhoto
+    all_photos?: IPhoto[]
+
+    current_price: Price
+    all_prices?: Price[]
+
     brands: IBrand
     sub_type_goods: ISubGoodsTypes
-    prices: Prices
+}
+
+export interface IPhoto {
+    id?: number
+    goods_catalog_id?: number
+    photo: string
 }
 
 export interface IBrand {
@@ -16,7 +27,7 @@ export interface IBrand {
     logo: string | null
 }
 
-export interface Prices {
+export interface Price {
     price: number
     discount: number
 }
