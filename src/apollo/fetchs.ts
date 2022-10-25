@@ -25,8 +25,14 @@ export const GET_GOODS = gql`
         goods(search: $search, subId: $subId) {
             id
             name
-            main_photo
             description
+            main_photo {
+                photo
+            }
+            current_price {
+                price
+                discount
+            }
             brands {
                 id
                 name
@@ -36,10 +42,6 @@ export const GET_GOODS = gql`
                 id
                 name
                 photo
-            }
-            prices {
-                price
-                discount
             }
         }
     }
@@ -60,8 +62,14 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
         goods(search: $search, subId: $subId, filters: $filters) {
             id
             name
-            main_photo
             description
+            main_photo {
+                photo
+            }
+            current_price {
+                price
+                discount
+            }
             brands {
                 id
                 name
@@ -72,15 +80,86 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
                 name
                 photo
             }
-            prices {
-                price
-                discount
-            }
         }
         brands(subId: $subId) {
             name
             id
             logo
+        }
+    }
+`
+export const GET_GOOD = gql`
+    query Goods($goodId: Int!) {
+        good(id: $goodId) {
+            id
+            name
+            main_photo {
+                id
+                goods_catalog_id
+                photo
+            }
+            all_photos {
+                id
+                goods_catalog_id
+                photo
+            }
+            current_price {
+                price
+                discount
+            }
+            all_prices {
+                price
+                discount
+            }
+            brands {
+                id
+                name
+                logo
+            }
+            sub_type_goods {
+                id
+                name
+                photo
+            }
+            description
+        }
+    }
+`
+
+export const GET_DATA_FOR_GOOD_PAGE = gql`
+    query GetDataForGoodPage($goodId: Int!) {
+        good(id: $goodId) {
+            id
+            name
+            main_photo {
+                id
+                goods_catalog_id
+                photo
+            }
+            all_photos {
+                id
+                goods_catalog_id
+                photo
+            }
+            current_price {
+                price
+                discount
+            }
+            all_prices {
+                price
+                discount
+            }
+            brands {
+                id
+                name
+                logo
+            }
+            sub_type_goods {
+                id
+                name
+                photo
+            }
+            description
         }
     }
 `
