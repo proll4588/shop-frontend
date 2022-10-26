@@ -1,3 +1,4 @@
+import { IGood } from './../interfaces/good.interface'
 import { gql } from '@apollo/client'
 
 export const GET_ALL_GOODS_TYPES = gql`
@@ -126,11 +127,16 @@ export const GET_GOOD = gql`
     }
 `
 
+export interface IGetDataForGoodPage {
+    good: IGood
+}
+
 export const GET_DATA_FOR_GOOD_PAGE = gql`
     query GetDataForGoodPage($goodId: Int!) {
         good(id: $goodId) {
             id
             name
+            description
             main_photo {
                 id
                 goods_catalog_id
@@ -159,7 +165,6 @@ export const GET_DATA_FOR_GOOD_PAGE = gql`
                 name
                 photo
             }
-            description
         }
     }
 `
