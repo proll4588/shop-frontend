@@ -3,7 +3,7 @@ import { ISubGoodsTypes } from './goodsTypes.interface'
 export interface IGood {
     id: number
     name: string
-    description: string
+    description?: string
 
     main_photo: IPhoto
     all_photos?: IPhoto[]
@@ -12,7 +12,7 @@ export interface IGood {
     all_prices?: Price[]
 
     brands: IBrand
-    sub_type_goods: ISubGoodsTypes
+    sub_type_goods?: ISubGoodsTypes
 }
 
 export interface IPhoto {
