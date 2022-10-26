@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { Link, redirect } from 'react-router-dom'
 import Button from '../UI/Button/Button'
 import Rating from '../UI/Rating/Rating'
 import styles from './GoodCard.module.scss'
@@ -16,6 +17,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
         brands,
         current_price,
         description,
+        id,
     } = data
 
     if (!isFull)
@@ -37,7 +39,12 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
                                 {brands.name}
                             </div>
                         </div>
-                        <div className={styles.GoodCard__name}>{name}</div>
+                        <Link
+                            to={`/good/${id}`}
+                            className={styles.GoodCard__name}
+                        >
+                            {name}
+                        </Link>
                         <div className={styles.FullGoodCard__rating}>
                             <Rating
                                 type='mini'
@@ -83,9 +90,12 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
 
                     <div className={styles.FullGoodCard__infoContainer}>
                         <div className={styles.FullGoodCard__info}>
-                            <div className={styles.FullGoodCard__name}>
+                            <Link
+                                to={`/good/${id}`}
+                                className={styles.FullGoodCard__name}
+                            >
                                 {name}
-                            </div>
+                            </Link>
                             <div className={styles.FullGoodCard__rating}>
                                 <Rating
                                     type='mini'
