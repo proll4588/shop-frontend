@@ -1,27 +1,30 @@
-import { IBrand } from '../../interfaces/good.interface'
+import IAllFilters from '../../interfaces/IResponseFilters.interface'
 
 export default interface FilterPanelProps {
-    data: IFilterData
-    onChange?: (data: IFilters) => void
-    value?: IFilters
+    filters: IAllFilters
+
+    onChange?: (data: IAllFilterState) => void
+    value?: IAllFilterState
 }
 
-export interface IFilterData {
-    brands: IBrand[]
-    price: {
-        min: number
-        max: number
-    }
+export interface IAllFilterState {
+    generalFilters: IGeneralFilterState
+    typeFilters: ITypeFilterState[]
 }
 
-export interface IFilters {
-    brands?: string[]
-    price?: {
-        min: number
-        max: number
-    }
-    other?: {
-        name: string
-        params: string[]
-    }
+export interface IGeneralFilterState {
+    brand: number[]
+    price: { max: number; min: number }
+    // ...
+}
+
+type IListFilterState = number[]
+interface IRangeFilterState {
+    max: number
+    min: number
+}
+
+export interface ITypeFilterState {
+    id: number
+    state: IListFilterState | IRangeFilterState
 }
