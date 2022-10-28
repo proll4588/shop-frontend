@@ -6,18 +6,21 @@ import { useParams } from 'react-router-dom'
 /* Компоненты */
 import FilterPanel from '../../components/FilterPanel/FilterPanel'
 import GoodsList from '../../components/GoodsList/GoodsList'
+import RouteTitle from '../../components/RouteTitle/RouteTitle'
 
 /* Интерфейсы */
-import { IFilters } from '../../components/FilterPanel/FilterPanel.props'
-import { IBrand } from '../../interfaces/good.interface'
+import IAllFilters from '../../interfaces/IResponseFilters.interface'
+import { IAllFilterState } from '../../components/FilterPanel/FilterPanel.props'
 
 /* Атрибуты компонента */
 import styles from './GoodsPage.module.scss'
 import GoodsPageProps from './GoodsPage.props'
 
 /* Запросы */
-import { GET_DATA_FOR_GOODS_PAGE } from '../../apollo/fetchs'
-import RouteTitle from '../../components/RouteTitle/RouteTitle'
+import {
+    GET_DATA_FOR_GOODS_PAGE,
+    IGetDataForGoodsPage,
+} from '../../apollo/fetchs'
 
 /*
  * Компонент-страниц. Отвечает за отображение страницы с товарами
@@ -28,24 +31,48 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     const { subGoodsTypeId } = useParams()
 
     // Состояние фильтра и список товаров. Поседний нужен для кэширования
-    const [filters, setFilters] = useState<IFilters>(null)
-    const [brands, setBrands] = useState<IBrand[]>(null)
+    const [filtersState, setFiltersState] = useState<IAllFilterState>(null)
+    const [cacheFilters, setCacheFilters] = useState<IAllFilters>(null)
 
     // Запрашиваем данные с сервера с учётом фильтров и типа товара
-    const { loading, error, data } = useQuery(GET_DATA_FOR_GOODS_PAGE, {
-        variables: {
-            subId: Number(subGoodsTypeId),
-            filters: filters ? filters : undefined,
-        },
-    })
+    const { loading, error, data } = useQuery<IGetDataForGoodsPage>(
+        GET_DATA_FOR_GOODS_PAGE,
+        {
+            variables: {
+                subId: Number(subGoodsTypeId),
+            },
+        }
+    )
 
     // Кэширование брэндов для избежания обновления интерфейса
     useEffect(() => {
-        !loading && !error && setBrands(data.brands)
+        if (!loading && !error) {
+            setCacheFilters(data.filters)
+            if (filtersState === null) {
+                setFiltersState({
+                    generalFilters: {
+                        brand: [],
+                        price: { max: null, min: null },
+                    },
+                    typeFilters: data.filters.typeFilters.map((filter) => ({
+                        id: filter.id,
+                        state:
+                            'values' in filter.data
+                                ? []
+                                : { max: null, min: null },
+                    })),
+                })
+            }
+        }
     }, [data, loading, error])
+
+    // useEffect(() => {
+    //     console.log('filtersState', filtersState)
+    // }, [filtersState])
 
     // В случае ошибки выводить грустный смайлик
     if (error) return <p>Error :(</p>
+    console.log(data)
 
     return (
         <div className={styles.GoodsPage}>
@@ -57,15 +84,11 @@ const GoodsPage: FC<GoodsPageProps> = () => {
             />
             <div className={styles.GoodsPage__container}>
                 <div className={styles.GoodsPage__FilterPanel}>
-                    {brands && (
+                    {!!cacheFilters && !!filtersState && (
                         <FilterPanel
-                            data={{
-                                brands: brands,
-                                price: { min: 0, max: 10000 },
-                            }}
-                            onChange={setFilters}
-                            // TODO: Мб иерархичная ередача знаений выглядит не  очень. При обновлении фильтров, обнавляется и сама панель, надо этого избежать.
-                            value={filters}
+                            filters={cacheFilters}
+                            onChange={setFiltersState}
+                            value={filtersState}
                         />
                     )}
                 </div>
