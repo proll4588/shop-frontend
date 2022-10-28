@@ -1,5 +1,6 @@
 import { IGood } from './../interfaces/good.interface'
 import { gql } from '@apollo/client'
+import IAllFilters from '../interfaces/IResponseFilters.interface'
 
 export const GET_ALL_GOODS_TYPES = gql`
     query GetAllGoodsTypes {
@@ -58,8 +59,16 @@ export const GET_BRANDS = gql`
     }
 `
 
+export interface IGetDataForGoodsPage {
+    goods: IGood[]
+    filters: IAllFilters
+}
 export const GET_DATA_FOR_GOODS_PAGE = gql`
-    query GetDataForGoodsPage($search: String, $subId: Int, $filters: Filters) {
+    query GetDataForGoodsPage(
+        $search: String
+        $subId: Int!
+        $filters: Filters
+    ) {
         goods(search: $search, subId: $subId, filters: $filters) {
             id
             name
@@ -82,13 +91,67 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
                 photo
             }
         }
-        brands(subId: $subId) {
-            name
-            id
-            logo
+        filters(subId: $subId) {
+            generalFilters {
+                price {
+                    id
+                    name
+                    type
+                    data {
+                        ... on FilterListData {
+                            values {
+                                id
+                                value
+                            }
+                        }
+                        ... on FilterRangeData {
+                            id
+                            max
+                            min
+                        }
+                    }
+                }
+                brand {
+                    id
+                    name
+                    type
+                    data {
+                        ... on FilterListData {
+                            values {
+                                id
+                                value
+                            }
+                        }
+                        ... on FilterRangeData {
+                            id
+                            max
+                            min
+                        }
+                    }
+                }
+            }
+            typeFilters {
+                id
+                name
+                type
+                data {
+                    ... on FilterListData {
+                        values {
+                            id
+                            value
+                        }
+                    }
+                    ... on FilterRangeData {
+                        id
+                        max
+                        min
+                    }
+                }
+            }
         }
     }
 `
+
 export const GET_GOOD = gql`
     query Goods($goodId: Int!) {
         good(id: $goodId) {
