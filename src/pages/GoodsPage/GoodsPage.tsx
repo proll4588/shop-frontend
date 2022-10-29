@@ -40,6 +40,7 @@ const GoodsPage: FC<GoodsPageProps> = () => {
         {
             variables: {
                 subId: Number(subGoodsTypeId),
+                filters: filtersState,
             },
         }
     )
@@ -66,9 +67,9 @@ const GoodsPage: FC<GoodsPageProps> = () => {
         }
     }, [data, loading, error])
 
-    // useEffect(() => {
-    //     console.log('filtersState', filtersState)
-    // }, [filtersState])
+    useEffect(() => {
+        console.log('filtersState', filtersState)
+    }, [filtersState])
 
     // В случае ошибки выводить грустный смайлик
     if (error) return <p>Error :(</p>
@@ -94,7 +95,7 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                 </div>
                 <div className={styles.GoodsPage__GoodsList}>
                     {!loading && !error ? (
-                        <GoodsList data={loading ? [] : data.goods} />
+                        <GoodsList data={loading ? [] : data.filteredGoods} />
                     ) : (
                         ''
                     )}

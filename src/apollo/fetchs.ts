@@ -60,16 +60,12 @@ export const GET_BRANDS = gql`
 `
 
 export interface IGetDataForGoodsPage {
-    goods: IGood[]
+    filteredGoods: IGood[]
     filters: IAllFilters
 }
 export const GET_DATA_FOR_GOODS_PAGE = gql`
-    query GetDataForGoodsPage(
-        $search: String
-        $subId: Int!
-        $filters: Filters
-    ) {
-        goods(search: $search, subId: $subId, filters: $filters) {
+    query GetDataForGoodsPage($subId: Int!, $filters: AllFilterState) {
+        filteredGoods(subId: $subId, filters: $filters) {
             id
             name
             description
@@ -92,6 +88,24 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
             }
         }
         filters(subId: $subId) {
+            typeFilters {
+                id
+                name
+                type
+                data {
+                    ... on FilterListData {
+                        values {
+                            id
+                            value
+                        }
+                    }
+                    ... on FilterRangeData {
+                        id
+                        max
+                        min
+                    }
+                }
+            }
             generalFilters {
                 price {
                     id
@@ -127,24 +141,6 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
                             max
                             min
                         }
-                    }
-                }
-            }
-            typeFilters {
-                id
-                name
-                type
-                data {
-                    ... on FilterListData {
-                        values {
-                            id
-                            value
-                        }
-                    }
-                    ... on FilterRangeData {
-                        id
-                        max
-                        min
                     }
                 }
             }

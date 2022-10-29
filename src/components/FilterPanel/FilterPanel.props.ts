@@ -13,8 +13,8 @@ export interface IAllFilterState {
 }
 
 export interface IGeneralFilterState {
-    brand: number[]
-    price: { max: number; min: number }
+    brand: IListFilterState
+    price: IRangeFilterState
     // ...
 }
 
