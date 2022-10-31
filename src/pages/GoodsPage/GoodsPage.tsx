@@ -30,7 +30,7 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     // Получаем id типа товара из адресса страницы
     const { subGoodsTypeId } = useParams()
 
-    // Состояние фильтра и список товаров. Поседний нужен для кэширования
+    // Состояние действующих и полученных. Поседний нужен для кэширования
     const [filtersState, setFiltersState] = useState<IAllFilterState>(null)
     const [cacheFilters, setCacheFilters] = useState<IAllFilters>(null)
 
@@ -49,6 +49,7 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     useEffect(() => {
         if (!loading && !error) {
             setCacheFilters(data.filters)
+            // TODO: можно вынести в отдельную функцию
             if (filtersState === null) {
                 setFiltersState({
                     generalFilters: {
@@ -64,27 +65,32 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                     })),
                 })
             }
+            /*=========================================*/
         }
     }, [data, loading, error])
 
-    useEffect(() => {
-        console.log('filtersState', filtersState)
-    }, [filtersState])
+    // TODO: DEV
+    // useEffect(() => {
+    //     console.log('filtersState', filtersState)
+    // }, [filtersState])
 
     // В случае ошибки выводить грустный смайлик
     if (error) return <p>Error :(</p>
-    console.log(data)
+
+    // TODO: DEV
+    // console.log(data)
 
     return (
         <div className={styles.GoodsPage}>
             {/* TODO: ХЗ надо или нет. Занимает много места */}
             {/* если оставлять то перенести в layout */}
-            <RouteTitle
+            {/* <RouteTitle
                 path={'Main / Catalog'}
                 title={'Catalog'}
-            />
+            /> */}
             <div className={styles.GoodsPage__container}>
                 <div className={styles.GoodsPage__FilterPanel}>
+                    {/* TODO: Сдлеать loader в момент получения данных */}
                     {!!cacheFilters && !!filtersState && (
                         <FilterPanel
                             filters={cacheFilters}
@@ -94,10 +100,9 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                     )}
                 </div>
                 <div className={styles.GoodsPage__GoodsList}>
-                    {!loading && !error ? (
+                    {/* TODO: Сдлеать loader в момент получения данных */}
+                    {!loading && !error && (
                         <GoodsList data={loading ? [] : data.filteredGoods} />
-                    ) : (
-                        ''
                     )}
                 </div>
             </div>
