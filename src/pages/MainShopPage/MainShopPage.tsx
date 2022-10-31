@@ -1,12 +1,13 @@
 import { useQuery } from '@apollo/client'
 import React, { FC } from 'react'
-import { GET_ALL_GOODS_TYPES } from '../../apollo/fetchs'
+import { GET_ALL_GOODS_TYPES, IGetAllGoodsTypes } from '../../apollo/fetchs'
 import CategoriesPanel from '../../components/CategoriesPanel/CategoriesPanel'
 import styles from './MainShopPage.module.scss'
 import MainShopPageProps from './MainShopPage.props'
 
 const MainShopPage: FC<MainShopPageProps> = () => {
-    const { loading, error, data } = useQuery(GET_ALL_GOODS_TYPES)
+    const { loading, error, data } =
+        useQuery<IGetAllGoodsTypes>(GET_ALL_GOODS_TYPES)
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error :(</p>
