@@ -30,7 +30,7 @@ const Head: FC<HeadProps> = ({ onClick }) => {
                 className={styles.CategoriesPanel__listIcon}
             />
 
-            <div className={styles.CategoriesPanel__titleName}>Категории</div>
+            <h5 className={styles.CategoriesPanel__titleName}>Категории</h5>
         </div>
     )
 }
@@ -52,7 +52,7 @@ const List: FC<ListProps> = ({ globalGoodsTypes, selected, inHandler }) => {
                         inHandler(type.id)
                     }}
                 >
-                    <div
+                    <h5
                         className={classNames(
                             styles.CategoriesPanel__typeName,
                             selected === type.id
@@ -61,10 +61,15 @@ const List: FC<ListProps> = ({ globalGoodsTypes, selected, inHandler }) => {
                         )}
                     >
                         {type.name}
-                    </div>
+                    </h5>
 
                     <MdOutlineKeyboardArrowRight
-                        className={styles.CategoriesPanel__arrowIcon}
+                        className={classNames(
+                            styles.CategoriesPanel__arrowIcon,
+                            selected === type.id
+                                ? styles.CategoriesPanel__arrowIcon_selected
+                                : ''
+                        )}
                     />
                 </li>
             ))}

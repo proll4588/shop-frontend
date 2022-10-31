@@ -28,14 +28,14 @@
         }
     }
     &__titleName {
-        font-size: 14px;
-        font-weight: bold;
+        // font-size: 14px;
+        // font-weight: bold;
         color: var(--color-light-text);
 
         width: 200px;
     }
     &__listIcon {
-        font-size: 16px;
+        font-size: 20px;
         margin-right: 20px;
     }
 
@@ -64,8 +64,8 @@
         padding-left: 32px;
     }
     &__typeName {
-        font-size: 14px;
-        font-weight: bold;
+        // font-size: 14px;
+        // font-weight: bold;
 
         width: 200px;
 
@@ -82,7 +82,11 @@
 
         right: 30px;
 
-        font-size: 20px;
+        font-size: 24px;
         color: var(--color-grey-text);
+
+        &_selected {
+            color: var(--color-light-text);
+        }
     }
 }
