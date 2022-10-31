@@ -1,7 +1,12 @@
+import { IGlobalGoodsTypes } from './../interfaces/goodsTypes.interface'
 import { IGood } from './../interfaces/good.interface'
 import { gql } from '@apollo/client'
 import IAllFilters from '../interfaces/IResponseFilters.interface'
+import { ICharacteristics } from '../interfaces/characteristics.interface'
 
+export interface IGetAllGoodsTypes {
+    types: IGlobalGoodsTypes[]
+}
 export const GET_ALL_GOODS_TYPES = gql`
     query GetAllGoodsTypes {
         types {
@@ -22,6 +27,7 @@ export const GET_ALL_GOODS_TYPES = gql`
     }
 `
 
+// Марально устарело и вообще не надо
 export const GET_GOODS = gql`
     query GetGoods($search: String, $subId: Int) {
         goods(search: $search, subId: $subId) {
@@ -45,16 +51,6 @@ export const GET_GOODS = gql`
                 name
                 photo
             }
-        }
-    }
-`
-
-export const GET_BRANDS = gql`
-    query GetBrands($subId: Int) {
-        brands(subId: $subId) {
-            name
-            id
-            logo
         }
     }
 `
@@ -148,8 +144,12 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
     }
 `
 
+// export interface IGetGood {
+//     good: IGood
+//     goodCharacteristics: ICharacteristics
+// }
 export const GET_GOOD = gql`
-    query Goods($goodId: Int!) {
+    query GetGood($goodId: Int!) {
         good(id: $goodId) {
             id
             name
@@ -188,8 +188,8 @@ export const GET_GOOD = gql`
 
 export interface IGetDataForGoodPage {
     good: IGood
+    goodCharacteristics: ICharacteristics
 }
-
 export const GET_DATA_FOR_GOOD_PAGE = gql`
     query GetDataForGoodPage($goodId: Int!) {
         good(id: $goodId) {
@@ -223,6 +223,16 @@ export const GET_DATA_FOR_GOOD_PAGE = gql`
                 id
                 name
                 photo
+            }
+        }
+        goodCharacteristics(goodId: $goodId) {
+            id
+            name
+            items {
+                id
+                name
+                value
+                description
             }
         }
     }
