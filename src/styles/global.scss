@@ -20,7 +20,7 @@
 
     box-sizing: border-box;
 
-    font-size: 12px;
+    font-size: 12px; //5px
     // color: var(--color-light-text);
 }
 
@@ -35,4 +35,20 @@ body {
 
 li {
     list-style: none;
+}
+
+h5 {
+    font-size: 16px; //12px
+}
+h4 {
+    font-size: 18px; //13px
+}
+h3 {
+    font-size: 24px; //17px
+}
+h2 {
+    font-size: 32px; //23px
+}
+h1 {
+    font-size: 48px; //35px
 }

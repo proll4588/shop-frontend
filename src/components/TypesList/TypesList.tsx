@@ -13,9 +13,9 @@ const TypesList: FC<TypesListProps> = ({ localGoodsTypes }) => {
                             className={styles.TypesList__localType}
                             key={local.id}
                         >
-                            <div className={styles.TypesList__localTypeName}>
+                            <h3 className={styles.TypesList__localTypeName}>
                                 {local.name}
-                            </div>
+                            </h3>
                             <ul className={styles.TypesList__subTypes}>
                                 {local.sub_type_goods.map((sub) => {
                                     return (
@@ -26,7 +26,13 @@ const TypesList: FC<TypesListProps> = ({ localGoodsTypes }) => {
                                                     styles.TypesList__subTypesLink
                                                 }
                                             >
-                                                {sub.name}
+                                                <h5
+                                                    className={
+                                                        styles.TypesList__subTypesName
+                                                    }
+                                                >
+                                                    {sub.name}
+                                                </h5>
                                             </Link>
                                         </li>
                                     )

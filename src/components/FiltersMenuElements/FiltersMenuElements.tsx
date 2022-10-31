@@ -123,9 +123,9 @@ const FiltersMenuElements: FC<FiltersMenuElementsProps> = ({
                     className={styles.FiltersMenuElements__head}
                     onClick={clickHandler}
                 >
-                    <div className={styles.FiltersMenuElements__title}>
+                    <h4 className={styles.FiltersMenuElements__title}>
                         {title}
-                    </div>
+                    </h4>
                     <IoIosArrowDown
                         className={styles.FiltersMenuElements__icon}
                     />

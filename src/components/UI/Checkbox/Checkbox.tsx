@@ -29,7 +29,7 @@ const Checkbox: FC<CheckboxProps> = ({ lable, onChange, state, className }) => {
                 <div className={addClassName}>
                     {isChecked && <BsCheck className={styles.Checkbox__icon} />}
                 </div>
-                {lable && <div className={styles.Checkbox__lable}>{lable}</div>}
+                {lable && <h5 className={styles.Checkbox__lable}>{lable}</h5>}
             </div>
         </div>
     )
