@@ -15,12 +15,7 @@ import { IGood } from '../../interfaces/good.interface'
 import styles from './GoodPage.module.scss'
 import GoodPageProps from './GoodPage.props'
 import ImageGallery from 'react-image-gallery'
-
-const myphoto1 =
-    'https://sun9-north.userapi.com/sun9-86/s/v1/ig2/rPDHsKOlqqeARET1kIHJRRmvanmc0bEL25MgcrZPLc9Imc4e12UYVqnp261utIdnni8qkC14xDq4Tf3FJ6yQo4fJ.jpg?size=1080x1080&quality=96&type=album'
-
-const myphoto2 =
-    'https://sun9-west.userapi.com/sun9-1/s/v1/ig2/rqOZx35-xPoiFsw7-336I4jjoMWNK42V15RTg-WYU2vj_tvCqrZ--X0ti3rqqMLXY9r8sQ9BqQkXQ8u2FnBSuvIk.jpg?size=1080x1080&quality=96&type=album'
+import GoodDescriptionPanel from '../../components/GoodDescriptionPanel/GoodDescriptionPanel'
 
 interface GoodDescriptionProps {
     data: IGood
@@ -198,6 +193,10 @@ const GoodPage: FC<GoodPageProps> = () => {
                 <FullGoodInfo
                     data={data.good}
                     photos={data.good.all_photos.map((el) => el.photo)}
+                />
+                <GoodDescriptionPanel
+                    description={data.good.description}
+                    characteristics={data.goodCharacteristics}
                 />
             </div>
         </div>
