@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Link, redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Button from '../UI/Button/Button'
 import Rating from '../UI/Rating/Rating'
 import styles from './GoodCard.module.scss'
