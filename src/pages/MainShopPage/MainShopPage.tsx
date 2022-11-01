@@ -1,10 +1,20 @@
+/* Хуки */
 import { useQuery } from '@apollo/client'
 import React, { FC } from 'react'
-import { GET_ALL_GOODS_TYPES, IGetAllGoodsTypes } from '../../apollo/fetchs'
+
+/* Компоненты */
 import CategoriesPanel from '../../components/CategoriesPanel/CategoriesPanel'
+
+/* Запросы */
+import { GET_ALL_GOODS_TYPES, IGetAllGoodsTypes } from '../../apollo/fetchs'
+
+/* Основные атрибуты */
 import styles from './MainShopPage.module.scss'
 import MainShopPageProps from './MainShopPage.props'
 
+/*
+ * Компонент MainShopPage - главная страница магазина
+ */
 const MainShopPage: FC<MainShopPageProps> = () => {
     const { loading, error, data } =
         useQuery<IGetAllGoodsTypes>(GET_ALL_GOODS_TYPES)
