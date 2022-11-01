@@ -2,32 +2,34 @@ import { Route, Routes } from 'react-router-dom'
 import Header from '../components/Header/Header'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
-import GoodsTypePage from '../pages/GoodsTypePage/GoodsTypePage'
 import MainShopPage from '../pages/MainShopPage/MainShopPage'
 
+/*
+ * Компонент ShopLayout - это layout для магазинной части приложения
+ */
 const ShopLayout = () => {
     return (
         <div className='ShopLayout'>
             <div className='ShopLayout__container'>
                 <Header />
 
+                {/* TODO: Суда можно вставить route компонент */}
+
+                {/* TODO: Сделать оболочку для контента со всеми отступами */}
                 <Routes>
+                    {/* Главная станица магазина */}
                     <Route
                         path={'/'}
                         element={<MainShopPage />}
                     />
-                    {/* <Route
-                        path={'/types/:globalGoodsTypeId'}
-                        element={<GoodsTypePage />}
-                    />
-                    <Route
-                        path={'/types/:globalGoodsTypeId/:localGoodsTypeId'}
-                        element={<GoodsTypePage />}
-                    /> */}
+
+                    {/* Список товаров по типу */}
                     <Route
                         path={'/goods/:subGoodsTypeId'}
                         element={<GoodsPage />}
                     />
+
+                    {/* Страницв товара */}
                     <Route
                         path={'/good/:goodId'}
                         element={<GoodPage />}
