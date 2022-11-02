@@ -59,10 +59,10 @@ const Header: FC<HeaderProps> = () => {
                             />
                             <IconCard
                                 icon={<AiOutlineUser />}
-                                to={'/'}
+                                to={'/auth'}
                                 number={1}
-                                // title={'Профиль'}
-                                // text={'1 000р'}
+                                // title={'Войти'}
+                                // text={'или зарегестрироватся'}
                             />
                         </div>
                     </div>

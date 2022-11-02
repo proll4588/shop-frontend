@@ -1,0 +1,13 @@
+.AuthPage {
+    & {
+    }
+    &__container {
+        max-width: 1280px;
+        margin: auto;
+        padding: 10px 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

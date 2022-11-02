@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Header from '../components/Header/Header'
+import AuthPage from '../pages/AuthPage/AuthPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
 import MainShopPage from '../pages/MainShopPage/MainShopPage'
@@ -33,6 +34,12 @@ const ShopLayout = () => {
                     <Route
                         path={'/good/:goodId'}
                         element={<GoodPage />}
+                    />
+
+                    {/* Авторизация пользователя */}
+                    <Route
+                        path={'/auth'}
+                        element={<AuthPage />}
                     />
                 </Routes>
             </div>
