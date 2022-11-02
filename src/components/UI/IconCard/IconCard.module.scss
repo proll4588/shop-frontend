@@ -16,36 +16,6 @@
         position: relative;
     }
 
-    &__iconContainer {
-        height: 100%;
-        width: 50px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-
-        border: 2px solid var(--color-border-1);
-        border-radius: var(--border-radius);
-
-        cursor: pointer;
-
-        transition: var(--trans-time);
-
-        &:hover {
-            border-color: var(--color-gray-2);
-        }
-    }
-    &__icon {
-        font-size: 30px;
-        color: var(--color-grey-text) !important;
-        transition: var(--trans-time);
-
-        &:hover {
-            color: var(--color-light-text);
-        }
-    }
-
     &__desc {
         overflow: hidden;
     }

@@ -3,6 +3,7 @@ import styles from './IconCard.module.scss'
 import IconCardProps from './IconCard.props'
 import { IconContext } from 'react-icons'
 import { Link } from 'react-router-dom'
+import Square from '../Square/Square'
 
 const IconCard: FC<IconCardProps> = ({ icon, number, title, text, to }) => {
     const [num, setNum] = useState<string>('' + number)
@@ -17,19 +18,14 @@ const IconCard: FC<IconCardProps> = ({ icon, number, title, text, to }) => {
         <IconContext.Provider value={{ className: styles.IconCard__icon }}>
             <div className={styles.IconCard}>
                 <div className={styles.IconCard__container}>
-                    {number && number !== 0 ? (
+                    {!!number && number !== 0 && (
                         <div className={styles.IconCard__dotContainer}>
                             {num}
                         </div>
-                    ) : (
-                        ''
                     )}
 
-                    <Link
-                        to={to}
-                        className={styles.IconCard__iconContainer}
-                    >
-                        {icon}
+                    <Link to={to}>
+                        <Square icon={icon} />
                     </Link>
 
                     {!!title && (
