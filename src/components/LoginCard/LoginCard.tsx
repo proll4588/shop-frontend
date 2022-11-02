@@ -19,7 +19,7 @@ const LoginCard: FC<LoginCardProps> = ({ onChange }) => {
                 <div className={styles.LoginCard__inputBlock}>
                     <Input
                         type='text'
-                        placeholder='E-male'
+                        placeholder='E-mail'
                         value={email}
                         onChange={setEmail}
                         className={styles.LoginCard__input}

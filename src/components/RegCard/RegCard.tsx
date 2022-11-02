@@ -7,7 +7,7 @@ import RegCardProps from './RegCard.props'
 
 // TODO: сделать валидацию пароля и почты
 const RegCard: FC<RegCardProps> = ({ onChange }) => {
-    const [name, setName] = useState('')
+    // const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rem, setRem] = useState(false)
@@ -20,13 +20,13 @@ const RegCard: FC<RegCardProps> = ({ onChange }) => {
                     Or use your email to registration
                 </h5>
                 <div className={styles.RegCard__inputBlock}>
-                    <Input
+                    {/* <Input
                         type='text'
                         placeholder='Name'
                         value={name}
                         onChange={setName}
                         className={styles.RegCard__input}
-                    />
+                    /> */}
                     <Input
                         type='text'
                         placeholder='E-mail'
