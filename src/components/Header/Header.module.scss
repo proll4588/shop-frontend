@@ -1,6 +1,6 @@
 .Header {
     & {
-        height: 150px;
+        height: 110px;
         width: 100%;
     }
     &__container {
@@ -28,7 +28,7 @@
         color: var(--color-light-text);
     }
     &__main {
-        height: 120px;
+        height: 80px;
         width: 100%;
 
         border-bottom: 1px solid var(--color-border-1);
