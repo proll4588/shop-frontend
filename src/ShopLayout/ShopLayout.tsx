@@ -12,7 +12,7 @@ const ShopLayout = () => {
     return (
         <div className='ShopLayout'>
             <div className='ShopLayout__container'>
-                <Header />
+                {/* <Header /> */}
 
                 {/* TODO: Суда можно вставить route компонент */}
 

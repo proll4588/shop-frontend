@@ -21,6 +21,7 @@ import {
     GET_DATA_FOR_GOODS_PAGE,
     IGetDataForGoodsPage,
 } from '../../apollo/fetchs'
+import classNames from 'classnames'
 
 /*
  * Компонент-страниц. Отвечает за отображение страницы с товарами
@@ -33,6 +34,8 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     // Состояние действующих и полученных. Поседний нужен для кэширования
     const [filtersState, setFiltersState] = useState<IAllFilterState>(null)
     const [cacheFilters, setCacheFilters] = useState<IAllFilters>(null)
+
+    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false)
 
     // Запрашиваем данные с сервера с учётом фильтров и типа товара
     const { loading, error, data } = useQuery<IGetDataForGoodsPage>(
@@ -81,7 +84,12 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     // console.log(data)
 
     return (
-        <div className={styles.GoodsPage}>
+        <div
+            className={classNames(
+                styles.GoodsPage,
+                isPanelOpen ? styles.GoodsPage_fix : ''
+            )}
+        >
             {/* TODO: ХЗ надо или нет. Занимает много места */}
             {/* если оставлять то перенести в layout */}
             {/* <RouteTitle
@@ -89,20 +97,41 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                 title={'Catalog'}
             /> */}
             <div className={styles.GoodsPage__container}>
-                <div className={styles.GoodsPage__FilterPanel}>
+                {/* TODO: В отдкльный компонент */}
+                <div
+                    className={classNames(
+                        styles.GoodsPage__FilterPanel,
+                        isPanelOpen ? styles.GoodsPage__FilterPanel_open : ''
+                    )}
+                >
                     {/* TODO: Сдлеать loader в момент получения данных */}
                     {!!cacheFilters && !!filtersState && (
                         <FilterPanel
                             filters={cacheFilters}
-                            onChange={setFiltersState}
+                            onChange={(ans) => {
+                                setIsPanelOpen(false)
+                                setFiltersState(ans)
+                            }}
                             value={filtersState}
                         />
                     )}
+                    <div
+                        className={styles.GoodsPage__FilterPanelBack}
+                        onClick={() => {
+                            setIsPanelOpen(false)
+                        }}
+                    />
                 </div>
+
                 <div className={styles.GoodsPage__GoodsList}>
                     {/* TODO: Сдлеать loader в момент получения данных */}
                     {!loading && !error && (
-                        <GoodsList data={loading ? [] : data.filteredGoods} />
+                        <GoodsList
+                            onPanelOpen={() => {
+                                setIsPanelOpen(true)
+                            }}
+                            data={data.filteredGoods}
+                        />
                     )}
                 </div>
             </div>

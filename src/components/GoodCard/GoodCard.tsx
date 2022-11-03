@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../UI/Button/Button'
@@ -9,7 +10,7 @@ const NO_PHOTO =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'
 
 //TODO: Разделить на два компонента
-const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
+const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
     const {
         main_photo,
         name,
@@ -22,7 +23,12 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull }) => {
 
     if (!isFull)
         return (
-            <div className={styles.GoodCard}>
+            <div
+                className={classNames(
+                    styles.GoodCard,
+                    className ? className : ''
+                )}
+            >
                 <div className={styles.GoodCard__container}>
                     <img
                         src={main_photo ? main_photo.photo : NO_PHOTO}

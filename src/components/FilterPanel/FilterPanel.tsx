@@ -1,4 +1,5 @@
 /* Хуки */
+import classNames from 'classnames'
 import React, { FC, useState } from 'react'
 
 /* Компоненты */
@@ -59,7 +60,7 @@ const FilterPanel: FC<FilterPanelProps> = ({ filters, onChange, value }) => {
     }
 
     return (
-        <div className={styles.FilterPanel}>
+        <div className={classNames(styles.FilterPanel)}>
             <div className={styles.FilterPanel__container}>
                 <Button
                     secondary

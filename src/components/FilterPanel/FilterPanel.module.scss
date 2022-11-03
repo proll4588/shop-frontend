@@ -1,7 +1,10 @@
 .FilterPanel {
     & {
         width: 300px;
-        margin-top: 10px;
+        padding-top: 10px;
+        background-color: var(--color-bg);
+
+        overflow: auto;
     }
     &__container {
         width: 100%;
