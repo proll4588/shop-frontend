@@ -1,11 +1,22 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import tokenAtom from '../../atoms/token.atom'
 import LoginCard from '../../components/LoginCard/LoginCard'
 import RegCard from '../../components/RegCard/RegCard'
 import styles from './AuthPage.module.scss'
 import AuthPageProps from './AuthPage.props'
 
 const AuthPage: FC<AuthPageProps> = () => {
+    const token = useRecoilValue(tokenAtom)
+    const navigate = useNavigate()
     const [isLogin, setIsLogin] = useState(false)
+
+    useEffect(() => {
+        if (token !== null && token !== 'null') {
+            navigate('/')
+        }
+    }, [token])
 
     const changeAuthForm = () => {
         setIsLogin((prev) => !prev)
