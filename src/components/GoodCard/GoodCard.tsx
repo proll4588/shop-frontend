@@ -1,8 +1,11 @@
 import classNames from 'classnames'
 import React, { FC } from 'react'
+import { AiOutlineHeart } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import Button from '../UI/Button/Button'
+import FavoriteButton from '../UI/FavoriteButton/FavoriteButton'
 import Rating from '../UI/Rating/Rating'
+import Square from '../UI/Square/Square'
 import styles from './GoodCard.module.scss'
 import GoodCardProps from './GoodCard.props'
 
@@ -10,7 +13,14 @@ const NO_PHOTO =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'
 
 //TODO: Разделить на два компонента
-const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
+const GoodCard: FC<GoodCardProps> = ({
+    data,
+    isFull,
+    className,
+    onClickFavorite,
+    onClickCart,
+    isfavorite = false,
+}) => {
     const {
         main_photo,
         name,
@@ -78,7 +88,24 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                             </div>
                         )}
                     </div>
-                    <Button secondary>Add to Cart</Button>
+                    <div className={styles.GoodCard__btns}>
+                        {/* <Square
+                            icon={<AiOutlineHeart />}
+                            active={isfavorite}
+                            onClick={onClickFavorite}
+                        /> */}
+                        <FavoriteButton
+                            value={isfavorite}
+                            onClick={onClickFavorite}
+                        />
+                        <Button
+                            secondary
+                            className={styles.GoodCard__btn}
+                            onClick={onClickCart}
+                        >
+                            Add to Cart
+                        </Button>
+                    </div>
                 </div>
             </div>
         )
@@ -143,8 +170,16 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                         </div>
 
                         <div className={styles.FullGoodCard__inputsContainer}>
-                            <Button secondary>Add to cart</Button>
-                            <Button secondary>Buy now</Button>
+                            <FavoriteButton
+                                value={isfavorite}
+                                onClick={onClickFavorite}
+                            />
+                            <Button
+                                secondary
+                                onClick={onClickCart}
+                            >
+                                Add to Cart
+                            </Button>
                         </div>
                     </div>
                 </div>

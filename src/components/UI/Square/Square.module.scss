@@ -23,6 +23,10 @@
 
         &_active {
             border-color: var(--color-border-5);
+
+            &:hover {
+                border-color: var(--color-border-5);
+            }
         }
 
         &_disasble {
@@ -32,6 +36,9 @@
 
         &_error {
             border-color: var(--color-border-4);
+            &:hover {
+                border-color: var(--color-border-4);
+            }
         }
     }
 

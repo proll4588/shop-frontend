@@ -1,0 +1,9 @@
+.FavoriteButton {
+    & {
+    }
+    &__icon {
+        &_active {
+            color: rgb(250, 50, 50);
+        }
+    }
+}

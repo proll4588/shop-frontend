@@ -1,6 +1,6 @@
 /* Хуки */
 import React, { FC, useEffect, useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
 /* Компоненты */
@@ -18,9 +18,14 @@ import GoodsPageProps from './GoodsPage.props'
 
 /* Запросы */
 import {
+    ADD_TO_FAVORITE,
     GET_DATA_FOR_GOODS_PAGE,
+    GET_FAVORITE,
     IGetDataForGoodsPage,
+    REMOVE_FROM_FAVORITE,
 } from '../../apollo/fetchs'
+
+/* Сторонние библиотеки */
 import classNames from 'classnames'
 
 /*
@@ -30,11 +35,13 @@ import classNames from 'classnames'
 const GoodsPage: FC<GoodsPageProps> = () => {
     // Получаем id типа товара из адресса страницы
     const { subGoodsTypeId } = useParams()
+    const client = useApolloClient()
 
     // Состояние действующих и полученных. Поседний нужен для кэширования
     const [filtersState, setFiltersState] = useState<IAllFilterState>(null)
     const [cacheFilters, setCacheFilters] = useState<IAllFilters>(null)
 
+    // Состояние открытости боковой панели
     const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false)
 
     // Запрашиваем данные с сервера с учётом фильтров и типа товара
@@ -47,6 +54,12 @@ const GoodsPage: FC<GoodsPageProps> = () => {
             },
         }
     )
+
+    // Запрос на товары в избранном
+    const favInfo = useQuery(GET_FAVORITE)
+
+    const [addToFav, addInfo] = useMutation(ADD_TO_FAVORITE)
+    const [remFromFav, remInfo] = useMutation(REMOVE_FROM_FAVORITE)
 
     // Кэширование брэндов для избежания обновления интерфейса
     useEffect(() => {
@@ -72,16 +85,16 @@ const GoodsPage: FC<GoodsPageProps> = () => {
         }
     }, [data, loading, error])
 
-    // TODO: DEV
-    // useEffect(() => {
-    //     console.log('filtersState', filtersState)
-    // }, [filtersState])
+    useEffect(() => {
+        if (addInfo.data || remInfo.data) {
+            client.refetchQueries({
+                include: [GET_FAVORITE],
+            })
+        }
+    }, [addInfo.data, remInfo.data])
 
     // В случае ошибки выводить грустный смайлик
     if (error) return <p>Error :(</p>
-
-    // TODO: DEV
-    // console.log(data)
 
     return (
         <div
@@ -91,7 +104,6 @@ const GoodsPage: FC<GoodsPageProps> = () => {
             )}
         >
             {/* TODO: ХЗ надо или нет. Занимает много места */}
-            {/* если оставлять то перенести в layout */}
             {/* <RouteTitle
                 path={'Main / Catalog'}
                 title={'Catalog'}
@@ -131,6 +143,21 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                                 setIsPanelOpen(true)
                             }}
                             data={data.filteredGoods}
+                            favorite={favInfo.data && favInfo.data.getFavorite}
+                            addToFavorite={(goodId) => {
+                                addToFav({
+                                    variables: {
+                                        goodId,
+                                    },
+                                })
+                            }}
+                            removeFromFavorite={(goodId) => {
+                                remFromFav({
+                                    variables: {
+                                        goodId,
+                                    },
+                                })
+                            }}
                         />
                     )}
                 </div>

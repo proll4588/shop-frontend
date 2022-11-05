@@ -8,26 +8,26 @@ import {
     IGetDataForGoodPage,
 } from '../../apollo/fetchs'
 import Button from '../../components/UI/Button/Button'
-import IconCard from '../../components/UI/IconCard/IconCard'
 import Rating from '../../components/UI/Rating/Rating'
-import Square from '../../components/UI/Square/Square'
 import { IGood } from '../../interfaces/good.interface'
 import styles from './GoodPage.module.scss'
 import GoodPageProps from './GoodPage.props'
 import ImageGallery from 'react-image-gallery'
 import GoodDescriptionPanel from '../../components/GoodDescriptionPanel/GoodDescriptionPanel'
+import FavoriteButton from '../../components/UI/FavoriteButton/FavoriteButton'
 
 interface GoodDescriptionProps {
     data: IGood
 }
 const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
+    const { brands, name, sub_type_goods, current_price } = data
     return (
         <div className={styles.GoodDescription}>
             <div className={styles.GoodDescription__container}>
                 <div className={styles.GoodDescription__typeName}>
-                    {data.sub_type_goods.name}
+                    {sub_type_goods.name}
                 </div>
-                <div className={styles.GoodDescription__name}>{data.name}</div>
+                <div className={styles.GoodDescription__name}>{name}</div>
 
                 <div className={styles.GoodDescription__brand}>
                     <div className={styles.GoodDescription__brandLeft}>
@@ -36,14 +36,14 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                         </div>
 
                         <div className={styles.GoodDescription__brandName}>
-                            {data.brands.name}
+                            {brands.name}
                         </div>
                     </div>
 
-                    {data.brands.logo && (
+                    {brands.logo && (
                         <img
                             alt='123'
-                            src={data.brands.logo}
+                            src={brands.logo}
                             className={styles.GoodDescription__brandLogo}
                         />
                     )}
@@ -58,31 +58,28 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                 </div>
 
                 <div className={styles.GoodDescription__price}>
-                    {data.current_price.discount !== null ? (
+                    {current_price.discount !== null ? (
                         <>
                             <div
                                 className={
                                     styles.GoodDescription__priceSecondary
                                 }
                             >
-                                {data.current_price.price}
+                                {current_price.price}
                             </div>
                             <div className={styles.GoodDescription__priceMain}>
-                                {data.current_price.discount}
+                                {current_price.discount}
                             </div>
                         </>
                     ) : (
                         <div className={styles.GoodDescription__priceMain}>
-                            {data.current_price.price}
+                            {current_price.price}
                         </div>
                     )}
                 </div>
 
                 <div className={styles.GoodDescription__actionBar}>
-                    <Square
-                        icon={<AiOutlineHeart />}
-                        className={styles.GoodDescription__fav}
-                    />
+                    <FavoriteButton />
                     <Button className={styles.GoodDescription__button}>
                         Add to Cart
                     </Button>
@@ -163,7 +160,6 @@ const FullGoodInfo: FC<FullGoodInfoProps> = ({ data, photos }) => {
     return (
         <div className={styles.FullGoodInfo}>
             <div className={styles.FullGoodInfo__container}>
-                {/* {!!photos.length && <GoodPhoto photos={photos} />} */}
                 <GoodPhoto photos={photos} />
                 <GoodDescription data={data} />
             </div>
@@ -185,18 +181,19 @@ const GoodPage: FC<GoodPageProps> = () => {
 
     if (error) return <>Error</>
     if (loading) return <>Loading</>
-    console.log(data)
+    const { good, goodCharacteristics } = data
+    // console.log(data)
 
     return (
         <div className={styles.GoodPage}>
             <div className={styles.GoodPage__container}>
                 <FullGoodInfo
-                    data={data.good}
-                    photos={data.good.all_photos.map((el) => el.photo)}
+                    data={good}
+                    photos={good.all_photos.map((el) => el.photo)}
                 />
                 <GoodDescriptionPanel
-                    description={data.good.description}
-                    characteristics={data.goodCharacteristics}
+                    description={good.description}
+                    characteristics={goodCharacteristics}
                 />
             </div>
         </div>
