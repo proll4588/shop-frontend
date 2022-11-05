@@ -33,7 +33,6 @@ const DropdownInput: FC<DropdownInputProps> = ({
         onClick && onClick()
     }
 
-    // TODO: Избавится от контейнера. Добавть отступ с права и поставить туда иконку
     return (
         <div
             className={styles.Dropdown__inputContainer}
