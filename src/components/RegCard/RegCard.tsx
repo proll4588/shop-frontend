@@ -1,16 +1,29 @@
 import React, { FC, useState } from 'react'
+import useAuth from '../../hooks/auth.hook'
 import Button from '../UI/Button/Button'
 import Checkbox from '../UI/Checkbox/Checkbox'
 import Input from '../UI/Input/Input'
 import styles from './RegCard.module.scss'
 import RegCardProps from './RegCard.props'
 
+const pattern =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 // TODO: сделать валидацию пароля и почты
 const RegCard: FC<RegCardProps> = ({ onChange }) => {
-    // const [name, setName] = useState('')
+    const { registrate, regStatus } = useAuth()
+    const { loading, error, data } = regStatus
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rem, setRem] = useState(false)
+
+    const createAccount = () => {
+        const isPassword = password.length >= 8
+        const isEmail = pattern.test(email)
+
+        if (isEmail && isPassword) registrate(email, password)
+    }
 
     return (
         <div className={styles.RegCard}>
@@ -20,16 +33,12 @@ const RegCard: FC<RegCardProps> = ({ onChange }) => {
                     Or use your email to registration
                 </h5>
                 <div className={styles.RegCard__inputBlock}>
-                    {/* <Input
-                        type='text'
-                        placeholder='Name'
-                        value={name}
-                        onChange={setName}
-                        className={styles.RegCard__input}
-                    /> */}
                     <Input
                         type='text'
                         placeholder='E-mail'
+                        isError={
+                            error && error.message === 'User is already exist'
+                        }
                         value={email}
                         onChange={setEmail}
                         className={styles.RegCard__input}
@@ -51,7 +60,13 @@ const RegCard: FC<RegCardProps> = ({ onChange }) => {
                 />
 
                 <div className={styles.RegCard__buttonBlock}>
-                    <Button className={styles.RegCard__button}>Sign Up</Button>
+                    <Button
+                        className={styles.RegCard__button}
+                        onClick={createAccount}
+                        disable={loading}
+                    >
+                        Sign Up
+                    </Button>
                     <Button
                         className={styles.RegCard__button}
                         secondary
