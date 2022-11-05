@@ -237,3 +237,57 @@ export const GET_DATA_FOR_GOOD_PAGE = gql`
         }
     }
 `
+
+export const REGISTRATION_ACCOUNT = gql`
+    mutation RegistrationAccount($email: String!, $password: String!) {
+        registration(email: $email, password: $password) {
+            token
+        }
+    }
+`
+
+export const LOGIN = gql`
+    query Login($email: String!, $password: String!) {
+        login(email: $email, password: $password) {
+            token
+        }
+    }
+`
+
+export const CHECK_TOKEN = gql`
+    query VerifyToken {
+        verifyToken {
+            verify
+        }
+    }
+`
+
+export const ADD_TO_FAVORITE = gql`
+    mutation AddToFavorite($goodId: Int!) {
+        addToFavorite(goodId: $goodId) {
+            id
+            goods_catalog_id
+            users_id
+        }
+    }
+`
+
+export const REMOVE_FROM_FAVORITE = gql`
+    mutation RemoveFromFavorite($goodId: Int!) {
+        removeFavorite(goodId: $goodId) {
+            id
+            goods_catalog_id
+            users_id
+        }
+    }
+`
+
+export const GET_FAVORITE = gql`
+    query GetFavorite {
+        getFavorite {
+            id
+            goods_catalog_id
+            users_id
+        }
+    }
+`
