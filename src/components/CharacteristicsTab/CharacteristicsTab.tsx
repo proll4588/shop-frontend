@@ -37,6 +37,7 @@ const CharacteristicsGroup: FC<CharacteristicsGroupProps> = ({ group }) => {
                     {group.items.map((item) => {
                         return (
                             <CharacteristicsItem
+                                key={item.id}
                                 paramName={item.name}
                                 value={item.value}
                             />
@@ -56,7 +57,12 @@ const CharacteristicsTab: FC<CharacteristicsTabProps> = ({
         <div className={styles.CharacteristicsTab}>
             <div className={styles.CharacteristicsTab__container}>
                 {characteristics.map((group) => {
-                    return <CharacteristicsGroup group={group} />
+                    return (
+                        <CharacteristicsGroup
+                            group={group}
+                            key={group.id}
+                        />
+                    )
                 })}
             </div>
         </div>
