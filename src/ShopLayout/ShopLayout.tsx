@@ -7,6 +7,7 @@ import { getLink } from '../apollo/link'
 import tokenAtom from '../atoms/token.atom'
 import Header from '../components/Header/Header'
 import useStorage from '../hooks/storage.hook'
+import AccountPage from '../pages/AccountPage/AccountPage'
 import AuthPage from '../pages/AuthPage/AuthPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
@@ -76,6 +77,12 @@ const ShopLayout = () => {
                     <Route
                         path={'/auth'}
                         element={<AuthPage />}
+                    />
+
+                    {/* Авторизация пользователя */}
+                    <Route
+                        path={'/account/*'}
+                        element={<AccountPage />}
                     />
                 </Routes>
             </div>
