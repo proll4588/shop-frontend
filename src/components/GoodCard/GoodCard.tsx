@@ -1,11 +1,10 @@
 import classNames from 'classnames'
 import React, { FC } from 'react'
-import { AiOutlineHeart } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
+import useFavorite from '../../hooks/favorite.hook'
 import Button from '../UI/Button/Button'
 import FavoriteButton from '../UI/FavoriteButton/FavoriteButton'
 import Rating from '../UI/Rating/Rating'
-import Square from '../UI/Square/Square'
 import styles from './GoodCard.module.scss'
 import GoodCardProps from './GoodCard.props'
 
@@ -13,14 +12,7 @@ const NO_PHOTO =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'
 
 //TODO: Разделить на два компонента
-const GoodCard: FC<GoodCardProps> = ({
-    data,
-    isFull,
-    className,
-    onClickFavorite,
-    onClickCart,
-    isfavorite = false,
-}) => {
+const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
     const {
         main_photo,
         name,
@@ -30,6 +22,20 @@ const GoodCard: FC<GoodCardProps> = ({
         description,
         id,
     } = data
+
+    const {
+        addToFavorite,
+        removeFromFavorite,
+        data: favoriteList,
+    } = useFavorite()
+
+    const doFaveorite = (value) => {
+        value ? addToFavorite(data.id) : removeFromFavorite(data.id)
+    }
+
+    const isFavorite =
+        !!favoriteList &&
+        !!favoriteList.getFavorite.find((el) => el.goods_catalog_id === data.id)
 
     if (!isFull)
         return (
@@ -89,19 +95,14 @@ const GoodCard: FC<GoodCardProps> = ({
                         )}
                     </div>
                     <div className={styles.GoodCard__btns}>
-                        {/* <Square
-                            icon={<AiOutlineHeart />}
-                            active={isfavorite}
-                            onClick={onClickFavorite}
-                        /> */}
                         <FavoriteButton
-                            value={isfavorite}
-                            onClick={onClickFavorite}
+                            value={isFavorite}
+                            onClick={doFaveorite}
                         />
                         <Button
                             secondary
                             className={styles.GoodCard__btn}
-                            onClick={onClickCart}
+                            // onClick={onClickCart}
                         >
                             Add to Cart
                         </Button>
@@ -171,12 +172,12 @@ const GoodCard: FC<GoodCardProps> = ({
 
                         <div className={styles.FullGoodCard__inputsContainer}>
                             <FavoriteButton
-                                value={isfavorite}
-                                onClick={onClickFavorite}
+                                value={isFavorite}
+                                onClick={doFaveorite}
                             />
                             <Button
                                 secondary
-                                onClick={onClickCart}
+                                // onClick={onClickCart}
                             >
                                 Add to Cart
                             </Button>

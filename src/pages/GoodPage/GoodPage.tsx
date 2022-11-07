@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
 import classNames from 'classnames'
 import React, { FC, useState } from 'react'
-import { AiOutlineHeart, AiOutlineShoppingCart } from 'react-icons/ai'
 import { useParams } from 'react-router-dom'
 import {
     GET_DATA_FOR_GOOD_PAGE,
@@ -15,11 +14,17 @@ import GoodPageProps from './GoodPage.props'
 import ImageGallery from 'react-image-gallery'
 import GoodDescriptionPanel from '../../components/GoodDescriptionPanel/GoodDescriptionPanel'
 import FavoriteButton from '../../components/UI/FavoriteButton/FavoriteButton'
+import useFavorite from '../../hooks/favorite.hook'
 
 interface GoodDescriptionProps {
     data: IGood
 }
 const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
+    const {
+        addToFavorite,
+        removeFromFavorite,
+        data: favoriteList,
+    } = useFavorite()
     const { brands, name, sub_type_goods, current_price } = data
     return (
         <div className={styles.GoodDescription}>
@@ -79,7 +84,18 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                 </div>
 
                 <div className={styles.GoodDescription__actionBar}>
-                    <FavoriteButton />
+                    <FavoriteButton
+                        onClick={(value) => {
+                            if (value) addToFavorite(data.id)
+                            else removeFromFavorite(data.id)
+                        }}
+                        value={
+                            !!favoriteList &&
+                            !!favoriteList.getFavorite.find(
+                                (el) => el.goods_catalog_id === data.id
+                            )
+                        }
+                    />
                     <Button className={styles.GoodDescription__button}>
                         Add to Cart
                     </Button>
@@ -182,7 +198,6 @@ const GoodPage: FC<GoodPageProps> = () => {
     if (error) return <>Error</>
     if (loading) return <>Loading</>
     const { good, goodCharacteristics } = data
-    // console.log(data)
 
     return (
         <div className={styles.GoodPage}>

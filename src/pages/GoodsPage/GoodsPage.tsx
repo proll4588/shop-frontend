@@ -23,7 +23,6 @@ import {
 
 /* Сторонние библиотеки */
 import classNames from 'classnames'
-import useFavorite from '../../hooks/favorite.hook'
 
 const createFilterState = (filters) => {
     return {
@@ -45,11 +44,6 @@ const createFilterState = (filters) => {
 const GoodsPage: FC<GoodsPageProps> = () => {
     // Получаем id типа товара из адресса страницы
     const { subGoodsTypeId } = useParams()
-    const {
-        addToFavorite,
-        removeFromFavorite,
-        data: favoriteList,
-    } = useFavorite()
 
     // Состояние действующих и полученных. Поседний нужен для кэширования
     const [filtersState, setFiltersState] = useState<IAllFilterState>(null)
@@ -123,9 +117,6 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                                 setIsPanelOpen(true)
                             }}
                             data={data.filteredGoods}
-                            favorite={favoriteList && favoriteList.getFavorite}
-                            addToFavorite={addToFavorite}
-                            removeFromFavorite={removeFromFavorite}
                         />
                     )}
                 </div>

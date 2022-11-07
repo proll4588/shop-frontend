@@ -1,6 +1,4 @@
-import { useQuery } from '@apollo/client'
-import React, { FC, useEffect, useState } from 'react'
-import { GET_FAVORITE } from '../../apollo/fetchs'
+import React, { FC, useState } from 'react'
 import GoodCard from '../GoodCard/GoodCard'
 import Button from '../UI/Button/Button'
 import Dropdown from '../UI/Dropdown/Dropdown'
@@ -14,17 +12,8 @@ const sortNames = [
     'По убыванию цены',
 ]
 
-const GoodsList: FC<GoodsListProps> = ({
-    data,
-    onPanelOpen,
-    favorite,
-    addToFavorite,
-    removeFromFavorite,
-}) => {
+const GoodsList: FC<GoodsListProps> = ({ data, onPanelOpen }) => {
     const [isFull, setIsFull] = useState<boolean>(false)
-
-    const isFavorite = (goodId) =>
-        !!favorite && !!favorite.find((el) => el.goods_catalog_id === goodId)
 
     return (
         <div className={styles.GoodsList}>
@@ -60,11 +49,6 @@ const GoodsList: FC<GoodsListProps> = ({
                                   data={good}
                                   isFull={isFull}
                                   key={good.id}
-                                  isfavorite={isFavorite(good.id)}
-                                  onClickFavorite={(val) => {
-                                      if (val) addToFavorite(good.id)
-                                      else removeFromFavorite(good.id)
-                                  }}
                               />
                           ))
                         : 'Товаров пока нет'}
