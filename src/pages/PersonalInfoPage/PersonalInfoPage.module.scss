@@ -1,0 +1,35 @@
+.PersonalInfoPage {
+    & {
+        width: calc(100% - 300px);
+    }
+    &__container {
+        width: 100%;
+    }
+    &__form {
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 24px;
+    }
+    & {
+    }
+    & {
+    }
+    & {
+    }
+    & {
+    }
+}
+
+.LabelInput {
+    & {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    &__label {
+        font-size: 16px;
+        color: var(--color-light-text);
+    }
+}
