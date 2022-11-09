@@ -1,8 +1,11 @@
+import { useQuery } from '@apollo/client'
 import React, { FC, useEffect, useLayoutEffect } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
+import { GET_USER_DATA } from '../../apollo/fetchs'
 import tokenAtom from '../../atoms/token.atom'
 import UserNav from '../../components/UserNav/UserNav'
+import PersonalInfoPage from '../PersonalInfoPage/PersonalInfoPage'
 import styles from './AccountPage.module.scss'
 import AccountPageProps from './AccountPage.props'
 
@@ -13,21 +16,32 @@ const AccountPage: FC<AccountPageProps> = () => {
     const token = useRecoilValue(tokenAtom)
     const navigate = useNavigate()
 
+    const { data, loading, error } = useQuery(GET_USER_DATA)
+
     useLayoutEffect(() => {
         if (!token || token === 'null') {
             navigate('/auth')
         }
     }, [token])
 
+    if (loading) return <>Loading</>
+    if (error) return <>Error</>
+    console.log(data)
+    const { userData } = data
+
     return (
         <div className={styles.AccountPage}>
             <div className={styles.AccountPage__container}>
                 <UserNav
                     userInfo={{
-                        email: 'emaile@lolo.com',
-                        fname: 'Kostya',
-                        lname: 'Valkov',
-                        photo: userPhoto,
+                        // email: 'emaile@lolo.com',
+                        // fname: 'Kostya',
+                        // lname: 'Valkov',
+                        // photo: userPhoto,
+                        email: userData.email,
+                        fname: userData.fname,
+                        lname: userData.lname,
+                        photo: userData.photo,
                     }}
                 />
                 <Routes>
@@ -43,7 +57,7 @@ const AccountPage: FC<AccountPageProps> = () => {
                     {/* Персональная информация */}
                     <Route
                         path={'personalInfo'}
-                        element={<>personalInfo</>}
+                        element={<PersonalInfoPage userData={data.userData} />}
                     />
 
                     {/* Список избранного */}

@@ -291,3 +291,45 @@ export const GET_FAVORITE = gql`
         }
     }
 `
+
+export const GET_USER_DATA = gql`
+    query Query {
+        userData {
+            id
+            fname
+            lname
+            email
+            phone_number
+            gender
+            address {
+                id
+                city
+                street
+                country
+                ZIP
+            }
+            photo
+            date_of_birthday
+        }
+    }
+`
+
+export const UPDATE_USER_DATA = gql`
+    mutation UpdateUserData($data: UserData) {
+        updateUserData(data: $data) {
+            id
+            fname
+            lname
+            email
+            phone_number
+            gender
+            address {
+                id
+                city
+                street
+            }
+            photo
+            date_of_birthday
+        }
+    }
+`
