@@ -113,7 +113,7 @@ const Dropdown: FC<DropdownProps> = ({
     className,
 }) => {
     const [selected, setSelected] = useState<string>(
-        defaultVal !== null ? content[defaultVal] : ''
+        defaultVal !== undefined ? content[defaultVal] : ''
     )
     const [isSelecting, setIsSelecting] = useState<boolean>(false)
 

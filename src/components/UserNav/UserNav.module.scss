@@ -1,11 +1,14 @@
 .UserNav {
     & {
         width: 280px;
+        height: 500px;
 
         border: 1px solid var(--color-border-1);
         border-radius: 10px;
 
         padding: 30px 16px;
+
+        // display: inline-block;
 
         //
         // margin: 20px;

@@ -56,3 +56,28 @@ h2 {
 h1 {
     font-size: 48px; //35px
 }
+
+input {
+    height: 52px;
+
+    background: var(--color-bg);
+
+    border: 1px solid var(--color-border-1);
+    border-radius: 10px;
+    outline: none;
+
+    padding-left: 16px;
+    padding-right: 16px;
+
+    font-size: 16px;
+    color: var(--color-light-text);
+
+    transition: var(--trans-time);
+    &:hover {
+        border-color: var(--color-border-2);
+    }
+
+    &:focus {
+        border-color: var(--color-accent);
+    }
+}
