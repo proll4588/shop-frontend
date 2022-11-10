@@ -1,12 +1,10 @@
-import { useApolloClient, useLazyQuery } from '@apollo/client'
-import { useLayoutEffect, useState } from 'react'
+import { useLazyQuery } from '@apollo/client'
+import { useLayoutEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { CHECK_TOKEN } from '../apollo/fetchs'
-import { getLink } from '../apollo/link'
 import tokenAtom from '../atoms/token.atom'
 import Header from '../components/Header/Header'
-import useStorage from '../hooks/storage.hook'
 import AccountPage from '../pages/AccountPage/AccountPage'
 import AuthPage from '../pages/AuthPage/AuthPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
@@ -18,22 +16,12 @@ import MainShopPage from '../pages/MainShopPage/MainShopPage'
  */
 const ShopLayout = () => {
     const [token, setToken] = useRecoilState(tokenAtom)
-    const { currentData, setCurrentData } = useStorage('token')
-    const client = useApolloClient()
     const [verify, { data, loading, error }] = useLazyQuery(CHECK_TOKEN)
 
     // При первом рендере приложения получаем токен из памяти проложения
     useLayoutEffect(() => {
         if (token && token !== 'null') verify()
     }, [])
-
-    // При изменении токена, новое значение записываем в storage
-    useLayoutEffect(() => {
-        setCurrentData(token)
-
-        // Обновление link клиента при обновлении токена
-        client.setLink(getLink())
-    }, [token])
 
     // При получении информации о валидности токена
     useLayoutEffect(() => {
