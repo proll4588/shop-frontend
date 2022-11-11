@@ -10,72 +10,78 @@ import AuthPage from '../pages/AuthPage/AuthPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
 import MainShopPage from '../pages/MainShopPage/MainShopPage'
+import TypePage from '../pages/TypePage/TypePage'
 
 /*
  * Компонент ShopLayout - это layout для магазинной части приложения
  */
 const ShopLayout = () => {
-    const [token, setToken] = useRecoilState(tokenAtom)
-    const [verify, { data, loading, error }] = useLazyQuery(CHECK_TOKEN)
+  const [token, setToken] = useRecoilState(tokenAtom)
+  const [verify, { data, loading, error }] = useLazyQuery(CHECK_TOKEN)
 
-    // При первом рендере приложения получаем токен из памяти проложения
-    useLayoutEffect(() => {
-        if (token && token !== 'null') verify()
-    }, [])
+  // При первом рендере приложения получаем токен из памяти проложения
+  useLayoutEffect(() => {
+    if (token && token !== 'null') verify()
+  }, [])
 
-    // При получении информации о валидности токена
-    useLayoutEffect(() => {
-        if (data && !data.verifyToken.verify) {
-            setToken(null)
-        }
-    }, [data])
-    // ....
+  // При получении информации о валидности токена
+  useLayoutEffect(() => {
+    if (data && !data.verifyToken.verify) {
+      setToken(null)
+    }
+  }, [data])
+  // ....
 
-    if (loading) return <>Loading</>
-    if (error) return <>Oops)</>
+  if (loading) return <>Loading</>
+  if (error) return <>Oops)</>
 
-    return (
-        <div className='ShopLayout'>
-            <div className='ShopLayout__container'>
-                <Header />
+  return (
+    <div className='ShopLayout'>
+      <div className='ShopLayout__container'>
+        {/* <Header /> */}
 
-                {/* TODO: Суда можно вставить route компонент */}
+        {/* TODO: Суда можно вставить route компонент */}
 
-                {/* TODO: Сделать оболочку для контента со всеми отступами */}
-                <Routes>
-                    {/* Главная станица магазина */}
-                    <Route
+        {/* TODO: Сделать оболочку для контента со всеми отступами */}
+        <Routes>
+          {/* Главная станица магазина */}
+          {/* <Route
                         path={'/'}
                         element={<MainShopPage />}
-                    />
+                    /> */}
 
-                    {/* Список товаров по типу */}
-                    <Route
-                        path={'/goods/:subGoodsTypeId'}
-                        element={<GoodsPage />}
-                    />
+          <Route
+            path={'/'}
+            element={<TypePage />}
+          />
 
-                    {/* Страницв товара */}
-                    <Route
-                        path={'/good/:goodId'}
-                        element={<GoodPage />}
-                    />
+          {/* Список товаров по типу */}
+          <Route
+            path={'/goods/:subGoodsTypeId'}
+            element={<GoodsPage />}
+          />
 
-                    {/* Авторизация пользователя */}
-                    <Route
-                        path={'/auth'}
-                        element={<AuthPage />}
-                    />
+          {/* Страницв товара */}
+          <Route
+            path={'/good/:goodId'}
+            element={<GoodPage />}
+          />
 
-                    {/* Авторизация пользователя */}
-                    <Route
-                        path={'/account/*'}
-                        element={<AccountPage />}
-                    />
-                </Routes>
-            </div>
-        </div>
-    )
+          {/* Авторизация пользователя */}
+          <Route
+            path={'/auth'}
+            element={<AuthPage />}
+          />
+
+          {/* Авторизация пользователя */}
+          <Route
+            path={'/account/*'}
+            element={<AccountPage />}
+          />
+        </Routes>
+      </div>
+    </div>
+  )
 }
 
 export default ShopLayout
