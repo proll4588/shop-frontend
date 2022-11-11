@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil'
 import { GET_USER_DATA } from '../../apollo/fetchs'
 import tokenAtom from '../../atoms/token.atom'
 import UserNav from '../../components/UserNav/UserNav'
+import FavoritePage from '../FavoritePage/FavoritePage'
 import PersonalInfoPage from '../PersonalInfoPage/PersonalInfoPage'
 import styles from './AccountPage.module.scss'
 import AccountPageProps from './AccountPage.props'
@@ -63,7 +64,7 @@ const AccountPage: FC<AccountPageProps> = () => {
                     {/* Список избранного */}
                     <Route
                         path={'favorite'}
-                        element={<>favorite</>}
+                        element={<FavoritePage />}
                     />
 
                     {/* Заказы пользователя */}
