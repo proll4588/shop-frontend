@@ -1,8 +1,10 @@
 .MainShopPage {
     & {
+        width: 100%;
         margin-top: 10px;
     }
     &__container {
+        width: 100%;
         max-width: 1280px;
         margin: auto;
         padding: 0 10px;

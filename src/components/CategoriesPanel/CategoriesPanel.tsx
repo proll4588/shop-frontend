@@ -48,7 +48,10 @@ const List: FC<ListProps> = ({ globalGoodsTypes, selected, inHandler }) => {
                 <li
                     className={styles.CategoriesPanel__typeContainer}
                     key={type.id}
-                    onMouseEnter={() => {
+                    // onMouseEnter={() => {
+                    //     inHandler(type.id)
+                    // }}
+                    onClick={() => {
                         inHandler(type.id)
                     }}
                 >

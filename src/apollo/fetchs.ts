@@ -286,8 +286,36 @@ export const GET_FAVORITE = gql`
     query GetFavorite {
         getFavorite {
             id
-            goods_catalog_id
-            users_id
+            name
+            description
+            main_photo {
+                id
+                goods_catalog_id
+                photo
+            }
+            all_photos {
+                id
+                goods_catalog_id
+                photo
+            }
+            current_price {
+                price
+                discount
+            }
+            all_prices {
+                price
+                discount
+            }
+            brands {
+                id
+                name
+                logo
+            }
+            sub_type_goods {
+                id
+                name
+                photo
+            }
         }
     }
 `
