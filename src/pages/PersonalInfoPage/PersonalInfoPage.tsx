@@ -3,8 +3,11 @@ import styles from './PersonalInfoPage.module.scss'
 import PersonalInfoPageProps from './PersonalInfoPage.props'
 import { Controller, useForm } from 'react-hook-form'
 import Dropdown from '../../components/UI/Dropdown/Dropdown'
+import Dropzone from 'react-dropzone'
 import { useMutation } from '@apollo/client'
-import { UPDATE_USER_DATA } from '../../apollo/fetchs'
+import { UPDATE_USER_DATA, UPLOAD_USER_PHOTO } from '../../apollo/fetchs'
+import { AiOutlineFileImage } from 'react-icons/ai'
+import classNames from 'classnames'
 
 const generateUserDataObj = (data) => {
     console.log(data)
@@ -40,6 +43,33 @@ const generateUserDataObj = (data) => {
     return ans
 }
 
+interface DragPhotoProps {
+    isLight?: boolean
+}
+const DragPhoto: FC<DragPhotoProps> = ({ isLight = false }) => {
+    return (
+        <div
+            className={classNames(
+                styles.DragPhoto,
+                isLight ? styles.DragPhoto_active : ''
+            )}
+        >
+            <div className={styles.DragPhoto__container}>
+                <div className={styles.DragPhoto__iconContainer}>
+                    <AiOutlineFileImage className={styles.DragPhoto__icon} />
+                </div>
+
+                <h4 className={styles.DragPhoto__mainText}>
+                    Drag & Drop Your Photo
+                </h4>
+                <h5 className={styles.DragPhoto__subText}>
+                    File should be JPEG, PNG
+                </h5>
+            </div>
+        </div>
+    )
+}
+
 interface LabelInputProps {
     label: string
     children: ReactNode
@@ -68,6 +98,8 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
 
     const [updateUserData, { error, loading, data }] =
         useMutation(UPDATE_USER_DATA)
+
+    const [uploadUserPhoto, uploadInfo] = useMutation(UPLOAD_USER_PHOTO)
 
     const onSubmit = (data) => {
         updateUserData({
@@ -197,6 +229,31 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                         disabled={loading}
                     />
                 </form>
+                <div className={styles.PersonalInfoPage__dragndropContainer}>
+                    <LabelInput label='Your Photo'>
+                        <Dropzone
+                            onDrop={([file]) =>
+                                uploadUserPhoto({ variables: { file } })
+                            }
+                        >
+                            {({
+                                getRootProps,
+                                getInputProps,
+                                isDragActive,
+                            }) => (
+                                <div
+                                    {...getRootProps({
+                                        className:
+                                            styles.PersonalInfoPage__drop,
+                                    })}
+                                >
+                                    <input {...getInputProps()} />
+                                    <DragPhoto isLight={isDragActive} />
+                                </div>
+                            )}
+                        </Dropzone>
+                    </LabelInput>
+                </div>
             </div>
         </div>
     )

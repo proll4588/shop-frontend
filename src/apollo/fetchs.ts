@@ -361,3 +361,25 @@ export const UPDATE_USER_DATA = gql`
         }
     }
 `
+
+export const UPLOAD_USER_PHOTO = gql`
+    mutation UploadUserPhoto($file: Upload!) {
+        uploadUserPhoto(file: $file) {
+            id
+            fname
+            lname
+            email
+            phone_number
+            date_of_birthday
+            gender
+            address {
+                id
+                city
+                street
+                ZIP
+                country
+            }
+            photo
+        }
+    }
+`
