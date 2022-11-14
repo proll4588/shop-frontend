@@ -7,6 +7,7 @@ import tokenAtom from '../atoms/token.atom'
 import Header from '../components/Header/Header'
 import AccountPage from '../pages/AccountPage/AccountPage'
 import AuthPage from '../pages/AuthPage/AuthPage'
+import CartPage from '../pages/CartPage/CartPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
 import MainShopPage from '../pages/MainShopPage/MainShopPage'
@@ -45,11 +46,6 @@ const ShopLayout = () => {
                 {/* TODO: Сделать оболочку для контента со всеми отступами */}
                 <Routes>
                     {/* Главная станица магазина */}
-                    {/* <Route
-                        path={'/'}
-                        element={<MainShopPage />}
-                    /> */}
-
                     <Route
                         path={'/'}
                         element={<TypePage />}
@@ -77,6 +73,11 @@ const ShopLayout = () => {
                     <Route
                         path={'/account/*'}
                         element={<AccountPage />}
+                    />
+
+                    <Route
+                        path={'/cart'}
+                        element={<CartPage />}
                     />
                 </Routes>
             </div>
