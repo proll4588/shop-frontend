@@ -45,14 +45,14 @@ const Header: FC<HeaderProps> = () => {
                         <div className={styles.Header__iconCardList}>
                             <IconCard
                                 icon={<AiOutlineShoppingCart />}
-                                to={'/'}
+                                to={'/cart'}
                                 number={0}
                                 // title={'Корзина'}
                                 // text={'1 000р'}
                             />
                             <IconCard
                                 icon={<AiOutlineHeart />}
-                                to={'/'}
+                                to={'/account/favorite'}
                                 number={1}
                                 // title={'Избранное'}
                                 // text={'1 000р'}
