@@ -37,7 +37,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
         !!favoriteList &&
         !!favoriteList.getFavorite.find((el) => el.id === data.id)
 
-    if (favoriteList) console.log('favoriteList >> ', favoriteList)
+    // if (favoriteList) console.log('favoriteList >> ', favoriteList)
 
     if (!isFull)
         return (

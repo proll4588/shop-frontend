@@ -10,7 +10,6 @@ import AuthPage from '../pages/AuthPage/AuthPage'
 import CartPage from '../pages/CartPage/CartPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
-import MainShopPage from '../pages/MainShopPage/MainShopPage'
 import TypePage from '../pages/TypePage/TypePage'
 
 /*
