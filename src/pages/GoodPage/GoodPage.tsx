@@ -15,17 +15,26 @@ import ImageGallery from 'react-image-gallery'
 import GoodDescriptionPanel from '../../components/GoodDescriptionPanel/GoodDescriptionPanel'
 import FavoriteButton from '../../components/UI/FavoriteButton/FavoriteButton'
 import useFavorite from '../../hooks/favorite.hook'
+import useCart from '../../hooks/cart.hook'
 
 interface GoodDescriptionProps {
     data: IGood
 }
 const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
+    const { brands, name, sub_type_goods, current_price } = data
+
     const {
         addToFavorite,
         removeFromFavorite,
         data: favoriteList,
     } = useFavorite()
-    const { brands, name, sub_type_goods, current_price } = data
+
+    const { addToCart, data: cartList } = useCart()
+
+    const inCart =
+        !!cartList &&
+        cartList.getCart.find((el) => el.goods_catalog.id === data.id)
+
     return (
         <div className={styles.GoodDescription}>
             <div className={styles.GoodDescription__container}>
@@ -96,9 +105,23 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                             )
                         }
                     />
-                    <Button className={styles.GoodDescription__button}>
-                        Add to Cart
-                    </Button>
+                    {inCart ? (
+                        <Button
+                            className={styles.GoodDescription__button}
+                            disable
+                        >
+                            in cart
+                        </Button>
+                    ) : (
+                        <Button
+                            className={styles.GoodDescription__button}
+                            onClick={() => {
+                                addToCart(data.id, 1)
+                            }}
+                        >
+                            Add to Cart
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>

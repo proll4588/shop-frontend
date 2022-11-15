@@ -1,10 +1,5 @@
-import { useQuery } from '@apollo/client'
 import classNames from 'classnames'
 import React, { FC, useEffect, useState } from 'react'
-import {
-    GET_DATA_FOR_GOODS_PAGE,
-    IGetDataForGoodsPage,
-} from '../../apollo/fetchs'
 import { TiDeleteOutline } from 'react-icons/ti'
 import { IGood } from '../../interfaces/good.interface'
 import styles from './CartPage.module.scss'
@@ -22,6 +17,7 @@ const TableLine: FC<TableLineProps> = ({ good, col, onChangeCol, onDel }) => {
 
     useEffect(() => {
         onChangeCol && onChangeCol(num)
+        // changeInCart(good.id, num)
     }, [num])
 
     const add = () => {
@@ -112,8 +108,20 @@ const TableLine: FC<TableLineProps> = ({ good, col, onChangeCol, onDel }) => {
 
 interface GoodsTableProps {
     goods: IGood[]
+    col: {
+        goodId: number
+        col: number
+    }[]
+
+    onDel?: (goodId) => void
+    onChangeCol?: (goodId, col) => void
 }
-const GoodsTable: FC<GoodsTableProps> = ({ goods }) => {
+const GoodsTable: FC<GoodsTableProps> = ({
+    goods,
+    onChangeCol,
+    onDel,
+    col,
+}) => {
     return (
         <div className={styles.GoodsTable}>
             <div className={styles.GoodsTable__container}>
@@ -128,6 +136,13 @@ const GoodsTable: FC<GoodsTableProps> = ({ goods }) => {
                         <TableLine
                             good={good}
                             key={good.id}
+                            onDel={() => {
+                                onDel && onDel(good.id)
+                            }}
+                            onChangeCol={(col) => {
+                                onChangeCol && onChangeCol(good.id, col)
+                            }}
+                            col={col.find((el) => el.goodId === good.id).col}
                         />
                     ))}
                 </div>
@@ -146,7 +161,7 @@ const Sammery: FC<SammeryProps> = ({}) => {
 }
 
 const CartPage: FC<CartPageProps> = () => {
-    const {data, loading, error} = useCart()
+    const { data, loading, error, changeInCart, removeFromCart } = useCart()
 
     if (error) return <p>Error :(</p>
     if (loading) return <p>loading :(</p>
@@ -154,7 +169,19 @@ const CartPage: FC<CartPageProps> = () => {
     return (
         <div className={styles.CartPage}>
             <div className={styles.CartPage__container}>
-                <GoodsTable goods={data.getCart.map(el => el.goods_catalog)} />
+                <GoodsTable
+                    goods={data.getCart.map((el) => el.goods_catalog)}
+                    col={data.getCart.map((el) => ({
+                        goodId: el.goods_catalog.id,
+                        col: el.count,
+                    }))}
+                    onChangeCol={(goodId, col) => {
+                        changeInCart(goodId, col)
+                    }}
+                    onDel={(goodId) => {
+                        removeFromCart(goodId)
+                    }}
+                />
                 {/* <Sammery /> */}
             </div>
         </div>

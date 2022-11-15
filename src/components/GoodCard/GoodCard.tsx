@@ -30,15 +30,22 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
         data: favoriteList,
     } = useFavorite()
 
-    // const {addToCart, removeFromCart, data, error, loading} = useCart()
+    const { addToCart, data: cartList } = useCart()
 
     const doFaveorite = (value) => {
-        value ? addToFavorite(data.id) : removeFromFavorite(data.id)
+        value ? addToFavorite(id) : removeFromFavorite(id)
+    }
+
+    const addToCartFun = () => {
+        addToCart(id, 1)
     }
 
     const isFavorite =
-        !!favoriteList &&
-        !!favoriteList.getFavorite.find((el) => el.id === data.id)
+        !!favoriteList && !!favoriteList.getFavorite.find((el) => el.id === id)
+
+    const inCart =
+        !!cartList &&
+        !!cartList.getCart.find((el) => el.goods_catalog.id === id)
 
     if (!isFull)
         return (
@@ -102,13 +109,24 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                             value={isFavorite}
                             onClick={doFaveorite}
                         />
-                        <Button
-                            secondary
-                            className={styles.GoodCard__btn}
-                            // onClick={onClickCart}
-                        >
-                            Add to Cart
-                        </Button>
+
+                        {inCart ? (
+                            <Button
+                                secondary
+                                className={styles.GoodCard__btn}
+                                disable
+                            >
+                                In cart
+                            </Button>
+                        ) : (
+                            <Button
+                                secondary
+                                className={styles.GoodCard__btn}
+                                onClick={addToCartFun}
+                            >
+                                Add to Cart
+                            </Button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -178,12 +196,23 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                 value={isFavorite}
                                 onClick={doFaveorite}
                             />
-                            <Button
-                                secondary
-                                // onClick={onClickCart}
-                            >
-                                Add to Cart
-                            </Button>
+                            {inCart ? (
+                                <Button
+                                    secondary
+                                    className={styles.GoodCard__btn}
+                                    disable
+                                >
+                                    In cart
+                                </Button>
+                            ) : (
+                                <Button
+                                    secondary
+                                    className={styles.GoodCard__btn}
+                                    onClick={addToCartFun}
+                                >
+                                    Add to Cart
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </div>
