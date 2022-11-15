@@ -92,7 +92,7 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                         value={
                             !!favoriteList &&
                             !!favoriteList.getFavorite.find(
-                                (el) => el.goods_catalog_id === data.id
+                                (el) => el.id === data.id
                             )
                         }
                     />
