@@ -383,3 +383,129 @@ export const UPLOAD_USER_PHOTO = gql`
         }
     }
 `
+
+
+export const GET_CART = gql`
+    query GetCart {
+        getCart {
+            id
+            count
+            goods_catalog {
+                id
+                name
+                description
+                main_photo {
+                    photo
+                }
+                current_price {
+                    price
+                    discount
+                }
+                brands {
+                    id
+                    name
+                    logo
+                }
+                sub_type_goods {
+                    id
+                    name
+                    photo
+                }
+            }
+        }
+    }
+`
+
+export const ADD_TO_CART = gql`
+mutation AddToCart($goodId: Int!, $count: Int!) {
+  addToCart(goodId: $goodId, count: $count) {
+    count
+    id
+    goods_catalog {
+                id
+                name
+                description
+                main_photo {
+                    photo
+                }
+                current_price {
+                    price
+                    discount
+                }
+                brands {
+                    id
+                    name
+                    logo
+                }
+                sub_type_goods {
+                    id
+                    name
+                    photo
+                }
+            }
+  }
+}
+`
+
+
+export const REMOVE_FROM_CART = gql`
+mutation RemoveFromCart($goodId: Int!) {
+  removeFromCart(goodId: $goodId) {
+    count
+    id
+    goods_catalog {
+                id
+                name
+                description
+                main_photo {
+                    photo
+                }
+                current_price {
+                    price
+                    discount
+                }
+                brands {
+                    id
+                    name
+                    logo
+                }
+                sub_type_goods {
+                    id
+                    name
+                    photo
+                }
+            }
+  }
+}
+`
+
+
+export const CHANGE_CART = gql`
+mutation ChangeCart($goodId: Int!, $count: Int!) {
+  changeGoodInCart(goodId: $goodId, count: $count) {
+    count
+    id
+    goods_catalog {
+                id
+                name
+                description
+                main_photo {
+                    photo
+                }
+                current_price {
+                    price
+                    discount
+                }
+                brands {
+                    id
+                    name
+                    logo
+                }
+                sub_type_goods {
+                    id
+                    name
+                    photo
+                }
+            }
+  }
+}`
