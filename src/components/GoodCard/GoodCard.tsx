@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
+import useCart from '../../hooks/cart.hook'
 import useFavorite from '../../hooks/favorite.hook'
 import Button from '../UI/Button/Button'
 import FavoriteButton from '../UI/FavoriteButton/FavoriteButton'
@@ -29,6 +30,8 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
         data: favoriteList,
     } = useFavorite()
 
+    // const {addToCart, removeFromCart, data, error, loading} = useCart()
+
     const doFaveorite = (value) => {
         value ? addToFavorite(data.id) : removeFromFavorite(data.id)
     }
@@ -36,8 +39,6 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
     const isFavorite =
         !!favoriteList &&
         !!favoriteList.getFavorite.find((el) => el.id === data.id)
-
-    // if (favoriteList) console.log('favoriteList >> ', favoriteList)
 
     if (!isFull)
         return (

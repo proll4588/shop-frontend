@@ -9,6 +9,7 @@ import { TiDeleteOutline } from 'react-icons/ti'
 import { IGood } from '../../interfaces/good.interface'
 import styles from './CartPage.module.scss'
 import CartPageProps from './CartPage.props'
+import useCart from '../../hooks/cart.hook'
 
 interface TableLineProps {
     good: IGood
@@ -145,14 +146,7 @@ const Sammery: FC<SammeryProps> = ({}) => {
 }
 
 const CartPage: FC<CartPageProps> = () => {
-    const { loading, error, data } = useQuery<IGetDataForGoodsPage>(
-        GET_DATA_FOR_GOODS_PAGE,
-        {
-            variables: {
-                subId: 4,
-            },
-        }
-    )
+    const {data, loading, error} = useCart()
 
     if (error) return <p>Error :(</p>
     if (loading) return <p>loading :(</p>
@@ -160,7 +154,7 @@ const CartPage: FC<CartPageProps> = () => {
     return (
         <div className={styles.CartPage}>
             <div className={styles.CartPage__container}>
-                <GoodsTable goods={data.filteredGoods} />
+                <GoodsTable goods={data.getCart.map(el => el.goods_catalog)} />
                 {/* <Sammery /> */}
             </div>
         </div>
