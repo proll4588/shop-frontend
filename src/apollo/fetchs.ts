@@ -384,7 +384,6 @@ export const UPLOAD_USER_PHOTO = gql`
     }
 `
 
-
 export const GET_CART = gql`
     query GetCart {
         getCart {
@@ -417,11 +416,11 @@ export const GET_CART = gql`
 `
 
 export const ADD_TO_CART = gql`
-mutation AddToCart($goodId: Int!, $count: Int!) {
-  addToCart(goodId: $goodId, count: $count) {
-    count
-    id
-    goods_catalog {
+    mutation AddToCart($goodId: Int!, $count: Int!) {
+        addToCart(goodId: $goodId, count: $count) {
+            count
+            id
+            goods_catalog {
                 id
                 name
                 description
@@ -443,17 +442,16 @@ mutation AddToCart($goodId: Int!, $count: Int!) {
                     photo
                 }
             }
-  }
-}
+        }
+    }
 `
-
 
 export const REMOVE_FROM_CART = gql`
-mutation RemoveFromCart($goodId: Int!) {
-  removeFromCart(goodId: $goodId) {
-    count
-    id
-    goods_catalog {
+    mutation RemoveFromCart($goodId: Int!) {
+        removeFromCart(goodId: $goodId) {
+            count
+            id
+            goods_catalog {
                 id
                 name
                 description
@@ -475,17 +473,16 @@ mutation RemoveFromCart($goodId: Int!) {
                     photo
                 }
             }
-  }
-}
+        }
+    }
 `
 
-
 export const CHANGE_CART = gql`
-mutation ChangeCart($goodId: Int!, $count: Int!) {
-  changeGoodInCart(goodId: $goodId, count: $count) {
-    count
-    id
-    goods_catalog {
+    mutation ChangeCart($goodId: Int!, $count: Int!) {
+        changeGoodInCart(goodId: $goodId, count: $count) {
+            count
+            id
+            goods_catalog {
                 id
                 name
                 description
@@ -507,5 +504,13 @@ mutation ChangeCart($goodId: Int!, $count: Int!) {
                     photo
                 }
             }
-  }
-}`
+        }
+    }
+`
+
+export const GET_START_DATA = gql`
+    query GetStartData {
+        getFavoriteCount
+        getCartCount
+    }
+`
