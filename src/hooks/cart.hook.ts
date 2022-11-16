@@ -1,10 +1,17 @@
-import { useLayoutEffect } from 'react';
-import { GET_CART, ADD_TO_CART, REMOVE_FROM_CART, CHANGE_CART } from './../apollo/fetchs';
-import { useApolloClient, useMutation, useQuery } from "@apollo/client"
-
+import { useLayoutEffect } from 'react'
+import {
+    GET_CART,
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    CHANGE_CART,
+} from './../apollo/fetchs'
+import { useApolloClient, useMutation, useQuery } from '@apollo/client'
+import { useSetRecoilState } from 'recoil'
+import countsAtom from '../atoms/counts.atom'
 
 const useCart = () => {
     const client = useApolloClient()
+    const setCounts = useSetRecoilState(countsAtom)
 
     const { data, error, loading } = useQuery(GET_CART)
 
@@ -21,19 +28,21 @@ const useCart = () => {
     }, [addInfo.data, remInfo.data, changeInfo.data])
 
     const addToCart = (goodId, count) => {
+        setCounts((prev) => ({ ...prev, cart: prev.cart + 1 }))
         add({
             variables: {
                 goodId,
-                count
-            }
+                count,
+            },
         })
     }
 
     const removeFromCart = (goodId) => {
+        setCounts((prev) => ({ ...prev, cart: prev.cart - 1 }))
         remove({
             variables: {
-                goodId
-            }
+                goodId,
+            },
         })
     }
 
@@ -41,12 +50,12 @@ const useCart = () => {
         change({
             variables: {
                 goodId,
-                count
-            }
+                count,
+            },
         })
     }
 
-    return {addToCart, removeFromCart, changeInCart, data, loading, error}
+    return { addToCart, removeFromCart, changeInCart, data, loading, error }
 }
 
 export default useCart

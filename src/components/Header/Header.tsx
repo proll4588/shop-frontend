@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import {
     AiOutlineHeart,
     AiOutlineSearch,
@@ -11,8 +11,14 @@ import HeaderProps from './Header.props'
 import { DiReact } from 'react-icons/di'
 import { Link } from 'react-router-dom'
 import Input from '../UI/Input/Input'
+import { useRecoilValue } from 'recoil'
+import tokenAtom from '../../atoms/token.atom'
+import countsAtom from '../../atoms/counts.atom'
 
 const Header: FC<HeaderProps> = () => {
+    const token = useRecoilValue(tokenAtom)
+    const counts = useRecoilValue(countsAtom)
+
     return (
         <div className={styles.Header}>
             <div className={styles.Header__container}>
@@ -46,20 +52,20 @@ const Header: FC<HeaderProps> = () => {
                             <IconCard
                                 icon={<AiOutlineShoppingCart />}
                                 to={'/cart'}
-                                number={0}
+                                number={counts.cart}
                                 // title={'Корзина'}
                                 // text={'1 000р'}
                             />
                             <IconCard
                                 icon={<AiOutlineHeart />}
                                 to={'/account/favorite'}
-                                number={1}
+                                number={counts.favorite}
                                 // title={'Избранное'}
                                 // text={'1 000р'}
                             />
                             <IconCard
                                 icon={<AiOutlineUser />}
-                                to={'/auth'}
+                                to={token ? '/account' : '/auth'}
                                 number={1}
                                 // title={'Войти'}
                                 // text={'или зарегестрироватся'}
