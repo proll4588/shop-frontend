@@ -6,6 +6,7 @@ import { CHECK_TOKEN, GET_START_DATA } from '../apollo/fetchs'
 import countsAtom from '../atoms/counts.atom'
 import tokenAtom from '../atoms/token.atom'
 import Header from '../components/Header/Header'
+import useStart from '../hooks/start.hook'
 import AccountPage from '../pages/AccountPage/AccountPage'
 import AuthPage from '../pages/AuthPage/AuthPage'
 import CartPage from '../pages/CartPage/CartPage'
@@ -17,57 +18,10 @@ import TypePage from '../pages/TypePage/TypePage'
  * Компонент ShopLayout - это layout для магазинной части приложения
  */
 const ShopLayout = () => {
-    const [token, setToken] = useRecoilState(tokenAtom)
-    const setCounts = useSetRecoilState(countsAtom)
-    // const [counts, setCounts] = useRecoilState(countsAtom)
+    const { error, isInit } = useStart()
 
-    const [verified, setVerified] = useState(false)
-    const [verify, { data, loading, error }] = useLazyQuery(CHECK_TOKEN)
-
-    const [geted, setGeted] = useState(false)
-    const [getSatrtData, fetinfo] = useLazyQuery(GET_START_DATA)
-
-    // При первом рендере приложения получаем токен из памяти проложения
-    useLayoutEffect(() => {
-        if (token && token !== 'null') verify()
-        else setVerified(true)
-    }, [])
-
-    // При получении информации о валидности токена
-    useLayoutEffect(() => {
-        if (data && !data.verifyToken.verify) {
-            setToken(null)
-        }
-        setVerified(true)
-    }, [data])
-
-    // После получения информации о валидности токена
-    useLayoutEffect(() => {
-        if (verified) {
-            if (token) {
-                getSatrtData()
-            } else {
-                setGeted(true)
-            }
-        }
-    }, [verified])
-
-    // При получении стартовых данных
-    useLayoutEffect(() => {
-        if (fetinfo.data) {
-            setCounts({
-                cart: fetinfo.data.getCartCount,
-                favorite: fetinfo.data.getFavoriteCount,
-            })
-
-            setGeted(true)
-        }
-    }, [fetinfo.data])
-    // ....
-
-    if (loading || fetinfo.loading) return <>Loading</>
-    if (error || fetinfo.error) return <>Oops)</>
-    if (!geted || !verified) return <>Loading</>
+    if (error) return <>Oops)</>
+    if (!isInit) return <>Loading</>
 
     return (
         <div className='ShopLayout'>
