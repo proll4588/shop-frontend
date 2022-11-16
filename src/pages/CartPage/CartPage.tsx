@@ -5,6 +5,7 @@ import { IGood } from '../../interfaces/good.interface'
 import styles from './CartPage.module.scss'
 import CartPageProps from './CartPage.props'
 import useCart from '../../hooks/cart.hook'
+import Button from '../../components/UI/Button/Button'
 
 interface TableLineProps {
     good: IGood
@@ -151,11 +152,49 @@ const GoodsTable: FC<GoodsTableProps> = ({
     )
 }
 
+interface SammeryLineProps {
+    left: string
+    right: string
+}
+const SammeryLine: FC<SammeryLineProps> = ({ left, right }) => {
+    return (
+        <div className={styles.SammeryLine}>
+            <div className={styles.SammeryLine__left}>{left}</div>
+            <div className={styles.SammeryLine__right}>{right}</div>
+        </div>
+    )
+}
+
 interface SammeryProps {}
 const Sammery: FC<SammeryProps> = ({}) => {
     return (
         <div className={styles.Sammery}>
-            <div className={styles.Sammery__container}>Sammery Component</div>
+            <div className={styles.Sammery__container}>
+                <h3 className={styles.Sammery__head}>Sammery</h3>
+                <div className={styles.Sammery__calc}>
+                    <SammeryLine
+                        left='Subtotal'
+                        right='$171.99'
+                    />
+                    <SammeryLine
+                        left='Shipping Cost'
+                        right='$7.99'
+                    />
+                    <SammeryLine
+                        left='Discount (%)'
+                        right='-$21.00'
+                    />
+                    <SammeryLine
+                        left='Tax'
+                        right='7%'
+                    />
+                </div>
+                <SammeryLine
+                    left='Total'
+                    right='$12312.00'
+                />
+                <Button className={styles.Sammery__checkout}>Checkout</Button>
+            </div>
         </div>
     )
 }
@@ -182,7 +221,7 @@ const CartPage: FC<CartPageProps> = () => {
                         removeFromCart(goodId)
                     }}
                 />
-                {/* <Sammery /> */}
+                <Sammery />
             </div>
         </div>
     )
