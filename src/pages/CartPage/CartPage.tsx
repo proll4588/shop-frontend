@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames'
 import React, { FC, useEffect, useState } from 'react'
 import { TiDeleteOutline } from 'react-icons/ti'

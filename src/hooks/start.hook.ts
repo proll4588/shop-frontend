@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { GET_START_DATA } from './../apollo/fetchs'
 import { useLazyQuery } from '@apollo/client'
@@ -49,6 +50,7 @@ const useStart = () => {
                 localStorage.setItem('token', 'null')
                 setToken('null')
             }
+
             setVeryfied(true)
         }
     }, [verData.data])
