@@ -5,22 +5,21 @@ import { IconContext } from 'react-icons'
 import { Link } from 'react-router-dom'
 import Square from '../Square/Square'
 
+const getStr = (number) => {
+    if (number >= 1000) {
+        return `${Math.ceil(number / 1000)}k`
+    }
+    return `${number}`
+}
+
 const IconCard: FC<IconCardProps> = ({ icon, number, title, text, to }) => {
-    const [num, setNum] = useState<string>('' + number)
-
-    useLayoutEffect(() => {
-        if (number >= 1000) {
-            setNum(`${Math.ceil(number / 1000)}k`)
-        }
-    }, [number])
-
     return (
         <IconContext.Provider value={{ className: styles.IconCard__icon }}>
             <div className={styles.IconCard}>
                 <div className={styles.IconCard__container}>
                     {!!number && number !== 0 && (
                         <div className={styles.IconCard__dotContainer}>
-                            {num}
+                            {getStr(number)}
                         </div>
                     )}
 
