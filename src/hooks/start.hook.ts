@@ -77,7 +77,12 @@ const useStart = () => {
         }
     }, [startData.data])
 
-    // const initFromStore = () => {}
+    // Если вдруг мы залогинелись
+    useLayoutEffect(() => {
+        if (token && token !== 'null' && veryfied) {
+            getStartData()
+        }
+    }, [token])
 
     return { isInit, error }
 }
