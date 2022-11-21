@@ -11,6 +11,13 @@ import PersonalInfoPage from '../PersonalInfoPage/PersonalInfoPage'
 import styles from './AccountPage.module.scss'
 import AccountPageProps from './AccountPage.props'
 
+const LogOut = () => {
+    localStorage.setItem('token', 'null')
+    window.location.reload()
+
+    return <>LogOut</>
+}
+
 const userPhoto =
     'https://sun2.sibirix.userapi.com/s/v1/ig2/Os9abdXjY9O349S1rcKaGypeabp5XmsoZCfN4jgOHudHQdLcmvPznJK9QVY1oOUSdUxnx_gyhiWLCLlRn8fNoxK3.jpg?size=717x1080&quality=96&type=album'
 
@@ -83,6 +90,11 @@ const AccountPage: FC<AccountPageProps> = () => {
                     <Route
                         path={'payment'}
                         element={<>payment</>}
+                    />
+
+                    <Route
+                        path={'logout'}
+                        element={<LogOut />}
                     />
                 </Routes>
             </div>
