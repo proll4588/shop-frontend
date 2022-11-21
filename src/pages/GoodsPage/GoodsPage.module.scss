@@ -39,11 +39,23 @@
         &__FilterPanel {
             display: none;
 
+            // &:first-child {
+
+            // }
+
             &_open {
                 display: flex;
                 flex-direction: row;
 
                 position: absolute;
+
+                &:first-child {
+                    animation: slide 0.5s;
+                }
+
+                // &:nth-child(2) {
+                //     animation: back 1s;
+                // }
 
                 // top: 0;
                 // left: 0;
@@ -65,10 +77,34 @@
             display: block;
             width: calc(100% - 300px);
             background-color: rgba(black, 0.5);
+            animation: back 1s 0.3s;
         }
 
         &__GoodsList {
             width: 100%;
         }
+    }
+}
+
+@keyframes slide {
+    from {
+        position: absolute;
+        left: -300px;
+    }
+
+    to {
+        left: 10px;
+    }
+}
+
+@keyframes back {
+    from {
+        // width: 100%;
+        background-color: rgba(black, 0);
+    }
+
+    to {
+        // width: calc(100% - 300px);
+        background-color: rgba(black, 0.5);
     }
 }

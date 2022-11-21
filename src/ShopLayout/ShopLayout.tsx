@@ -23,7 +23,6 @@ const ShopLayout = () => {
         <div className={styles.ShopLayout}>
             <div className={styles.ShopLayout__container}>
                 <div className={styles.ShopLayout__content}>
-                    {' '}
                     <Header />
                     {/* TODO: Суда можно вставить route компонент */}
                     {/* TODO: Сделать оболочку для контента со всеми отступами */}
