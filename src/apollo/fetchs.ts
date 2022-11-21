@@ -510,7 +510,64 @@ export const CHANGE_CART = gql`
 
 export const GET_START_DATA = gql`
     query GetStartData {
-        getFavoriteCount
-        getCartCount
+        getCart {
+            id
+            count
+            goods_catalog {
+                id
+                name
+                description
+                main_photo {
+                    photo
+                }
+                current_price {
+                    price
+                    discount
+                }
+                brands {
+                    id
+                    name
+                    logo
+                }
+                sub_type_goods {
+                    id
+                    name
+                    photo
+                }
+            }
+        }
+        getFavorite {
+            id
+            name
+            description
+            main_photo {
+                id
+                goods_catalog_id
+                photo
+            }
+            all_photos {
+                id
+                goods_catalog_id
+                photo
+            }
+            current_price {
+                price
+                discount
+            }
+            all_prices {
+                price
+                discount
+            }
+            brands {
+                id
+                name
+                logo
+            }
+            sub_type_goods {
+                id
+                name
+                photo
+            }
+        }
     }
 `

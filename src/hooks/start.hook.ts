@@ -69,9 +69,17 @@ const useStart = () => {
     /* (4) Получаем пользовательские данные */
     useLayoutEffect(() => {
         if (startData.data) {
+            const { getCart, getFavorite } = startData.data
+            let cartCount = 0
+            let favCount = getFavorite.length
+
+            getCart.forEach((cart) => {
+                cartCount += cart.count
+            })
+
             setCounts({
-                cart: startData.data.getCartCount,
-                favorite: startData.data.getFavoriteCount,
+                cart: cartCount,
+                favorite: favCount,
             })
             setGetedData(true)
         }
