@@ -1,0 +1,84 @@
+.Footer {
+    & {
+    }
+    &__container {
+        // padding: 1px 10px;
+    }
+    &__top {
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: space-between;
+
+        border-top: 1px solid var(--color-border-1);
+        border-bottom: 1px solid var(--color-border-1);
+
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        padding: 30px 10px;
+    }
+    &__c1 {
+        width: 200px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    &__icon {
+        font-size: 70px;
+        color: var(--color-light-text);
+    }
+    &__text {
+        font-size: 14px;
+        color: var(--color-grey-text);
+    }
+    &__icons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    &__iconSoc {
+        color: var(--color-grey-text);
+        font-size: 24px;
+    }
+    &__c2 {
+        width: 200px;
+
+        // display: flex;
+        // flex-direction: column;
+        // gap: 20px;
+    }
+    &__title {
+        color: var(--color-light-text);
+        font-size: 16px;
+
+        margin-bottom: 20px;
+    }
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &__listItem {
+        font-size: 14px;
+        color: var(--color-grey-text);
+    }
+    &__c3 {
+        width: 200px;
+    }
+    &__buttom {
+        padding: 10px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    &__buttomLeft {
+        color: var(--color-grey-text);
+    }
+    &__buttomRight {
+        color: var(--color-grey-text);
+    }
+    & {
+    }
+}

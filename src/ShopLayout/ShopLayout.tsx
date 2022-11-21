@@ -1,10 +1,5 @@
-import { useLazyQuery } from '@apollo/client'
-import { useLayoutEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { CHECK_TOKEN, GET_START_DATA } from '../apollo/fetchs'
-import countsAtom from '../atoms/counts.atom'
-import tokenAtom from '../atoms/token.atom'
+import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import useStart from '../hooks/start.hook'
 import AccountPage from '../pages/AccountPage/AccountPage'
@@ -13,6 +8,7 @@ import CartPage from '../pages/CartPage/CartPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
 import TypePage from '../pages/TypePage/TypePage'
+import styles from './ShopLayout.module.scss'
 
 /*
  * Компонент ShopLayout - это layout для магазинной части приложения
@@ -24,49 +20,52 @@ const ShopLayout = () => {
     if (!isInit) return <>Loading</>
 
     return (
-        <div className='ShopLayout'>
-            <div className='ShopLayout__container'>
-                <Header />
+        <div className={styles.ShopLayout}>
+            <div className={styles.ShopLayout__container}>
+                <div className={styles.ShopLayout__content}>
+                    {' '}
+                    <Header />
+                    {/* TODO: Суда можно вставить route компонент */}
+                    {/* TODO: Сделать оболочку для контента со всеми отступами */}
+                    <Routes>
+                        {/* Главная станица магазина */}
+                        <Route
+                            path={'/'}
+                            element={<TypePage />}
+                        />
 
-                {/* TODO: Суда можно вставить route компонент */}
+                        {/* Список товаров по типу */}
+                        <Route
+                            path={'/goods/:subGoodsTypeId'}
+                            element={<GoodsPage />}
+                        />
 
-                {/* TODO: Сделать оболочку для контента со всеми отступами */}
-                <Routes>
-                    {/* Главная станица магазина */}
-                    <Route
-                        path={'/'}
-                        element={<TypePage />}
-                    />
+                        {/* Страницв товара */}
+                        <Route
+                            path={'/good/:goodId'}
+                            element={<GoodPage />}
+                        />
 
-                    {/* Список товаров по типу */}
-                    <Route
-                        path={'/goods/:subGoodsTypeId'}
-                        element={<GoodsPage />}
-                    />
+                        {/* Авторизация пользователя */}
+                        <Route
+                            path={'/auth'}
+                            element={<AuthPage />}
+                        />
 
-                    {/* Страницв товара */}
-                    <Route
-                        path={'/good/:goodId'}
-                        element={<GoodPage />}
-                    />
+                        {/* Авторизация пользователя */}
+                        <Route
+                            path={'/account/*'}
+                            element={<AccountPage />}
+                        />
 
-                    {/* Авторизация пользователя */}
-                    <Route
-                        path={'/auth'}
-                        element={<AuthPage />}
-                    />
+                        <Route
+                            path={'/cart'}
+                            element={<CartPage />}
+                        />
+                    </Routes>
+                </div>
 
-                    {/* Авторизация пользователя */}
-                    <Route
-                        path={'/account/*'}
-                        element={<AccountPage />}
-                    />
-
-                    <Route
-                        path={'/cart'}
-                        element={<CartPage />}
-                    />
-                </Routes>
+                <Footer />
             </div>
         </div>
     )
