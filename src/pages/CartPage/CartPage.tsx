@@ -8,6 +8,8 @@ import useCart from '../../hooks/cart.hook'
 import Button from '../../components/UI/Button/Button'
 import Square from '../../components/UI/Square/Square'
 import { MdDeleteOutline } from 'react-icons/md'
+import CartMiniCardList from '../../components/CartMiniCardList/CartMiniCardList'
+import NumberInput from '../../components/UI/NumberInput/NumberInput'
 
 interface TableLineProps {
     good: IGood
@@ -59,34 +61,11 @@ const TableLine: FC<TableLineProps> = ({ good, col, onChangeCol, onDel }) => {
                         styles.TableLine__colomn_two
                     )}
                 >
-                    <div className={styles.TableLine__inputContainer}>
-                        <button
-                            className={classNames(
-                                styles.TableLine__btn,
-                                styles.TableLine__btnsub
-                            )}
-                            onClick={sub}
-                        >
-                            -
-                        </button>
-                        <input
-                            type='number'
-                            name='col'
-                            id='1'
-                            className={styles.TableLine__input}
-                            value={num}
-                            disabled
-                        />
-                        <button
-                            className={classNames(
-                                styles.TableLine__btn,
-                                styles.TableLine__btnadd
-                            )}
-                            onClick={add}
-                        >
-                            +
-                        </button>
-                    </div>
+                    <NumberInput
+                        value={num}
+                        onAdd={add}
+                        onSub={sub}
+                    />
                 </div>
 
                 <div
@@ -247,19 +226,38 @@ const CartPage: FC<CartPageProps> = () => {
     return (
         <div className={styles.CartPage}>
             <div className={styles.CartPage__container}>
-                <GoodsTable
-                    goods={data.getCart.map((el) => el.goods_catalog)}
-                    col={data.getCart.map((el) => ({
-                        goodId: el.goods_catalog.id,
-                        col: el.count,
-                    }))}
-                    onChangeCol={(goodId, col) => {
-                        changeInCart(goodId, col)
-                    }}
-                    onDel={(goodId) => {
-                        removeFromCart(goodId)
-                    }}
-                />
+                <div className={styles.CartPage__goodsTableContainer}>
+                    <GoodsTable
+                        goods={data.getCart.map((el) => el.goods_catalog)}
+                        col={data.getCart.map((el) => ({
+                            goodId: el.goods_catalog.id,
+                            col: el.count,
+                        }))}
+                        onChangeCol={(goodId, col) => {
+                            changeInCart(goodId, col)
+                        }}
+                        onDel={(goodId) => {
+                            removeFromCart(goodId)
+                        }}
+                    />
+                </div>
+
+                <div className={styles.CartPage__miniContainer}>
+                    <CartMiniCardList
+                        goods={data.getCart.map((el) => el.goods_catalog)}
+                        col={data.getCart.map((el) => ({
+                            goodId: el.goods_catalog.id,
+                            col: el.count,
+                        }))}
+                        onChangeCol={(goodId, col) => {
+                            changeInCart(goodId, col)
+                        }}
+                        onDel={(goodId) => {
+                            removeFromCart(goodId)
+                        }}
+                    />
+                </div>
+
                 <div className={styles.CartPage__sammeryContainer}>
                     <Sammery cartInfo={data.getCart} />
                     <div className={styles.CartPage__containerDown} />

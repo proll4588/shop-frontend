@@ -7,7 +7,15 @@
     &__container {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         gap: 40px;
+    }
+    &__goodsTableContainer {
+        display: grid;
+        width: calc(100% - 300px);
+    }
+    &__miniContainer {
+        display: none;
     }
     &__sammeryContainer {
         position: relative;
@@ -222,11 +230,25 @@
             flex-direction: column;
             gap: 20px;
         }
+        &__goodsTableContainer {
+            width: 100%;
+        }
     }
 
     .Sammery {
         & {
             width: 100%;
+        }
+    }
+}
+
+@media (max-width: 660px) {
+    .CartPage {
+        &__goodsTableContainer {
+            display: none;
+        }
+        &__miniContainer {
+            display: grid;
         }
     }
 }
