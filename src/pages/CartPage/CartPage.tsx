@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames'
 import React, { FC, useEffect, useState } from 'react'
-import { TiDeleteOutline } from 'react-icons/ti'
 import { IGood } from '../../interfaces/good.interface'
 import styles from './CartPage.module.scss'
 import CartPageProps from './CartPage.props'
 import useCart from '../../hooks/cart.hook'
 import Button from '../../components/UI/Button/Button'
+import Square from '../../components/UI/Square/Square'
+import { MdDeleteOutline } from 'react-icons/md'
 
 interface TableLineProps {
     good: IGood
@@ -94,12 +95,29 @@ const TableLine: FC<TableLineProps> = ({ good, col, onChangeCol, onDel }) => {
                         styles.TableLine__colomn_three
                     )}
                 >
-                    {/* TODO: Тут можно писать формулы вычесления цены */}
-                    <h4 className={styles.TableLine__cost}>
-                        {good.current_price.price * num}р
-                    </h4>
-                    <TiDeleteOutline
-                        className={styles.TableLine__delete}
+                    <div className={styles.TableLine__cost}>
+                        <div className={styles.TableLine__costCalc}>
+                            {num} * {good.current_price.price}₽ =
+                        </div>
+                        <h4 className={styles.TableLine__fullCost}>
+                            {(good.current_price.discount
+                                ? good.current_price.discount
+                                : good.current_price.price) * num}
+                            ₽
+                        </h4>
+                        {good.current_price.discount && (
+                            <div className={styles.TableLine__unDis}>
+                                {num * good.current_price.price} ₽
+                            </div>
+                        )}
+                    </div>
+                    <Square
+                        icon={
+                            <MdDeleteOutline
+                            // className={styles.TableLine__delete}
+                            // onClick={onDel}
+                            />
+                        }
                         onClick={onDel}
                     />
                 </div>
@@ -166,35 +184,55 @@ const SammeryLine: FC<SammeryLineProps> = ({ left, right }) => {
     )
 }
 
-interface SammeryProps {}
-const Sammery: FC<SammeryProps> = ({}) => {
+interface SammeryProps {
+    cartInfo: {
+        count: number
+        goods_catalog: IGood
+    }[]
+}
+const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
+    let subTotal = 0
+    let discount = 0
+    let total = 0
+    let fullCount = 0
+
+    cartInfo.forEach((cart) => {
+        subTotal += cart.count * cart.goods_catalog.current_price.price
+        fullCount += cart.count
+    })
+
+    cartInfo.forEach((cart) => {
+        if (cart.goods_catalog.current_price.discount) {
+            discount +=
+                cart.count *
+                (cart.goods_catalog.current_price.price -
+                    cart.goods_catalog.current_price.discount)
+        }
+    })
+
+    total = subTotal - discount
+
     return (
         <div className={styles.Sammery}>
             <div className={styles.Sammery__container}>
-                <h3 className={styles.Sammery__head}>Sammery</h3>
+                <h3 className={styles.Sammery__head}>Сводка</h3>
                 <div className={styles.Sammery__calc}>
                     <SammeryLine
-                        left='Subtotal'
-                        right='$171.99'
+                        left='Без учёта скидки'
+                        right={String(subTotal) + '₽'}
                     />
                     <SammeryLine
-                        left='Shipping Cost'
-                        right='$7.99'
-                    />
-                    <SammeryLine
-                        left='Discount (%)'
-                        right='-$21.00'
-                    />
-                    <SammeryLine
-                        left='Tax'
-                        right='7%'
+                        left='Скидка'
+                        right={String(discount) + '₽'}
                     />
                 </div>
                 <SammeryLine
-                    left='Total'
-                    right='$12312.00'
+                    left={`Итог (${fullCount} товаров)`}
+                    right={String(total) + '₽'}
                 />
-                <Button className={styles.Sammery__checkout}>Checkout</Button>
+                <Button className={styles.Sammery__checkout}>
+                    Оформить заказ
+                </Button>
             </div>
         </div>
     )
@@ -222,7 +260,10 @@ const CartPage: FC<CartPageProps> = () => {
                         removeFromCart(goodId)
                     }}
                 />
-                <Sammery />
+                <div className={styles.CartPage__sammeryContainer}>
+                    <Sammery cartInfo={data.getCart} />
+                    <div className={styles.CartPage__containerDown} />
+                </div>
             </div>
         </div>
     )

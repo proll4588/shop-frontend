@@ -7,7 +7,18 @@
     &__container {
         display: flex;
         flex-direction: row;
-        gap: 20px;
+        gap: 40px;
+    }
+    &__sammeryContainer {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+
+        height: inherit;
+    }
+    &__containerDown {
+        display: flex;
     }
 }
 
@@ -46,9 +57,6 @@
         padding: 24px 0;
 
         border-bottom: 1px solid var(--color-border-1);
-
-        // display: flex;
-        // align-items: center;
     }
     &__container {
         display: grid;
@@ -90,7 +98,8 @@
         color: var(--color-light-text);
     }
     &__cost {
-        color: var(--color-light-text);
+        display: flex;
+        flex-direction: column;
     }
     &__input {
         width: 90px;
@@ -135,10 +144,23 @@
             color: var(--color-light-text);
         }
     }
+    &__costCalc {
+        color: var(--color-grey-text);
+    }
+    &__fullCost {
+        color: var(--color-light-text);
+    }
+    &__unDis {
+        color: var(--color-light-text);
+        text-decoration: line-through;
+    }
 }
 
 .Sammery {
     & {
+        position: sticky;
+        top: 10px;
+
         width: 300px;
 
         border: 1px solid var(--color-border-1);
@@ -191,5 +213,20 @@
     &__right {
         font-size: 16px;
         color: var(--color-light-text);
+    }
+}
+
+@media (max-width: 1000px) {
+    .CartPage {
+        &__container {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    .Sammery {
+        & {
+            width: 100%;
+        }
     }
 }
