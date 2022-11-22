@@ -14,7 +14,6 @@ const Input: FC<InputProps> = ({
     className,
 }) => {
     const addClassName = classNames(
-        className ? className : '',
         styles.Input__input,
         isError ? styles.Input__input_error : '',
         icon ? styles.Input__input_wi : ''
@@ -27,18 +26,20 @@ const Input: FC<InputProps> = ({
     }
 
     return (
-        <IconContext.Provider value={{ className: styles.Input__icon }}>
-            <div className={styles.Input}>
-                <input
-                    className={addClassName}
-                    type={type === 'password' ? 'password' : 'text'}
-                    value={value}
-                    onChange={changeHandler}
-                    placeholder={placeholder}
-                />
-                {icon}
+        <div className={classNames(styles.Input, className ? className : '')}>
+            <div className={styles.Input__container}>
+                <IconContext.Provider value={{ className: styles.Input__icon }}>
+                    <input
+                        className={addClassName}
+                        type={type === 'password' ? 'password' : 'text'}
+                        value={value}
+                        onChange={changeHandler}
+                        placeholder={placeholder}
+                    />
+                    {icon}
+                </IconContext.Provider>
             </div>
-        </IconContext.Provider>
+        </div>
     )
 }
 
