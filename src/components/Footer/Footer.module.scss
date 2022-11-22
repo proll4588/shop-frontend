@@ -82,3 +82,36 @@
     & {
     }
 }
+
+@media (max-width: 650px) {
+    .Footer {
+        &__top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &__c1 {
+            width: 300px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+
+            text-align: center;
+        }
+        &__c2 {
+            display: none;
+        }
+        &__c3 {
+            display: none;
+        }
+        &__buttomRight {
+            display: none;
+        }
+        &__buttom {
+            justify-content: center;
+        }
+    }
+}
