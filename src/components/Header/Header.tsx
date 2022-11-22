@@ -14,6 +14,8 @@ import Input from '../UI/Input/Input'
 import { useRecoilValue } from 'recoil'
 import tokenAtom from '../../atoms/token.atom'
 import countsAtom from '../../atoms/counts.atom'
+import Square from '../UI/Square/Square'
+import { IconContext } from 'react-icons'
 
 const Header: FC<HeaderProps> = () => {
     const token = useRecoilValue(tokenAtom)
@@ -46,9 +48,14 @@ const Header: FC<HeaderProps> = () => {
                             type='text'
                             placeholder='Search'
                             icon={<AiOutlineSearch />}
+                            className={styles.Header__searchInput}
                         />
 
                         <div className={styles.Header__iconCardList}>
+                            <Square
+                                icon={<AiOutlineSearch />}
+                                className={styles.Header__searchSq}
+                            />
                             <IconCard
                                 icon={<AiOutlineShoppingCart />}
                                 to={'/cart'}
