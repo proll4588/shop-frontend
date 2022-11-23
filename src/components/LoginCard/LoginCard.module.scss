@@ -41,3 +41,18 @@
         color: var(--color-grey-text);
     }
 }
+
+@media (max-width: 650px) {
+    .LoginCard {
+        & {
+            // width: 550px;
+            width: 100%;
+            // box-shadow: var(--shadow);
+            box-shadow: none;
+            padding: 30px;
+            // border: 1px solid var(--color-border-1);
+            // border-radius: 10px;
+            border: none;
+        }
+    }
+}
