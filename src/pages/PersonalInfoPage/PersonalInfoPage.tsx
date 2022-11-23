@@ -10,8 +10,6 @@ import { AiOutlineFileImage } from 'react-icons/ai'
 import classNames from 'classnames'
 
 const generateUserDataObj = (data) => {
-    console.log(data)
-
     let ans = { user: { ...data }, address: undefined }
 
     ans.user.city = undefined
