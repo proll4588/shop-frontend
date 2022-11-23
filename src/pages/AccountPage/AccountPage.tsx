@@ -18,9 +18,6 @@ const LogOut = () => {
     return <>LogOut</>
 }
 
-const userPhoto =
-    'https://sun2.sibirix.userapi.com/s/v1/ig2/Os9abdXjY9O349S1rcKaGypeabp5XmsoZCfN4jgOHudHQdLcmvPznJK9QVY1oOUSdUxnx_gyhiWLCLlRn8fNoxK3.jpg?size=717x1080&quality=96&type=album'
-
 // TODO: При входе в аккаунт выскакивает ошибка
 const AccountPage: FC<AccountPageProps> = () => {
     const token = useRecoilValue(tokenAtom)
