@@ -10,3 +10,15 @@
         gap: 20px;
     }
 }
+
+@media (max-width: 900px) {
+    .AccountPage {
+        &__container {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 20px;
+
+            position: relative;
+        }
+    }
+}
