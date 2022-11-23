@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import React, { FC } from 'react'
 import { GET_FAVORITE } from '../../apollo/fetchs'
+import FavoriteList from '../../components/FavoriteList/FavoriteList'
 import GoodsList from '../../components/GoodsList/GoodsList'
 import useFavorite from '../../hooks/favorite.hook'
 import styles from './FavoritePage.module.scss'
@@ -16,7 +17,8 @@ const FavoritePage: FC<FavoritePageProps> = () => {
     return (
         <div className={styles.FavoritePage}>
             <div className={styles.FavoritePage__container}>
-                <GoodsList data={getFavorite} />
+                {/* <GoodsList data={getFavorite} /> */}
+                <FavoriteList goods={getFavorite} />
             </div>
         </div>
     )
