@@ -31,7 +31,14 @@
 
         &_disasble {
             color: var(--color-grey-text);
+            border-color: var(--color-gray-4);
             cursor: not-allowed;
+            .Square__icon {
+                color: var(--color-gray-4);
+            }
+            &:hover {
+                border-color: var(--color-gray-4);
+            }
         }
 
         &_error {

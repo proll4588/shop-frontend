@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default interface IconCardProps {
     icon: React.ReactElement
@@ -6,4 +6,5 @@ export default interface IconCardProps {
     title?: string
     text?: string
     to: string
+    disabled?: boolean
 }

@@ -12,7 +12,14 @@ const getStr = (number) => {
     return `${number}`
 }
 
-const IconCard: FC<IconCardProps> = ({ icon, number, title, text, to }) => {
+const IconCard: FC<IconCardProps> = ({
+    icon,
+    number,
+    title,
+    text,
+    to,
+    disabled,
+}) => {
     return (
         <IconContext.Provider value={{ className: styles.IconCard__icon }}>
             <div className={styles.IconCard}>
@@ -23,9 +30,19 @@ const IconCard: FC<IconCardProps> = ({ icon, number, title, text, to }) => {
                         </div>
                     )}
 
-                    <Link to={to}>
-                        <Square icon={icon} />
-                    </Link>
+                    {disabled ? (
+                        <Square
+                            icon={icon}
+                            disasble={disabled}
+                        />
+                    ) : (
+                        <Link to={to}>
+                            <Square
+                                icon={icon}
+                                disasble={disabled}
+                            />
+                        </Link>
+                    )}
 
                     {!!title && (
                         <div className={styles.IconCard__desc}>

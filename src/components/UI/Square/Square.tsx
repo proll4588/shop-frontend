@@ -28,7 +28,7 @@ const Square: FC<SquareProps> = ({
     return (
         <div
             className={addClassName}
-            onClick={clickHandler}
+            onClick={disasble ? () => {} : clickHandler}
         >
             <IconContext.Provider value={{ className: styles.Square__icon }}>
                 {string !== undefined
