@@ -1,4 +1,6 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import tokenAtom from '../atoms/token.atom'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import useStart from '../hooks/start.hook'
@@ -15,6 +17,8 @@ import styles from './ShopLayout.module.scss'
  */
 const ShopLayout = () => {
     const { error, isInit } = useStart()
+    const token = useRecoilValue(tokenAtom)
+    const isAuth = token && token !== 'null'
 
     if (error) return <>Oops)</>
     if (!isInit) return <>Loading</>
@@ -48,18 +52,36 @@ const ShopLayout = () => {
                         {/* Авторизация пользователя */}
                         <Route
                             path={'/auth'}
-                            element={<AuthPage />}
+                            element={
+                                isAuth ? (
+                                    <Navigate to={'/account'} />
+                                ) : (
+                                    <AuthPage />
+                                )
+                            }
                         />
 
                         {/* Авторизация пользователя */}
                         <Route
                             path={'/account/*'}
-                            element={<AccountPage />}
+                            element={
+                                isAuth ? (
+                                    <AccountPage />
+                                ) : (
+                                    <Navigate to={'/auth'} />
+                                )
+                            }
                         />
 
                         <Route
                             path={'/cart'}
-                            element={<CartPage />}
+                            element={
+                                isAuth ? (
+                                    <CartPage />
+                                ) : (
+                                    <Navigate to={'/auth'} />
+                                )
+                            }
                         />
                     </Routes>
                 </div>

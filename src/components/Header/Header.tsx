@@ -19,6 +19,7 @@ import { IconContext } from 'react-icons'
 
 const Header: FC<HeaderProps> = () => {
     const token = useRecoilValue(tokenAtom)
+    const isAuth = token && token !== 'null'
     const counts = useRecoilValue(countsAtom)
 
     return (
@@ -60,6 +61,7 @@ const Header: FC<HeaderProps> = () => {
                                 icon={<AiOutlineShoppingCart />}
                                 to={'/cart'}
                                 number={counts.cart}
+                                disabled={!isAuth}
                                 // title={'Корзина'}
                                 // text={'1 000р'}
                             />
@@ -67,13 +69,14 @@ const Header: FC<HeaderProps> = () => {
                                 icon={<AiOutlineHeart />}
                                 to={'/account/favorite'}
                                 number={counts.favorite}
+                                disabled={!isAuth}
                                 // title={'Избранное'}
                                 // text={'1 000р'}
                             />
                             <IconCard
                                 icon={<AiOutlineUser />}
                                 to={token ? '/account' : '/auth'}
-                                number={1}
+                                // number={1}
                                 // title={'Войти'}
                                 // text={'или зарегестрироватся'}
                             />
