@@ -571,3 +571,42 @@ export const GET_START_DATA = gql`
         }
     }
 `
+
+export const GET_GOOD_RATING = gql`
+    query GetRating {
+        getRating {
+            id
+            goods_catalog_id
+            users_id
+            rating
+            text
+            date
+        }
+    }
+`
+
+export const CREATE_GOOD_RATING = gql`
+    mutation CreateRating($goodId: Int!, $rating: Int!, $text: String) {
+        createRating(goodId: $goodId, rating: $rating, text: $text) {
+            id
+            goods_catalog_id
+            users_id
+            rating
+            text
+            date
+        }
+    }
+`
+
+export const DELETE_GOOD_RATING = gql`
+    mutation DeleteGoodRating($goodId: Int!) {
+        deleteGoodRating(goodId: $goodId) {
+            id
+            goods_catalog_id
+            users_id
+            rating
+            text
+            date
+        }
+    }
+`
