@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import React, { FC, useState } from 'react'
 import CharacteristicsTab from '../CharacteristicsTab/CharacteristicsTab'
 import DescriptionTab from '../DescriptionTab/DescriptionTab'
+import Rating from '../Rating/Rating'
 import styles from './GoodDescriptionPanel.module.scss'
 import GoodDescriptionPanelProps from './GoodDescriptionPanel.props'
 
@@ -102,6 +103,7 @@ const GoodDescriptionPanel: FC<GoodDescriptionPanelProps> = ({
                 {page === Pages.CHARACTERISTICS && (
                     <CharacteristicsTab characteristics={characteristics} />
                 )}
+                {page === Pages.REVIEWS && <Rating />}
             </div>
         </div>
     )

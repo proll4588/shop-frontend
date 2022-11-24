@@ -1,0 +1,41 @@
+.RatingStatistics {
+    & {
+    }
+    &__container {
+        display: flex;
+        gap: 28px;
+    }
+    &__left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 6px;
+    }
+    &__averageRating {
+        font-size: 32px;
+        color: var(--color-light-text);
+    }
+    &__numRev {
+        font-size: 14px;
+        color: var(--color-grey-text);
+    }
+    &__btn {
+    }
+    &__right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        // gap: 10px;
+    }
+    &__startContainer {
+        display: flex;
+        gap: 6px;
+    }
+    &__startText {
+        color: var(--color-grey-text);
+    }
+    & {
+    }
+    & {
+    }
+}
