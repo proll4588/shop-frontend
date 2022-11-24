@@ -573,11 +573,17 @@ export const GET_START_DATA = gql`
 `
 
 export const GET_GOOD_RATING = gql`
-    query GetRating {
-        getRating {
+    query GetRating($goodId: Int!) {
+        getRating(goodId: $goodId) {
             id
             goods_catalog_id
             users_id
+            users {
+                id
+                fname
+                lname
+                photo
+            }
             rating
             text
             date
@@ -591,6 +597,12 @@ export const CREATE_GOOD_RATING = gql`
             id
             goods_catalog_id
             users_id
+            users {
+                id
+                fname
+                lname
+                photo
+            }
             rating
             text
             date
@@ -604,6 +616,12 @@ export const DELETE_GOOD_RATING = gql`
             id
             goods_catalog_id
             users_id
+            users {
+                id
+                fname
+                lname
+                photo
+            }
             rating
             text
             date
