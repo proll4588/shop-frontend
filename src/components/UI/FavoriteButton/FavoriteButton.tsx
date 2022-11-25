@@ -5,7 +5,11 @@ import Square from '../Square/Square'
 import styles from './FavoriteButton.module.scss'
 import FavoriteButtonProps from './FavoriteButton.props'
 
-const FavoriteButton: FC<FavoriteButtonProps> = ({ onClick, value }) => {
+const FavoriteButton: FC<FavoriteButtonProps> = ({
+    onClick,
+    value,
+    disable,
+}) => {
     return (
         <Square
             icon={
@@ -21,6 +25,7 @@ const FavoriteButton: FC<FavoriteButtonProps> = ({ onClick, value }) => {
             onClick={() => {
                 onClick(!value)
             }}
+            disasble={disable}
         />
     )
 }

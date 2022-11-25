@@ -1,6 +1,8 @@
 import classNames from 'classnames'
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import tokenAtom from '../../atoms/token.atom'
 import useCart from '../../hooks/cart.hook'
 import useFavorite from '../../hooks/favorite.hook'
 import Button from '../UI/Button/Button'
@@ -29,6 +31,9 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
         removeFromFavorite,
         data: favoriteList,
     } = useFavorite()
+
+    const token = useRecoilValue(tokenAtom)
+    const isAuth = token && token !== 'null'
 
     const { addToCart, data: cartList } = useCart()
 
@@ -108,6 +113,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                         <FavoriteButton
                             value={isFavorite}
                             onClick={doFaveorite}
+                            disable={!isAuth}
                         />
 
                         {inCart ? (
@@ -123,6 +129,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                 secondary
                                 className={styles.GoodCard__btn}
                                 onClick={addToCartFun}
+                                disable={!isAuth}
                             >
                                 Add to Cart
                             </Button>
@@ -195,6 +202,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                             <FavoriteButton
                                 value={isFavorite}
                                 onClick={doFaveorite}
+                                disable={!isAuth}
                             />
                             {inCart ? (
                                 <Button
@@ -209,6 +217,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                     secondary
                                     className={styles.GoodCard__btn}
                                     onClick={addToCartFun}
+                                    disable={!isAuth}
                                 >
                                     Add to Cart
                                 </Button>
