@@ -57,7 +57,8 @@ h1 {
     font-size: 48px; //35px
 }
 
-input {
+input,
+textarea {
     height: 52px;
 
     background: var(--color-bg);
@@ -80,4 +81,8 @@ input {
     &:focus {
         border-color: var(--color-accent);
     }
+}
+
+textarea {
+    padding: 16px;
 }
