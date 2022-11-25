@@ -1,0 +1,47 @@
+.UserRating {
+    & {
+        padding: 20px 0;
+
+        border-bottom: 1px solid var(--color-border-1);
+    }
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &__userInfo {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    &__photoContaienr {
+        width: 40px;
+        height: 40px;
+
+        overflow: hidden;
+
+        border-radius: 50%;
+    }
+    &__photo {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+    }
+    &__right {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    &__fullName {
+        color: var(--color-light-text);
+    }
+    &__date {
+        color: var(--color-grey-text);
+    }
+    &__rating {
+    }
+    &__text {
+        color: var(--color-grey-text);
+    }
+}
