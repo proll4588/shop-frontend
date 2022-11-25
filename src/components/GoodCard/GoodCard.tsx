@@ -24,6 +24,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
         current_price,
         description,
         id,
+        avg_rating,
     } = data
 
     const {
@@ -85,8 +86,8 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                         <div className={styles.FullGoodCard__rating}>
                             <Rating
                                 type='mini'
-                                rating={4}
-                                revNum={10}
+                                rating={avg_rating.avg}
+                                revNum={avg_rating.count}
                             />
                         </div>
                     </div>
@@ -161,8 +162,8 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                             <div className={styles.FullGoodCard__rating}>
                                 <Rating
                                     type='mini'
-                                    rating={4}
-                                    revNum={10}
+                                    rating={avg_rating.avg}
+                                    revNum={avg_rating.count}
                                 />
                             </div>
                             <div className={styles.FullGoodCard__description}>

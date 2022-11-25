@@ -13,6 +13,11 @@ export interface IGood {
 
     brands: IBrand
     sub_type_goods?: ISubGoodsTypes
+
+    avg_rating: {
+        count: number
+        avg: number
+    }
 }
 
 export interface IPhoto {

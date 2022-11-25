@@ -21,7 +21,7 @@ interface GoodDescriptionProps {
     data: IGood
 }
 const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
-    const { brands, name, sub_type_goods, current_price } = data
+    const { brands, name, sub_type_goods, current_price, avg_rating } = data
 
     const {
         addToFavorite,
@@ -65,9 +65,9 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
 
                 <div className={styles.GoodDescription__rating}>
                     <Rating
-                        rating={4}
                         type={'mini'}
-                        revNum={15}
+                        rating={avg_rating.avg}
+                        revNum={avg_rating.count}
                     />
                 </div>
 

@@ -51,6 +51,10 @@ export const GET_GOODS = gql`
                 name
                 photo
             }
+            avg_rating {
+                count
+                avg
+            }
         }
     }
 `
@@ -81,6 +85,10 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
                 id
                 name
                 photo
+            }
+            avg_rating {
+                count
+                avg
             }
         }
         filters(subId: $subId) {
@@ -181,6 +189,10 @@ export const GET_GOOD = gql`
                 name
                 photo
             }
+            avg_rating {
+                count
+                avg
+            }
             description
         }
     }
@@ -223,6 +235,10 @@ export const GET_DATA_FOR_GOOD_PAGE = gql`
                 id
                 name
                 photo
+            }
+            avg_rating {
+                count
+                avg
             }
         }
         goodCharacteristics(goodId: $goodId) {
@@ -315,6 +331,10 @@ export const GET_FAVORITE = gql`
                 id
                 name
                 photo
+            }
+            avg_rating {
+                count
+                avg
             }
         }
     }
@@ -410,6 +430,10 @@ export const GET_CART = gql`
                     name
                     photo
                 }
+                avg_rating {
+                    count
+                    avg
+                }
             }
         }
     }
@@ -440,6 +464,10 @@ export const ADD_TO_CART = gql`
                     id
                     name
                     photo
+                }
+                avg_rating {
+                    count
+                    avg
                 }
             }
         }
@@ -472,6 +500,10 @@ export const REMOVE_FROM_CART = gql`
                     name
                     photo
                 }
+                avg_rating {
+                    count
+                    avg
+                }
             }
         }
     }
@@ -503,6 +535,10 @@ export const CHANGE_CART = gql`
                     name
                     photo
                 }
+                avg_rating {
+                    count
+                    avg
+                }
             }
         }
     }
@@ -533,6 +569,10 @@ export const GET_START_DATA = gql`
                     id
                     name
                     photo
+                }
+                avg_rating {
+                    count
+                    avg
                 }
             }
         }
@@ -613,6 +653,25 @@ export const CREATE_GOOD_RATING = gql`
 export const DELETE_GOOD_RATING = gql`
     mutation DeleteGoodRating($goodId: Int!) {
         deleteGoodRating(goodId: $goodId) {
+            id
+            goods_catalog_id
+            users_id
+            users {
+                id
+                fname
+                lname
+                photo
+            }
+            rating
+            text
+            date
+        }
+    }
+`
+
+export const UPDATE_GOOD_RATING = gql`
+    mutation UpdateRating($goodId: Int!, $rating: Int, $text: String) {
+        updateRating(goodId: $goodId, rating: $rating, text: $text) {
             id
             goods_catalog_id
             users_id
