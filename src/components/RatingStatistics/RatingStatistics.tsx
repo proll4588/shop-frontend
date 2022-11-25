@@ -29,9 +29,6 @@ const RatingStatistics: FC<RatingStatisticsProps> = ({ ratings }) => {
                     <div className={styles.RatingStatistics__numRev}>
                         {ratings.length} reviews
                     </div>
-                    <Button className={styles.RatingStatistics__btn}>
-                        Write a Review
-                    </Button>
                 </div>
                 <div className={styles.RatingStatistics__right}>
                     <div className={styles.RatingStatistics__startContainer}>

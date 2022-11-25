@@ -4,7 +4,7 @@ export default interface IRating {
     users: {
         id: number
         fname?: string
-        lanme?: string
+        lname?: string
         photo?: string
     }
     rating: number
