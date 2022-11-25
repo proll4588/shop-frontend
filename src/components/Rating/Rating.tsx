@@ -1,7 +1,8 @@
 import { useQuery } from '@apollo/client'
 import React, { FC } from 'react'
 import { useParams } from 'react-router-dom'
-import { GET_GOOD_RATING } from '../../apollo/fetchs'
+import { GET_GOOD_RATING, GET_USER_DATA } from '../../apollo/fetchs'
+import RatingCreater from '../RatingCreater/RatingCreater'
 import RatingStatistics from '../RatingStatistics/RatingStatistics'
 import RatingWiever from '../RatingWiever/RatingWiever'
 import styles from './Rating.module.scss'
@@ -14,15 +15,25 @@ const Rating: FC<RatingProps> = () => {
             goodId: Number(goodId),
         },
     })
+    const userData = useQuery(GET_USER_DATA)
 
-    if (loading) return <>Loading</>
-    if (error) return <>error</>
+    if (loading || userData.loading) return <>Loading</>
+    if (error || userData.error) return <>error</>
 
     return (
         <div className={styles.Rating}>
             <div className={styles.Rating__container}>
-                <RatingStatistics ratings={data.getRating} />
-                <RatingWiever />
+                <div className={styles.Rating__up}>
+                    <RatingStatistics ratings={data.getRating} />
+                    <RatingCreater
+                        user={userData.data ? userData.data.userData : null}
+                        rating={data.getRating.find(
+                            (el) => el.users.id === userData.data.userData.id
+                        )}
+                    />
+                </div>
+
+                <RatingWiever ratings={data.getRating} />
             </div>
         </div>
     )

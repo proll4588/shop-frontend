@@ -1,6 +1,96 @@
 .RatingCreater {
     & {
+        // width: 100%;
+        width: calc(100% - 210px);
+        padding-bottom: 20px;
     }
     &__container {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    &__up {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__down {
+        width: 100%;
+    }
+    &__area {
+        width: 100%;
+        height: 100%;
+
+        resize: none;
+    }
+    &__userInfo {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    &__photoContaienr {
+        width: 40px;
+        height: 40px;
+
+        overflow: hidden;
+
+        border-radius: 50%;
+    }
+    &__photo {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+    }
+    &__right {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    &__fullName {
+        color: var(--color-light-text);
+    }
+    &__buttns {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+}
+
+.StarSelector {
+    & {
+    }
+    &__star {
+        cursor: pointer;
+        font-size: 20px;
+    }
+    & {
+    }
+    & {
+    }
+    & {
+    }
+    & {
+    }
+}
+
+@media (max-width: 700px) {
+    .RatingCreater {
+        & {
+            width: 100%;
+            // height: 160px;
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    .RatingCreater {
+        &__up {
+            flex-direction: column;
+            gap: 10px;
+        }
     }
 }

@@ -3,4 +3,18 @@
     }
     &__container {
     }
+    &__up {
+        display: flex;
+        gap: 40px;
+
+        border-bottom: 1px solid var(--color-border-1);
+    }
+}
+
+@media (max-width: 700px) {
+    .Rating {
+        &__up {
+            flex-direction: column;
+        }
+    }
 }
