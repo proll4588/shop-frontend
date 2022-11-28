@@ -27,16 +27,12 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
         avg_rating,
     } = data
 
-    const {
-        addToFavorite,
-        removeFromFavorite,
-        data: favoriteList,
-    } = useFavorite()
+    const { addToFavorite, removeFromFavorite, favoriteList } = useFavorite()
 
     const token = useRecoilValue(tokenAtom)
     const isAuth = token && token !== 'null'
 
-    const { addToCart, data: cartList } = useCart()
+    const { addToCart, cartList } = useCart()
 
     const doFaveorite = (value) => {
         value ? addToFavorite(id) : removeFromFavorite(id)
@@ -47,11 +43,10 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
     }
 
     const isFavorite =
-        !!favoriteList && !!favoriteList.getFavorite.find((el) => el.id === id)
+        !!favoriteList && !!favoriteList.find((el) => el.id === id)
 
     const inCart =
-        !!cartList &&
-        !!cartList.getCart.find((el) => el.goods_catalog.id === id)
+        !!cartList && !!cartList.find((el) => el.goods_catalog.id === id)
 
     if (!isFull)
         return (
@@ -123,7 +118,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                 className={styles.GoodCard__btn}
                                 disable
                             >
-                                In cart
+                                Уже в корзине
                             </Button>
                         ) : (
                             <Button
@@ -132,7 +127,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                 onClick={addToCartFun}
                                 disable={!isAuth}
                             >
-                                Add to Cart
+                                Добавить в корзину
                             </Button>
                         )}
                     </div>
@@ -211,7 +206,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                     className={styles.GoodCard__btn}
                                     disable
                                 >
-                                    In cart
+                                    Уже в корзине
                                 </Button>
                             ) : (
                                 <Button
@@ -220,7 +215,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                     onClick={addToCartFun}
                                     disable={!isAuth}
                                 >
-                                    Add to Cart
+                                    Добавить в корзину
                                 </Button>
                             )}
                         </div>

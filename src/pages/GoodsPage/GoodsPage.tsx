@@ -23,7 +23,9 @@ import {
 
 /* Сторонние библиотеки */
 import classNames from 'classnames'
+import Loader from '../../components/UI/Loader/Loader'
 
+/* Создание объекта фильтров для отображения */
 const createFilterState = (filters) => {
     return {
         generalFilters: {
@@ -63,17 +65,20 @@ const GoodsPage: FC<GoodsPageProps> = () => {
         }
     )
 
-    // Кэширование брэндов для избежания обновления интерфейса и
+    // Кэширование фильтров для избежания обновления интерфейса и
     // создание объекта фильтров
     useLayoutEffect(() => {
         if (!loading && !error) {
             setCacheFilters(data.filters)
+
             if (filtersState === null)
                 setFiltersState(createFilterState(data.filters))
         }
     }, [data, loading, error])
 
     // В случае ошибки выводить грустный смайлик
+    // TODO: Сделать компонент для отображения ошибок
+    if (loading) return <Loader page />
     if (error) return <p>Error :(</p>
 
     return (
@@ -110,15 +115,12 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                 </div>
 
                 <div className={styles.GoodsPage__GoodsList}>
-                    {/* TODO: Сдлеать loader в момент получения данных */}
-                    {!loading && !error && (
-                        <GoodsList
-                            onPanelOpen={() => {
-                                setIsPanelOpen(true)
-                            }}
-                            data={data.filteredGoods}
-                        />
-                    )}
+                    <GoodsList
+                        onPanelOpen={() => {
+                            setIsPanelOpen(true)
+                        }}
+                        data={data.filteredGoods}
+                    />
                 </div>
             </div>
         </div>

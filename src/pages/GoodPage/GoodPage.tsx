@@ -16,6 +16,7 @@ import GoodDescriptionPanel from '../../components/GoodDescriptionPanel/GoodDesc
 import FavoriteButton from '../../components/UI/FavoriteButton/FavoriteButton'
 import useFavorite from '../../hooks/favorite.hook'
 import useCart from '../../hooks/cart.hook'
+import Loader from '../../components/UI/Loader/Loader'
 
 interface GoodDescriptionProps {
     data: IGood
@@ -23,17 +24,12 @@ interface GoodDescriptionProps {
 const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
     const { brands, name, sub_type_goods, current_price, avg_rating } = data
 
-    const {
-        addToFavorite,
-        removeFromFavorite,
-        data: favoriteList,
-    } = useFavorite()
+    const { addToFavorite, removeFromFavorite, favoriteList } = useFavorite()
 
-    const { addToCart, data: cartList } = useCart()
+    const { addToCart, cartList } = useCart()
 
     const inCart =
-        !!cartList &&
-        cartList.getCart.find((el) => el.goods_catalog.id === data.id)
+        !!cartList && cartList.find((el) => el.goods_catalog.id === data.id)
 
     return (
         <div className={styles.GoodDescription}>
@@ -100,9 +96,7 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                         }}
                         value={
                             !!favoriteList &&
-                            !!favoriteList.getFavorite.find(
-                                (el) => el.id === data.id
-                            )
+                            !!favoriteList.find((el) => el.id === data.id)
                         }
                     />
                     {inCart ? (
@@ -219,7 +213,7 @@ const GoodPage: FC<GoodPageProps> = () => {
     )
 
     if (error) return <>Error</>
-    if (loading) return <>Loading</>
+    if (loading) return <Loader page />
     const { good, goodCharacteristics } = data
 
     return (

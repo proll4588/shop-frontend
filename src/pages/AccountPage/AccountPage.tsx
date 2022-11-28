@@ -5,6 +5,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { GET_USER_DATA } from '../../apollo/fetchs'
 import tokenAtom from '../../atoms/token.atom'
+import Loader from '../../components/UI/Loader/Loader'
 import UserNav from '../../components/UserNav/UserNav'
 import FavoritePage from '../FavoritePage/FavoritePage'
 import PersonalInfoPage from '../PersonalInfoPage/PersonalInfoPage'
@@ -23,7 +24,7 @@ const AccountPage: FC<AccountPageProps> = () => {
     const token = useRecoilValue(tokenAtom)
     const { data, loading, error } = useQuery(GET_USER_DATA)
 
-    if (loading) return <>Loading</>
+    if (loading) return <Loader page />
     if (
         error &&
         error.graphQLErrors[0].extensions.code === 'USER_IS_NOT_AUTHENTICATED'

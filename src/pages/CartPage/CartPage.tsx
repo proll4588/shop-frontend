@@ -218,18 +218,19 @@ const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
 }
 
 const CartPage: FC<CartPageProps> = () => {
-    const { data, loading, error, changeInCart, removeFromCart } = useCart()
+    const { cartList, isGetLoading, error, changeInCart, removeFromCart } =
+        useCart()
 
     if (error) return <p>Error :(</p>
-    if (loading) return <p>loading :(</p>
+    if (isGetLoading) return <p>loading :(</p>
 
     return (
         <div className={styles.CartPage}>
             <div className={styles.CartPage__container}>
                 <div className={styles.CartPage__goodsTableContainer}>
                     <GoodsTable
-                        goods={data.getCart.map((el) => el.goods_catalog)}
-                        col={data.getCart.map((el) => ({
+                        goods={cartList.map((el) => el.goods_catalog)}
+                        col={cartList.map((el) => ({
                             goodId: el.goods_catalog.id,
                             col: el.count,
                         }))}
@@ -244,8 +245,8 @@ const CartPage: FC<CartPageProps> = () => {
 
                 <div className={styles.CartPage__miniContainer}>
                     <CartMiniCardList
-                        goods={data.getCart.map((el) => el.goods_catalog)}
-                        col={data.getCart.map((el) => ({
+                        goods={cartList.map((el) => el.goods_catalog)}
+                        col={cartList.map((el) => ({
                             goodId: el.goods_catalog.id,
                             col: el.count,
                         }))}
@@ -259,7 +260,7 @@ const CartPage: FC<CartPageProps> = () => {
                 </div>
 
                 <div className={styles.CartPage__sammeryContainer}>
-                    <Sammery cartInfo={data.getCart} />
+                    <Sammery cartInfo={cartList} />
                     <div className={styles.CartPage__containerDown} />
                 </div>
             </div>
