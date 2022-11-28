@@ -1,0 +1,51 @@
+.Loader {
+    & {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__page {
+        height: calc(100vh - 120px);
+    }
+    &__container {
+        display: flex;
+        align-items: center;
+
+        // gap: 4px;
+    }
+    &__el {
+        width: 20px;
+        height: 20px;
+
+        background-color: var(--color-gray-3);
+
+        border-radius: 50%;
+
+        animation: 1s infinite puls;
+    }
+    &__elContainer {
+        width: 35px;
+        height: 35px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@keyframes puls {
+    0% {
+        width: 20px;
+        height: 20px;
+    }
+
+    50% {
+        width: 30px;
+        height: 30px;
+    }
+
+    100% {
+        width: 20px;
+        height: 20px;
+    }
+}
