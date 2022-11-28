@@ -17,20 +17,30 @@ const Rating: FC<RatingProps> = () => {
     })
     const userData = useQuery(GET_USER_DATA)
 
-    if (loading || userData.loading) return <>Loading</>
-    if (error || userData.error) return <>error</>
+    if (loading) return <>Loading</>
+    if (error) return <>error</>
 
     return (
         <div className={styles.Rating}>
             <div className={styles.Rating__container}>
                 <div className={styles.Rating__up}>
                     <RatingStatistics ratings={data.getRating} />
-                    <RatingCreater
-                        user={userData.data ? userData.data.userData : null}
-                        rating={data.getRating.find(
-                            (el) => el.users.id === userData.data.userData.id
-                        )}
-                    />
+                    {userData.loading || loading ? (
+                        <>Loading</>
+                    ) : (
+                        <RatingCreater
+                            user={userData.data ? userData.data.userData : null}
+                            rating={
+                                userData.data
+                                    ? data.getRating.find(
+                                          (el) =>
+                                              el.users.id ===
+                                              userData.data.userData.id
+                                      )
+                                    : null
+                            }
+                        />
+                    )}
                 </div>
 
                 <RatingWiever ratings={data.getRating} />

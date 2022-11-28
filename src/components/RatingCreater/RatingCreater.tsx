@@ -1,13 +1,7 @@
-import { useMutation } from '@apollo/client'
 import React, { FC, useState } from 'react'
 import { AiFillStar } from 'react-icons/ai'
 import { MdDeleteOutline } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
-import {
-    CREATE_GOOD_RATING,
-    DELETE_GOOD_RATING,
-    UPDATE_GOOD_RATING,
-} from '../../apollo/fetchs'
 import useRating from '../../hooks/rating.hook'
 import Button from '../UI/Button/Button'
 import Square from '../UI/Square/Square'
@@ -16,7 +10,7 @@ import RatingCreaterProps from './RatingCreater.props'
 
 const NoUser = () => {
     return (
-        <div className={styles.UserRating__noDataContainer}>
+        <div className={styles.RatingCreater__noDataContainer}>
             Авторизируйтесь чтобы написать отзыв
         </div>
     )
