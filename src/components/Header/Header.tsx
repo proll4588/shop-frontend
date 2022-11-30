@@ -25,7 +25,7 @@ const Header: FC<HeaderProps> = () => {
     return (
         <div className={styles.Header}>
             <div className={styles.Header__container}>
-                <div className={styles.Header__up}>
+                {/* <div className={styles.Header__up}>
                     <div className={styles.Header__upContainer}>
                         <div className={styles.Header__sity}>Город: ...</div>
 
@@ -33,7 +33,7 @@ const Header: FC<HeaderProps> = () => {
                             Выбрать другой город
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className={styles.Header__main}>
                     <div className={styles.Header__mainContainer}>

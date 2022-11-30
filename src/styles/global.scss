@@ -86,3 +86,8 @@ textarea {
 textarea {
     padding: 16px;
 }
+
+.inputError {
+    color: var(--color-border-4);
+    border-color: var(--color-border-4);
+}

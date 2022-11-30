@@ -72,7 +72,7 @@ interface LabelInputProps {
     label: string
     children: ReactNode
 }
-const LabelInput: FC<LabelInputProps> = ({ label, children }) => {
+export const LabelInput: FC<LabelInputProps> = ({ label, children }) => {
     return (
         <div className={styles.LabelInput}>
             <label className={styles.LabelInput__label}>{label}</label>
