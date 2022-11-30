@@ -31,14 +31,16 @@
     }
     &__right {
         width: calc(100% - 125px);
+
         display: flex;
+        justify-content: space-between;
         flex-direction: column;
     }
     &__l1 {
         display: flex;
         justify-content: space-between;
 
-        margin-bottom: 18px;
+        // margin-bottom: 18px;
     }
     &__icon {
         color: var(--color-grey-text);
@@ -51,6 +53,14 @@
         }
     }
     &__l3 {
-        margin-top: 20px;
+        // margin-top: 20px;
+
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    &__maxCount {
+        color: var(--color-grey-text);
+        font-size: 14px;
     }
 }

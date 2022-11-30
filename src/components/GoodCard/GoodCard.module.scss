@@ -40,9 +40,21 @@
     &__price {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         align-items: center;
         gap: 10px;
     }
+    &__priceLeft {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+    &__priceRight {
+        color: var(--color-light-text);
+        font-size: 14px;
+    }
+
     &__priceMain {
         color: var(--color-light-text);
         font-size: 18px;
@@ -134,7 +146,7 @@
 
     &__infoContainer {
         flex-shrink: 1;
-        flex-grow: 0;
+        flex-grow: 1;
 
         display: flex;
         flex-direction: column;
@@ -162,6 +174,13 @@
         box-orient: vertical;
     }
     &__price {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+    &__priceLeft {
         display: flex;
         flex-direction: row;
         align-items: center;

@@ -18,6 +18,10 @@ export interface IGood {
         count: number
         avg: number
     }
+
+    storage?: {
+        count: number
+    }
 }
 
 export interface IPhoto {

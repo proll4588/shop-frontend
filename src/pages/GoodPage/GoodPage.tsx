@@ -17,12 +17,24 @@ import FavoriteButton from '../../components/UI/FavoriteButton/FavoriteButton'
 import useFavorite from '../../hooks/favorite.hook'
 import useCart from '../../hooks/cart.hook'
 import Loader from '../../components/UI/Loader/Loader'
+import { useRecoilValue } from 'recoil'
+import tokenAtom from '../../atoms/token.atom'
 
 interface GoodDescriptionProps {
     data: IGood
 }
 const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
-    const { brands, name, sub_type_goods, current_price, avg_rating } = data
+    const {
+        brands,
+        name,
+        sub_type_goods,
+        current_price,
+        avg_rating,
+        storage: { count },
+    } = data
+
+    const token = useRecoilValue(tokenAtom)
+    const isAuth = token && token !== 'null'
 
     const { addToFavorite, removeFromFavorite, favoriteList } = useFavorite()
 
@@ -68,24 +80,35 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                 </div>
 
                 <div className={styles.GoodDescription__price}>
-                    {current_price.discount !== null ? (
-                        <>
-                            <div
-                                className={
-                                    styles.GoodDescription__priceSecondary
-                                }
-                            >
+                    <div className={styles.GoodDescription__priceLeft}>
+                        {current_price.discount !== null ? (
+                            <>
+                                <div
+                                    className={
+                                        styles.GoodDescription__priceSecondary
+                                    }
+                                >
+                                    {current_price.price}
+                                </div>
+                                <div
+                                    className={
+                                        styles.GoodDescription__priceMain
+                                    }
+                                >
+                                    {current_price.discount}
+                                </div>
+                            </>
+                        ) : (
+                            <div className={styles.GoodDescription__priceMain}>
                                 {current_price.price}
                             </div>
-                            <div className={styles.GoodDescription__priceMain}>
-                                {current_price.discount}
-                            </div>
-                        </>
-                    ) : (
-                        <div className={styles.GoodDescription__priceMain}>
-                            {current_price.price}
-                        </div>
-                    )}
+                        )}
+                    </div>
+                    <div className={styles.GoodDescription__priceRight}>
+                        {count === 0
+                            ? 'Нет в наличии'
+                            : `Доступно ${count} шт.`}
+                    </div>
                 </div>
 
                 <div className={styles.GoodDescription__actionBar}>
@@ -104,7 +127,7 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                             className={styles.GoodDescription__button}
                             disable
                         >
-                            in cart
+                            Уже в корзине
                         </Button>
                     ) : (
                         <Button
@@ -112,8 +135,9 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                             onClick={() => {
                                 addToCart(data.id, 1)
                             }}
+                            disable={!isAuth || !count}
                         >
-                            Add to Cart
+                            {!count ? 'Нет в наличии' : 'Добавить в корзину'}
                         </Button>
                     )}
                 </div>

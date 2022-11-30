@@ -25,6 +25,7 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
         description,
         id,
         avg_rating,
+        storage: { count },
     } = data
 
     const { addToFavorite, removeFromFavorite, favoriteList } = useFavorite()
@@ -57,12 +58,15 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                 )}
             >
                 <div className={styles.GoodCard__container}>
+                    {/* Фото товара */}
                     <img
                         src={main_photo ? main_photo.photo : NO_PHOTO}
                         alt={name}
                         className={styles.GoodCard__photo}
                     />
+                    {/* ======== */}
 
+                    {/* Имя, райтинг, производитель, тип */}
                     <div className={styles.GoodCard__nameContainer}>
                         <div className={styles.GoodCard__line}>
                             <div className={styles.GoodCard__type}>
@@ -86,25 +90,43 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                             />
                         </div>
                     </div>
+                    {/* ======== */}
 
+                    {/* Цена товара */}
                     <div className={styles.GoodCard__price}>
-                        {current_price.discount !== null ? (
-                            <>
+                        <div className={styles.GoodCard__priceLeft}>
+                            {current_price.discount !== null ? (
+                                <>
+                                    <div
+                                        className={
+                                            styles.FullGoodCard__priceMain
+                                        }
+                                    >
+                                        {current_price.discount}
+                                    </div>
+                                    <div
+                                        className={
+                                            styles.FullGoodCard__priceSecond
+                                        }
+                                    >
+                                        {current_price.price}
+                                    </div>
+                                </>
+                            ) : (
                                 <div className={styles.FullGoodCard__priceMain}>
-                                    {current_price.discount}
-                                </div>
-                                <div
-                                    className={styles.FullGoodCard__priceSecond}
-                                >
                                     {current_price.price}
                                 </div>
-                            </>
-                        ) : (
-                            <div className={styles.FullGoodCard__priceMain}>
-                                {current_price.price}
-                            </div>
-                        )}
+                            )}
+                        </div>
+                        <div className={styles.GoodCard__priceRight}>
+                            {count === 0
+                                ? 'Нет в наличии'
+                                : `Доступно ${count} шт.`}
+                        </div>
                     </div>
+                    {/* ======== */}
+
+                    {/* Кнопки управления */}
                     <div className={styles.GoodCard__btns}>
                         <FavoriteButton
                             value={isFavorite}
@@ -125,12 +147,15 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                 secondary
                                 className={styles.GoodCard__btn}
                                 onClick={addToCartFun}
-                                disable={!isAuth}
+                                disable={!isAuth || !count}
                             >
-                                Добавить в корзину
+                                {!count
+                                    ? 'Нет в наличии'
+                                    : 'Добавить в корзину'}
                             </Button>
                         )}
                     </div>
+                    {/* ======== */}
                 </div>
             </div>
         )
@@ -165,32 +190,39 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                 {description}
                             </div>
                             <div className={styles.FullGoodCard__price}>
-                                {current_price.discount !== null ? (
-                                    <>
+                                <div className={styles.GoodCard__priceLeft}>
+                                    {current_price.discount !== null ? (
+                                        <>
+                                            <div
+                                                className={
+                                                    styles.FullGoodCard__priceMain
+                                                }
+                                            >
+                                                {current_price.discount}
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.FullGoodCard__priceSecond
+                                                }
+                                            >
+                                                {current_price.price}
+                                            </div>
+                                        </>
+                                    ) : (
                                         <div
                                             className={
                                                 styles.FullGoodCard__priceMain
                                             }
                                         >
-                                            {current_price.discount}
-                                        </div>
-                                        <div
-                                            className={
-                                                styles.FullGoodCard__priceSecond
-                                            }
-                                        >
                                             {current_price.price}
                                         </div>
-                                    </>
-                                ) : (
-                                    <div
-                                        className={
-                                            styles.FullGoodCard__priceMain
-                                        }
-                                    >
-                                        {current_price.price}
-                                    </div>
-                                )}
+                                    )}
+                                </div>
+                                <div className={styles.GoodCard__priceRight}>
+                                    {count === 0
+                                        ? 'Нет в наличии'
+                                        : `Доступно ${count} шт.`}
+                                </div>
                             </div>
                         </div>
 
@@ -213,9 +245,11 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                                     secondary
                                     className={styles.GoodCard__btn}
                                     onClick={addToCartFun}
-                                    disable={!isAuth}
+                                    disable={!isAuth || !count}
                                 >
-                                    Добавить в корзину
+                                    {!count
+                                        ? 'Нет в наличии'
+                                        : 'Добавить в корзину'}
                                 </Button>
                             )}
                         </div>

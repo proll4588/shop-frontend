@@ -18,7 +18,7 @@ const CartMiniCard: FC<CartMiniCardProps> = ({
     }, [num])
 
     const add = () => {
-        setNum((prev) => prev + 1)
+        if (good.storage.count !== num) setNum((prev) => prev + 1)
     }
 
     const sub = () => {
@@ -56,6 +56,10 @@ const CartMiniCard: FC<CartMiniCardProps> = ({
                             onAdd={add}
                             onSub={sub}
                         />
+                    </div>
+
+                    <div className={styles.CartMiniCard__maxCount}>
+                        Max: {good.storage.count}
                     </div>
                 </div>
             </div>

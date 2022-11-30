@@ -10,6 +10,7 @@ import Square from '../../components/UI/Square/Square'
 import { MdDeleteOutline } from 'react-icons/md'
 import CartMiniCardList from '../../components/CartMiniCardList/CartMiniCardList'
 import NumberInput from '../../components/UI/NumberInput/NumberInput'
+import { useNavigate } from 'react-router-dom'
 
 interface TableLineProps {
     good: IGood
@@ -26,7 +27,7 @@ const TableLine: FC<TableLineProps> = ({ good, col, onChangeCol, onDel }) => {
     }, [num])
 
     const add = () => {
-        setNum((prev) => prev + 1)
+        if (good.storage.count !== num) setNum((prev) => prev + 1)
     }
 
     const sub = () => {
@@ -66,6 +67,9 @@ const TableLine: FC<TableLineProps> = ({ good, col, onChangeCol, onDel }) => {
                         onAdd={add}
                         onSub={sub}
                     />
+                    <div className={styles.TableLine__maxCount}>
+                        Max: {good.storage.count}
+                    </div>
                 </div>
 
                 <div
@@ -154,7 +158,7 @@ interface SammeryLineProps {
     left: string
     right: string
 }
-const SammeryLine: FC<SammeryLineProps> = ({ left, right }) => {
+export const SammeryLine: FC<SammeryLineProps> = ({ left, right }) => {
     return (
         <div className={styles.SammeryLine}>
             <div className={styles.SammeryLine__left}>{left}</div>
@@ -169,7 +173,9 @@ interface SammeryProps {
         goods_catalog: IGood
     }[]
 }
-const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
+export const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
+    const nav = useNavigate()
+
     let subTotal = 0
     let discount = 0
     let total = 0
@@ -209,7 +215,12 @@ const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
                     left={`Итог (${fullCount} товаров)`}
                     right={String(total) + '₽'}
                 />
-                <Button className={styles.Sammery__checkout}>
+                <Button
+                    className={styles.Sammery__checkout}
+                    onClick={() => {
+                        nav('/checkout')
+                    }}
+                >
                     Оформить заказ
                 </Button>
             </div>

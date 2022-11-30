@@ -55,6 +55,9 @@ export const GET_GOODS = gql`
                 count
                 avg
             }
+            storage {
+                count
+            }
         }
     }
 `
@@ -89,6 +92,9 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
             avg_rating {
                 count
                 avg
+            }
+            storage {
+                count
             }
         }
         filters(subId: $subId) {
@@ -193,6 +199,9 @@ export const GET_GOOD = gql`
                 count
                 avg
             }
+            storage {
+                count
+            }
             description
         }
     }
@@ -239,6 +248,9 @@ export const GET_DATA_FOR_GOOD_PAGE = gql`
             avg_rating {
                 count
                 avg
+            }
+            storage {
+                count
             }
         }
         goodCharacteristics(goodId: $goodId) {
@@ -335,6 +347,9 @@ export const GET_FAVORITE = gql`
             avg_rating {
                 count
                 avg
+            }
+            storage {
+                count
             }
         }
     }
@@ -434,6 +449,9 @@ export const GET_CART = gql`
                     count
                     avg
                 }
+                storage {
+                    count
+                }
             }
         }
     }
@@ -468,6 +486,9 @@ export const ADD_TO_CART = gql`
                 avg_rating {
                     count
                     avg
+                }
+                storage {
+                    count
                 }
             }
         }
@@ -504,6 +525,9 @@ export const REMOVE_FROM_CART = gql`
                     count
                     avg
                 }
+                storage {
+                    count
+                }
             }
         }
     }
@@ -538,6 +562,9 @@ export const CHANGE_CART = gql`
                 avg_rating {
                     count
                     avg
+                }
+                storage {
+                    count
                 }
             }
         }
@@ -574,6 +601,9 @@ export const GET_START_DATA = gql`
                     count
                     avg
                 }
+                storage {
+                    count
+                }
             }
         }
         getFavorite {
@@ -607,6 +637,9 @@ export const GET_START_DATA = gql`
                 id
                 name
                 photo
+            }
+            storage {
+                count
             }
         }
     }
