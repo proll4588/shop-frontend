@@ -7,6 +7,7 @@ import useStart from '../hooks/start.hook'
 import AccountPage from '../pages/AccountPage/AccountPage'
 import AuthPage from '../pages/AuthPage/AuthPage'
 import CartPage from '../pages/CartPage/CartPage'
+import CheckoutPage from '../pages/CheckoutPage/CheckoutPage'
 import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
 import TypePage from '../pages/TypePage/TypePage'
@@ -78,6 +79,17 @@ const ShopLayout = () => {
                             element={
                                 isAuth ? (
                                     <CartPage />
+                                ) : (
+                                    <Navigate to={'/auth'} />
+                                )
+                            }
+                        />
+
+                        <Route
+                            path={'/checkout'}
+                            element={
+                                isAuth ? (
+                                    <CheckoutPage />
                                 ) : (
                                     <Navigate to={'/auth'} />
                                 )
