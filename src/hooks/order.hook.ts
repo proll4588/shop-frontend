@@ -1,6 +1,7 @@
-import { GET_CART, GET_ORDERS } from './../apollo/fetchs'
+/* Хуки */
 import { useMutation, useQuery } from '@apollo/client'
-import { CREATE_ORDER } from '../apollo/fetchs'
+/* Запросы */
+import { GET_CART, GET_ORDERS, CREATE_ORDER } from './../apollo/fetchs'
 
 /* Статусы оплаты */
 export enum PAY_STATUSES {
