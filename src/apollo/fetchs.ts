@@ -720,3 +720,107 @@ export const UPDATE_GOOD_RATING = gql`
         }
     }
 `
+
+export const CREATE_ORDER = gql`
+    mutation CreateOrder($payStatus: PayStatus!, $orderType: OrderTypes!) {
+        createOrder(payStatus: $payStatus, orderType: $orderType) {
+            id
+            date
+            operations_status_id
+            payment_status_id
+            order_types_id
+            delivery_info {
+                id
+                count
+                goods_catalog {
+                    id
+                    name
+                    description
+                    main_photo {
+                        id
+                        goods_catalog_id
+                        photo
+                    }
+                    all_photos {
+                        id
+                        goods_catalog_id
+                        photo
+                    }
+                    current_price {
+                        price
+                        discount
+                    }
+                    all_prices {
+                        price
+                        discount
+                    }
+                    brands {
+                        id
+                        name
+                        logo
+                    }
+                    sub_type_goods {
+                        id
+                        name
+                        photo
+                    }
+                    storage {
+                        count
+                    }
+                }
+            }
+        }
+    }
+`
+
+export const GET_ORDERS = gql`
+    query GetOrders {
+        getOrders {
+            id
+            date
+            operations_status_id
+            payment_status_id
+            order_types_id
+            delivery_info {
+                id
+                count
+                goods_catalog {
+                    id
+                    name
+                    description
+                    main_photo {
+                        id
+                        goods_catalog_id
+                        photo
+                    }
+                    all_photos {
+                        id
+                        goods_catalog_id
+                        photo
+                    }
+                    current_price {
+                        price
+                        discount
+                    }
+                    all_prices {
+                        price
+                        discount
+                    }
+                    brands {
+                        id
+                        name
+                        logo
+                    }
+                    sub_type_goods {
+                        id
+                        name
+                        photo
+                    }
+                    storage {
+                        count
+                    }
+                }
+            }
+        }
+    }
+`
