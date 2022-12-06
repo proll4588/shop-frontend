@@ -220,6 +220,7 @@ export const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
                     onClick={() => {
                         nav('/checkout')
                     }}
+                    disable={!cartInfo.length}
                 >
                     Оформить заказ
                 </Button>
