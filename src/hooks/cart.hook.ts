@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
 /* Хуки */
 import { useMutation, useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
+import { useEffect } from 'react'
 
 /* Запросы */
 import {
