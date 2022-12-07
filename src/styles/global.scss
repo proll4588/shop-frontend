@@ -71,7 +71,7 @@ textarea {
     padding-right: 16px;
 
     font-size: 16px;
-    color: var(--color-light-text);
+    color: var(--color-light-text) !important;
 
     transition: var(--trans-time);
     &:hover {

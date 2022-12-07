@@ -8,6 +8,7 @@ import tokenAtom from '../../atoms/token.atom'
 import Loader from '../../components/UI/Loader/Loader'
 import UserNav from '../../components/UserNav/UserNav'
 import FavoritePage from '../FavoritePage/FavoritePage'
+import OrdersPage from '../OrdersPage/OrdersPage'
 import PersonalInfoPage from '../PersonalInfoPage/PersonalInfoPage'
 import styles from './AccountPage.module.scss'
 import AccountPageProps from './AccountPage.props'
@@ -75,7 +76,7 @@ const AccountPage: FC<AccountPageProps> = () => {
                     {/* Заказы пользователя */}
                     <Route
                         path={'orders'}
-                        element={<>orders</>}
+                        element={<OrdersPage />}
                     />
 
                     {/* Уведомления */}

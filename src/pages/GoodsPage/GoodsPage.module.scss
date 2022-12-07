@@ -23,6 +23,7 @@
         width: 300px;
     }
     &__FilterPanelBack {
+        background-color: rgba(black, 0);
         display: none;
     }
     &__GoodsList {
@@ -80,7 +81,8 @@
             display: block;
             width: calc(100% - 300px);
             background-color: rgba(black, 0.5);
-            animation: back 1s 0.3s;
+            // background-color: rgba(black, 0);
+            animation: back 0.5s;
         }
 
         &__GoodsList {
@@ -102,12 +104,12 @@
 
 @keyframes back {
     from {
-        // width: 100%;
+        width: 100%;
         background-color: rgba(black, 0);
     }
 
     to {
-        // width: calc(100% - 300px);
+        width: calc(100% - 300px);
         background-color: rgba(black, 0.5);
     }
 }
