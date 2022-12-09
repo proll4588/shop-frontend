@@ -3,8 +3,12 @@
         max-width: 1280px;
         margin: auto;
         padding: 10px 10px;
+
+        // height: 100%;
     }
     &__container {
+        // height: 100%;
+
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -27,6 +31,17 @@
     }
     &__containerDown {
         display: flex;
+    }
+
+    &__noData {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 24px;
+        color: var(--color-grey-text);
     }
 }
 

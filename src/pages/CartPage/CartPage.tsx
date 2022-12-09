@@ -238,44 +238,50 @@ const CartPage: FC<CartPageProps> = () => {
 
     return (
         <div className={styles.CartPage}>
-            <div className={styles.CartPage__container}>
-                <div className={styles.CartPage__goodsTableContainer}>
-                    <GoodsTable
-                        goods={cartList.map((el) => el.goods_catalog)}
-                        col={cartList.map((el) => ({
-                            goodId: el.goods_catalog.id,
-                            col: el.count,
-                        }))}
-                        onChangeCol={(goodId, col) => {
-                            changeInCart(goodId, col)
-                        }}
-                        onDel={(goodId) => {
-                            removeFromCart(goodId)
-                        }}
-                    />
-                </div>
+            {!!cartList.length ? (
+                <div className={styles.CartPage__container}>
+                    <div className={styles.CartPage__goodsTableContainer}>
+                        <GoodsTable
+                            goods={cartList.map((el) => el.goods_catalog)}
+                            col={cartList.map((el) => ({
+                                goodId: el.goods_catalog.id,
+                                col: el.count,
+                            }))}
+                            onChangeCol={(goodId, col) => {
+                                changeInCart(goodId, col)
+                            }}
+                            onDel={(goodId) => {
+                                removeFromCart(goodId)
+                            }}
+                        />
+                    </div>
 
-                <div className={styles.CartPage__miniContainer}>
-                    <CartMiniCardList
-                        goods={cartList.map((el) => el.goods_catalog)}
-                        col={cartList.map((el) => ({
-                            goodId: el.goods_catalog.id,
-                            col: el.count,
-                        }))}
-                        onChangeCol={(goodId, col) => {
-                            changeInCart(goodId, col)
-                        }}
-                        onDel={(goodId) => {
-                            removeFromCart(goodId)
-                        }}
-                    />
-                </div>
+                    <div className={styles.CartPage__miniContainer}>
+                        <CartMiniCardList
+                            goods={cartList.map((el) => el.goods_catalog)}
+                            col={cartList.map((el) => ({
+                                goodId: el.goods_catalog.id,
+                                col: el.count,
+                            }))}
+                            onChangeCol={(goodId, col) => {
+                                changeInCart(goodId, col)
+                            }}
+                            onDel={(goodId) => {
+                                removeFromCart(goodId)
+                            }}
+                        />
+                    </div>
 
-                <div className={styles.CartPage__sammeryContainer}>
-                    <Sammery cartInfo={cartList} />
-                    <div className={styles.CartPage__containerDown} />
+                    <div className={styles.CartPage__sammeryContainer}>
+                        <Sammery cartInfo={cartList} />
+                        <div className={styles.CartPage__containerDown} />
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className={styles.CartPage__noData}>
+                    У вас пока нет товаров в корзине
+                </div>
+            )}
         </div>
     )
 }
