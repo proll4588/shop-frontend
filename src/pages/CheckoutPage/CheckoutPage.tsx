@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import { GET_CART, GET_USER_DATA } from '../../apollo/fetchs'
 import Button from '../../components/UI/Button/Button'
 import Loader from '../../components/UI/Loader/Loader'
+import useCart from '../../hooks/cart.hook'
+import useOrder, { ORDER_TYPES, PAY_STATUSES } from '../../hooks/order.hook'
 import { IGood } from '../../interfaces/good.interface'
 import { IUser } from '../../interfaces/user.interface'
 import { SammeryLine } from '../CartPage'
@@ -315,6 +317,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({ user }) => {
     const [paymentMethod, setPaymentMethod] = useState(null)
     const [deliverytMethod, setDeliveryMethod] = useState(null)
 
+    const { createOrder, error, isCreateLoading } = useOrder()
     const { register, handleSubmit, formState, getValues } = useForm({
         defaultValues: {
             ...user,
@@ -331,6 +334,25 @@ const CheckoutForm: FC<CheckoutFormProps> = ({ user }) => {
     }
     const prevStep = () => {
         if (step !== 1) setStep((prev) => prev - 1)
+    }
+
+    const createWithPay = () => {
+        createOrder(
+            PAY_STATUSES.pay,
+            getValues('delivery_method') === 'delivery'
+                ? ORDER_TYPES.deliver
+                : ORDER_TYPES.fromShop
+        )
+        setStep(4)
+    }
+    const createWithoutPage = () => {
+        createOrder(
+            PAY_STATUSES.notPay,
+            getValues('delivery_method') === 'delivery'
+                ? ORDER_TYPES.deliver
+                : ORDER_TYPES.fromShop
+        )
+        setStep(4)
     }
 
     return (
@@ -367,55 +389,65 @@ const CheckoutForm: FC<CheckoutFormProps> = ({ user }) => {
                         />
                     </CheckoutPart>
                 )}
-                {/* {step === 4 && (
-                    <CheckoutPart title='Полная информация'>
-                        <AllCheckoutInfo
-                            user={user}
-                            paymentMethod={getValues('payment_method')}
-                            deliveryMethod={getValues('delivery_method')}
-                        />
+                {step === 4 && (
+                    <CheckoutPart
+                        title={
+                            isCreateLoading
+                                ? 'Оформление...'
+                                : error
+                                ? 'Что-то пошло не так'
+                                : 'Ваш заказ оформлен'
+                        }
+                    >
+                        {isCreateLoading && <Loader />}
                     </CheckoutPart>
-                )} */}
-
-                <div className={styles.CheckoutForm__text}>
-                    Если данные представленные в форме не верны или уже не
-                    актуальны, то зайдите на{' '}
-                    <Link
-                        to={'/account/personalInfo'}
-                        className={styles.CheckoutForm__link}
-                    >
-                        страницу пользователя
-                    </Link>{' '}
-                    и измените их там, потом вернитесь обратно к оформлению
-                    заказа
-                </div>
-            </form>
-            <div className={styles.CheckoutForm__btns}>
-                <Button
-                    style={{ opacity: Number(step !== 1) }}
-                    onClick={prevStep}
-                    disable={step === 1}
-                >
-                    Назад
-                </Button>
-                {step !== 3 ? (
-                    <Button
-                        onClick={nextStep}
-                        disable={step === 2 && !deliverytMethod}
-                    >
-                        Далее
-                    </Button>
-                ) : paymentMethod === 'byCardNow' ? (
-                    <Button onClick={nextStep}>Перейти к оплате</Button>
-                ) : (
-                    <Button
-                        onClick={nextStep}
-                        disable={step === 3 && !paymentMethod}
-                    >
-                        Завершить оформление заказа
-                    </Button>
                 )}
-            </div>
+
+                {step !== 4 && (
+                    <div className={styles.CheckoutForm__text}>
+                        Если данные представленные в форме не верны или уже не
+                        актуальны, то зайдите на{' '}
+                        <Link
+                            to={'/account/personalInfo'}
+                            className={styles.CheckoutForm__link}
+                        >
+                            страницу пользователя
+                        </Link>{' '}
+                        и измените их там, потом вернитесь обратно к оформлению
+                        заказа
+                    </div>
+                )}
+            </form>
+            {step !== 4 && (
+                <div className={styles.CheckoutForm__btns}>
+                    <Button
+                        style={{ opacity: Number(step !== 1) }}
+                        onClick={prevStep}
+                        disable={step === 1}
+                    >
+                        Назад
+                    </Button>
+                    {step !== 3 ? (
+                        <Button
+                            onClick={nextStep}
+                            disable={step === 2 && !deliverytMethod}
+                        >
+                            Далее
+                        </Button>
+                    ) : paymentMethod === 'byCardNow' ? (
+                        <Button onClick={createWithPay}>
+                            Перейти к оплате
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={createWithoutPage}
+                            disable={step === 3 && !paymentMethod}
+                        >
+                            Завершить оформление заказа
+                        </Button>
+                    )}
+                </div>
+            )}
         </div>
     )
 }
@@ -431,6 +463,8 @@ export const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
     let discount = 0
     let total = 0
     let fullCount = 0
+
+    // console.log(cartInfo)
 
     cartInfo.forEach((cart) => {
         subTotal += cart.count * cart.goods_catalog.current_price.price
@@ -491,24 +525,26 @@ export const Sammery: FC<SammeryProps> = ({ cartInfo }) => {
     )
 }
 
+// const LastCheckOut = () => {
+//     const {createOrder, error, isCreateLoading} = useOrder()
+
+//     return ()
+// }
+
 const CheckoutPage: FC<CheckoutPageProps> = () => {
+    // TODO: Сделать отдельный хук для пользователя
     const {
         data: userData,
         error: userError,
         loading: userLoading,
     } = useQuery(GET_USER_DATA)
 
-    const {
-        data: cartData,
-        error: cartError,
-        loading: cartLoading,
-    } = useQuery(GET_CART)
+    const { cartList, error: cartError, isGetLoading: cartLoading } = useCart()
 
     if (userLoading || cartLoading) return <Loader page />
     if (userError || cartError) return <>Error :,{'<'}</>
 
     const { userData: user } = userData
-    const { getCart: cart } = cartData
 
     return (
         <div className={styles.CheckoutPage}>
@@ -517,9 +553,11 @@ const CheckoutPage: FC<CheckoutPageProps> = () => {
                     <CheckoutForm user={user} />
                 </div>
 
-                <div className={styles.CheckoutPage__right}>
-                    <Sammery cartInfo={cart} />
-                </div>
+                {cartList.length !== 0 && (
+                    <div className={styles.CheckoutPage__right}>
+                        <Sammery cartInfo={cartList} />
+                    </div>
+                )}
             </div>
         </div>
     )
