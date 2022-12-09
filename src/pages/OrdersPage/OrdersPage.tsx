@@ -6,7 +6,9 @@ import { GET_ORDERS } from '../../apollo/fetchs'
 import Button from '../../components/UI/Button/Button'
 import Dropdown from '../../components/UI/Dropdown/Dropdown'
 import Input from '../../components/UI/Input/Input'
+import Loader from '../../components/UI/Loader/Loader'
 import useDebounce from '../../hooks/debounce.hook'
+import useOrder from '../../hooks/order.hook'
 import { IOrder, IDeliveryInfo } from '../../interfaces/order.interface'
 import styles from './OrdersPage.module.scss'
 import OrdersPageProps from './OrdersPage.props'
@@ -27,37 +29,6 @@ const statuses = [
     { id: 3, name: 'Получено' },
     { id: 5, name: 'Готов к выдаче' },
 ]
-
-interface HeadProps {
-    onChange?: (value) => void
-    value: number
-}
-const Head: FC<HeadProps> = ({ onChange, value }) => {
-    return (
-        <div className={styles.Head}>
-            <ul className={styles.Head__container}>
-                {headMenu.map((el) => (
-                    <li
-                        key={el.id}
-                        onClick={() => {
-                            onChange(el.id)
-                        }}
-                        className={classNames(
-                            styles.Head__el,
-                            value === el.id ? styles.Head__active : ''
-                        )}
-                    >
-                        {el.name}
-                    </li>
-                ))}
-                <div
-                    className={styles.Head__line}
-                    style={{ left: 130 * (value - 1) }}
-                />
-            </ul>
-        </div>
-    )
-}
 
 interface FilterPanelProps {
     onChangeText?: (value) => void
@@ -101,11 +72,10 @@ const FilterPanel: FC<FilterPanelProps> = ({ onChangeFilte, onChangeText }) => {
 }
 
 interface OrderTableProps {
-    orders: IOrder[]
+    orders?: IOrder[]
+    loading?: boolean
 }
-const OrderTable: FC<OrderTableProps> = ({ orders }) => {
-    console.log(orders)
-
+const OrderTable: FC<OrderTableProps> = ({ orders, loading }) => {
     return (
         <div className={styles.OrderTable}>
             <div className={styles.OrderTable__container}>
@@ -117,13 +87,20 @@ const OrderTable: FC<OrderTableProps> = ({ orders }) => {
                         <th>Цена</th>
                         <th>Статус заказа</th>
                     </tr>
-                    {orders.map((order) => (
-                        <OrdersTableRaw
-                            order={order}
-                            key={order.id}
-                        />
-                    ))}
+                    {orders &&
+                        orders.map((order) => (
+                            <OrdersTableRaw
+                                order={order}
+                                key={order.id}
+                            />
+                        ))}
                 </table>
+                {loading && <Loader className={styles.OrderTable__loader} />}
+                {!!orders && orders.length === 0 && (
+                    <div className={styles.OrderTable__noData}>
+                        Тут будут отображатся ваши заказы
+                    </div>
+                )}
             </div>
         </div>
     )
@@ -247,17 +224,18 @@ const OrdersPage: FC<OrdersPageProps> = () => {
     const [filter, setFulter] = useState(null)
     const [search, setSearch] = useState('')
     const [page, setPage] = useState(1)
+    const [cacheCount, setCacheCount] = useState(null)
 
     const dbSearch = useDebounce(search)
 
-    const { data, loading, error } = useQuery(GET_ORDERS, {
-        variables: {
-            skip: viewCount * (page - 1),
-            take: viewCount,
-            operStatus: filter,
-            search: dbSearch,
-        },
-    })
+    const variables = {
+        skip: viewCount * (page - 1),
+        take: viewCount,
+        operStatus: filter,
+        search: dbSearch,
+    }
+
+    const { orderList, error, isCreateLoading: loading } = useOrder(variables)
 
     const nextPage = () => {
         setPage((prev) => prev + 1)
@@ -266,22 +244,31 @@ const OrdersPage: FC<OrdersPageProps> = () => {
         setPage((prev) => prev - 1)
     }
 
+    // переход на первую страницу при изменении фильтра
+    useEffect(() => {
+        setPage(1)
+    }, [filter])
+
+    const orders = orderList ? orderList.getOrders.data : null
+    const count = orderList ? orderList.getOrders.count : null
+
+    // Кэшируем кол-во заказов
+    if (count !== null && count !== cacheCount) setCacheCount(count)
+
     return (
         <div className={styles.OrdersPage}>
             <div className={styles.OrdersPage__container}>
-                {/* <Head
-                    value={curHead}
-                    onChange={setCurHead}
-                /> */}
                 <FilterPanel
                     onChangeFilte={setFulter}
                     onChangeText={setSearch}
                 />
-                {loading || error ? (
-                    'loading'
-                ) : (
+                {error && <>{JSON.stringify(error)}</>}
+                {!error && (
                     <>
-                        <OrderTable orders={data.getOrders.data} />
+                        <OrderTable
+                            orders={orders}
+                            loading={loading}
+                        />
                         <div className={styles.OrdersPage__navPanel}>
                             <Button
                                 disable={page === 1}
@@ -292,16 +279,14 @@ const OrdersPage: FC<OrdersPageProps> = () => {
 
                             <div className={styles.OrdersPage__navInfo}>
                                 {viewCount * (page - 1) + 1} -{' '}
-                                {viewCount * page > data.getOrders.count
-                                    ? data.getOrders.count
+                                {viewCount * page > cacheCount
+                                    ? cacheCount
                                     : viewCount * page}{' '}
-                                из {data.getOrders.count}
+                                из {cacheCount}
                             </div>
 
                             <Button
-                                disable={
-                                    viewCount * page >= data.getOrders.count
-                                }
+                                disable={viewCount * page >= cacheCount}
                                 onClick={nextPage}
                             >
                                 Далее
