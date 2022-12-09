@@ -19,6 +19,12 @@ export enum ORDER_TYPES {
  * Хук для работы с заказами
  * Используется только если пользователь авторизирован
  *
+ * === Входные данные ===
+ * skip - кол-во пропускаемых элементов
+ * take - кол-во получаемых элементов
+ * operStatus - тип получаемых заказов
+ * search - строка поиска
+ *
  *
  * === Функции ===
  * createOrder - создание нового заказа
@@ -32,10 +38,24 @@ export enum ORDER_TYPES {
  * isCreateLoading - в процессе создания заказа
  * error - ошибки
  */
-const useOrder = () => {
+const useOrder = (
+    { skip, take, operStatus, search } = {
+        skip: 0,
+        take: 200,
+        operStatus: null,
+        search: null,
+    }
+) => {
     /* == Запросы == */
     // Получение списка заказов
-    const { data, loading, error } = useQuery(GET_ORDERS)
+    const { data, loading, error } = useQuery(GET_ORDERS, {
+        variables: {
+            skip,
+            take,
+            operStatus,
+            search,
+        },
+    })
 
     // Создание нового заказа
     const [qcreateOrder, createData] = useMutation(CREATE_ORDER, {
