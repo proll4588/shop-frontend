@@ -59,7 +59,18 @@ const useOrder = (
 
     // Создание нового заказа
     const [qcreateOrder, createData] = useMutation(CREATE_ORDER, {
-        refetchQueries: [{ query: GET_CART }, { query: GET_ORDERS }],
+        refetchQueries: [
+            { query: GET_CART },
+            {
+                query: GET_ORDERS,
+                variables: {
+                    skip,
+                    take,
+                    operStatus,
+                    search,
+                },
+            },
+        ],
     })
     /* =========================================================== */
 
@@ -73,6 +84,7 @@ const useOrder = (
         })
     }
 
+    // TODO: вместо data сразу выдовать содержимое
     return {
         orderList: data,
         isGetLoading: loading,
