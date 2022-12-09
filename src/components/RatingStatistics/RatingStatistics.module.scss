@@ -13,12 +13,15 @@
         height: 100%;
     }
     &__left {
+        // flex-grow: 1;
+
         display: flex;
         flex-direction: column;
         // justify-content: space-between;
         gap: 6px;
 
         // width: 100%;
+        width: 70px;
         height: 100%;
     }
     &__averageRating {
@@ -26,6 +29,8 @@
         color: var(--color-light-text);
     }
     &__numRev {
+        // flex-grow: 1;
+
         font-size: 14px;
         color: var(--color-grey-text);
     }

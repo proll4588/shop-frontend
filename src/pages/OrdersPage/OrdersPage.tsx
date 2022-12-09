@@ -235,7 +235,7 @@ const OrdersPage: FC<OrdersPageProps> = () => {
         search: dbSearch,
     }
 
-    const { orderList, error, isCreateLoading: loading } = useOrder(variables)
+    const { orderList, error, isGetLoading: loading } = useOrder(variables)
 
     const nextPage = () => {
         setPage((prev) => prev + 1)

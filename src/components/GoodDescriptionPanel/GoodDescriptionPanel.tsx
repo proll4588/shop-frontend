@@ -30,7 +30,7 @@ const Head: FC<HeadProps> = ({ onChange, currentPage }) => {
                 }}
             >
                 <h4 className={styles.GoodDescriptionPanel__headTitle}>
-                    Description
+                    Описание
                 </h4>
                 <div
                     className={classNames(
@@ -49,7 +49,7 @@ const Head: FC<HeadProps> = ({ onChange, currentPage }) => {
                 }}
             >
                 <h4 className={styles.GoodDescriptionPanel__headTitle}>
-                    Characteristics
+                    Характеристики
                 </h4>
                 <div
                     className={classNames(
@@ -68,7 +68,7 @@ const Head: FC<HeadProps> = ({ onChange, currentPage }) => {
                 }}
             >
                 <h4 className={styles.GoodDescriptionPanel__headTitle}>
-                    Reviews
+                    Отзывы
                 </h4>
                 <div
                     className={classNames(
@@ -97,13 +97,15 @@ const GoodDescriptionPanel: FC<GoodDescriptionPanelProps> = ({
                     currentPage={page}
                     onChange={setPage}
                 />
-                {page === Pages.DESCRIPTION && (
-                    <DescriptionTab descriprion={description} />
-                )}
-                {page === Pages.CHARACTERISTICS && (
-                    <CharacteristicsTab characteristics={characteristics} />
-                )}
-                {page === Pages.REVIEWS && <Rating />}
+                <div className={styles.GoodDescriptionPanel__content}>
+                    {page === Pages.DESCRIPTION && (
+                        <DescriptionTab descriprion={description} />
+                    )}
+                    {page === Pages.CHARACTERISTICS && (
+                        <CharacteristicsTab characteristics={characteristics} />
+                    )}
+                    {page === Pages.REVIEWS && <Rating />}
+                </div>
             </div>
         </div>
     )

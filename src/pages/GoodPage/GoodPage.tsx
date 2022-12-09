@@ -54,7 +54,7 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                 <div className={styles.GoodDescription__brand}>
                     <div className={styles.GoodDescription__brandLeft}>
                         <div className={styles.GoodDescription__brandTitle}>
-                            Brand
+                            Производитель
                         </div>
 
                         <div className={styles.GoodDescription__brandName}>

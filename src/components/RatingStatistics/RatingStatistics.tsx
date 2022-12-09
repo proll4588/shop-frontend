@@ -27,7 +27,7 @@ const RatingStatistics: FC<RatingStatisticsProps> = ({ ratings }) => {
                     </div>
                     <Stars num={Math.floor(aver)} />
                     <div className={styles.RatingStatistics__numRev}>
-                        {ratings.length} reviews
+                        {ratings.length} отзывов
                     </div>
                 </div>
                 <div className={styles.RatingStatistics__right}>

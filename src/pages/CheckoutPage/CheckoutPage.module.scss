@@ -114,6 +114,8 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+
+        gap: 10px;
     }
     &__link {
         color: var(--color-accent);
@@ -206,5 +208,44 @@
         font-size: 16px;
     }
     & {
+    }
+}
+
+@media (max-width: 930px) {
+    .CheckoutPage {
+        &__container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .CheckoutPart {
+        & {
+            padding-left: 20px;
+            padding-right: 10px;
+            padding-bottom: 20px;
+        }
+    }
+    .Sammery {
+        display: none;
+    }
+}
+
+@media (max-width: 620px) {
+    .PersonalDetails {
+        &__inputs {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .ShippingDetails {
+        &__inputs {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .PaymentMethod {
+        &__inputs {
+            grid-template-columns: 1fr;
+        }
     }
 }

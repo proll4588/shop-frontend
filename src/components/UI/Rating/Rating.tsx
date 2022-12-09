@@ -29,7 +29,7 @@ const RatingMini: FC<RatingFMProps> = ({ revNum, rating }) => {
                 <AiFillStar className={styles.Rating__YellowStar} />
                 <div className={styles.Rating__rating}>{rating}</div>
             </div>
-            <div className={styles.Rating__text}>{revNum} reviews</div>
+            <div className={styles.Rating__text}>{revNum} отзывов</div>
         </div>
     )
 }
