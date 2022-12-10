@@ -47,7 +47,7 @@ const Header: FC<HeaderProps> = () => {
                         <Input
                             value=''
                             type='text'
-                            placeholder='Search'
+                            placeholder='Поиск который не работает'
                             icon={<AiOutlineSearch />}
                             className={styles.Header__searchInput}
                         />

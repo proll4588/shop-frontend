@@ -28,16 +28,17 @@ const RegCard: FC<RegCardProps> = ({ onChange }) => {
     return (
         <div className={styles.RegCard}>
             <div className={styles.RegCard__container}>
-                <h2 className={styles.RegCard__title}>Create Account</h2>
+                <h2 className={styles.RegCard__title}>Регистрация</h2>
                 <h5 className={styles.RegCard__loginTitle}>
-                    Or use your email to registration
+                    Используйте электрнную почту
                 </h5>
                 <div className={styles.RegCard__inputBlock}>
                     <Input
                         type='text'
-                        placeholder='E-mail'
+                        placeholder='Эл. почта'
                         isError={
-                            error && error.message === 'User is already exist'
+                            error &&
+                            error.message === 'Пользователь уже существует'
                         }
                         value={email}
                         onChange={setEmail}
@@ -45,7 +46,7 @@ const RegCard: FC<RegCardProps> = ({ onChange }) => {
                     />
                     <Input
                         type='password'
-                        placeholder='Password'
+                        placeholder='Пароль'
                         value={password}
                         onChange={setPassword}
                         className={styles.RegCard__input}
@@ -53,7 +54,7 @@ const RegCard: FC<RegCardProps> = ({ onChange }) => {
                 </div>
 
                 <Checkbox
-                    lable='I agree to the Terms and Privacy Policy'
+                    lable='Я согласен с политикой компании (не обязательно)'
                     onChange={setRem}
                     state={rem}
                     className={styles.RegCard__check}
@@ -65,20 +66,19 @@ const RegCard: FC<RegCardProps> = ({ onChange }) => {
                         onClick={createAccount}
                         disable={loading}
                     >
-                        Sign Up
+                        Зарегестрироватся
                     </Button>
                     <Button
                         className={styles.RegCard__button}
                         secondary
                         onClick={onChange}
                     >
-                        Sign in
+                        Войти
                     </Button>
                 </div>
 
                 <p className={styles.RegCard__policy}>
-                    This site is protected by reCAPTCHA an th Google Privacy
-                    Policy an Terms of Service apply
+                    Бла бла бла бла бла бла бла и ещё много раз Блаааа
                 </p>
             </div>
         </div>

@@ -58,10 +58,10 @@ const DragPhoto: FC<DragPhotoProps> = ({ isLight = false }) => {
                 </div>
 
                 <h4 className={styles.DragPhoto__mainText}>
-                    Drag & Drop Your Photo
+                    Перенесите фото (Drag & Drop)
                 </h4>
                 <h5 className={styles.DragPhoto__subText}>
-                    File should be JPEG, PNG
+                    Файл должен быть формата JPEG или PNG
                 </h5>
             </div>
         </div>
@@ -116,27 +116,27 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                     onSubmit={handleSubmit(onSubmit)}
                     className={styles.PersonalInfoPage__form}
                 >
-                    <LabelInput label='First name'>
+                    <LabelInput label='Имя'>
                         <input
                             type='text'
-                            placeholder='First name'
+                            placeholder='Имя'
                             {...register('fname', {
                                 maxLength: 80,
                             })}
                         />
                     </LabelInput>
 
-                    <LabelInput label='Last name'>
+                    <LabelInput label='Фамилия'>
                         <input
                             type='text'
-                            placeholder='Last name'
+                            placeholder='Фамилия'
                             {...register('lname', {
                                 maxLength: 100,
                             })}
                         />
                     </LabelInput>
 
-                    <LabelInput label='Email adress'>
+                    <LabelInput label='Адрес электронной почты'>
                         <input
                             type='text'
                             placeholder='Email'
@@ -146,10 +146,10 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                         />
                     </LabelInput>
 
-                    <LabelInput label='Mobile number'>
+                    <LabelInput label='Номер телефона'>
                         <input
                             type='tel'
-                            placeholder='Mobile number'
+                            placeholder='Номер телефона'
                             {...register('phone_number', {
                                 minLength: 6,
                                 maxLength: 12,
@@ -157,7 +157,7 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                         />
                     </LabelInput>
 
-                    <LabelInput label='Date of Birth'>
+                    <LabelInput label='Дата рождения'>
                         <input
                             type='date'
                             placeholder='Date of Birth'
@@ -165,7 +165,7 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                         />
                     </LabelInput>
 
-                    <LabelInput label='Gender'>
+                    <LabelInput label='Пол'>
                         <Controller
                             name='gender'
                             control={control}
@@ -178,11 +178,12 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                                                 : 1
                                             : undefined
                                     }
-                                    content={['man', 'woman']}
+                                    placeholder={'Пол'}
+                                    content={['Мужской', 'Женский']}
                                     onChange={(value) => {
-                                        if (value === 'man')
+                                        if (value === 'Мужской')
                                             field.onChange(true)
-                                        else if (value === 'woman')
+                                        else if (value === 'Женский')
                                             field.onChange(false)
                                     }}
                                 />
@@ -190,34 +191,34 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                         />
                     </LabelInput>
 
-                    <LabelInput label='Street address'>
+                    <LabelInput label='Адрес'>
                         <input
                             type='text'
-                            placeholder='Street address'
+                            placeholder='Улица, дом-квартира'
                             {...register('street')}
                         />
                     </LabelInput>
 
-                    <LabelInput label='ZIP Code'>
+                    <LabelInput label='Почтовый индекс'>
                         <input
                             type='number'
-                            placeholder='ZIP Code'
+                            placeholder='Почтовый индекс'
                             {...register('ZIP')}
                         />
                     </LabelInput>
 
-                    <LabelInput label='City'>
+                    <LabelInput label='Город'>
                         <input
                             type='text'
-                            placeholder='City'
+                            placeholder='Город'
                             {...register('city')}
                         />
                     </LabelInput>
 
-                    <LabelInput label='Country'>
+                    <LabelInput label='Страна'>
                         <input
                             type='text'
-                            placeholder='Country'
+                            placeholder='Страна'
                             {...register('country')}
                         />
                     </LabelInput>
@@ -228,11 +229,15 @@ const PersonalInfoPage: FC<PersonalInfoPageProps> = ({ userData }) => {
                     />
                 </form>
                 <div className={styles.PersonalInfoPage__dragndropContainer}>
-                    <LabelInput label='Your Photo'>
+                    <LabelInput label='Обноаление фотографии'>
                         <Dropzone
                             onDrop={([file]) =>
                                 uploadUserPhoto({ variables: { file } })
                             }
+                            accept={{
+                                'image/jpeg': [],
+                                'image/png': [],
+                            }}
                         >
                             {({
                                 getRootProps,

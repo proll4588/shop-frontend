@@ -13,19 +13,19 @@ import { NavLink } from 'react-router-dom'
 const menu = [
     {
         id: 1,
-        name: 'Personal Info',
+        name: 'Информация',
         icon: <BsFillPersonFill />,
         link: 'personalInfo',
     },
-    { id: 2, name: 'Favorite', icon: <AiOutlineHeart />, link: 'favorite' },
-    { id: 3, name: 'Orders', icon: <BsCardChecklist />, link: 'orders' },
-    {
-        id: 4,
-        name: 'Notification',
-        icon: <IoMdNotificationsOutline />,
-        link: 'notifications',
-    },
-    { id: 5, name: 'Payment', icon: <FaRegCreditCard />, link: 'payment' },
+    { id: 2, name: 'Избранное', icon: <AiOutlineHeart />, link: 'favorite' },
+    { id: 3, name: 'Заказы', icon: <BsCardChecklist />, link: 'orders' },
+    // {
+    //     id: 4,
+    //     name: 'Notification',
+    //     icon: <IoMdNotificationsOutline />,
+    //     link: 'notifications',
+    // },
+    // { id: 5, name: 'Payment', icon: <FaRegCreditCard />, link: 'payment' },
 ]
 
 const UserInfo = ({ userInfo }) => {
@@ -43,7 +43,11 @@ const UserInfo = ({ userInfo }) => {
             </div>
 
             <div className={styles.UserNav__userName}>
-                {`${fname} ${lname}`}
+                {fname && lname ? (
+                    <>{`${fname} ${lname}`}</>
+                ) : (
+                    <>id{userInfo.id}</>
+                )}
             </div>
 
             <div className={styles.UserNav__userEmail}>{email}</div>
@@ -71,7 +75,7 @@ const Nav = () => {
             <div className={styles.UserNav__navLogout}>
                 <NavElement
                     icon={<MdOutlineLogout />}
-                    name='Logout'
+                    name='Выйти'
                     // isActive={false}
                     link={'logout'}
                 />

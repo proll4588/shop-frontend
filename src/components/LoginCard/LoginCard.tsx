@@ -28,23 +28,23 @@ const LoginCard: FC<LoginCardProps> = ({ onChange }) => {
     return (
         <div className={styles.LoginCard}>
             <div className={styles.LoginCard__container}>
-                <h2 className={styles.LoginCard__title}>Sign in</h2>
-                <h5 className={styles.LoginCard__loginTitle}>Log in</h5>
+                <h2 className={styles.LoginCard__title}>Вход</h2>
+                {/* <h5 className={styles.LoginCard__loginTitle}>Log in</h5> */}
                 <div className={styles.LoginCard__inputBlock}>
                     <Input
                         type='text'
-                        placeholder='E-mail'
-                        isError={error && error.message === 'User is not found'}
+                        placeholder='Ел. почта'
+                        isError={
+                            error && error.message === 'Пользователь не найден'
+                        }
                         value={email}
                         onChange={setEmail}
                         className={styles.LoginCard__input}
                     />
                     <Input
                         type='password'
-                        placeholder='Password'
-                        isError={
-                            error && error.message === 'Password is not correct'
-                        }
+                        placeholder='Пароль'
+                        isError={error && error.message === 'Пароль не верный'}
                         value={password}
                         onChange={setPassword}
                         className={styles.LoginCard__input}
@@ -52,7 +52,7 @@ const LoginCard: FC<LoginCardProps> = ({ onChange }) => {
                 </div>
 
                 <Checkbox
-                    lable='Remember me'
+                    lable='Запомнить меня (всё равно запомнит)'
                     onChange={setRem}
                     state={rem}
                     className={styles.LoginCard__check}
@@ -64,21 +64,18 @@ const LoginCard: FC<LoginCardProps> = ({ onChange }) => {
                         onClick={loginAccount}
                         disable={loading}
                     >
-                        Sign In
+                        Войти
                     </Button>
                     <Button
                         className={styles.LoginCard__button}
                         secondary
                         onClick={onChange}
                     >
-                        Sign Up
+                        Зарегестрироватся
                     </Button>
                 </div>
 
-                <p className={styles.LoginCard__policy}>
-                    This site is protected by reCAPTCHA an th Google Privacy
-                    Policy an Terms of Service apply
-                </p>
+                <p className={styles.LoginCard__policy}>бла бла бла</p>
             </div>
         </div>
     )
