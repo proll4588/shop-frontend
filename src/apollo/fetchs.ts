@@ -4,6 +4,7 @@ import { gql } from '@apollo/client'
 import IAllFilters from '../interfaces/IResponseFilters.interface'
 import { ICharacteristics } from '../interfaces/characteristics.interface'
 
+export const PHOTO_PAHT = `http://${process.env.REACT_APP_IP}/images/usersPhoto/`
 export interface IGetAllGoodsTypes {
     types: IGlobalGoodsTypes[]
 }

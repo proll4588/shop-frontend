@@ -2,10 +2,8 @@ import { ApolloLink, concat, HttpLink } from '@apollo/client'
 import { createUploadLink } from 'apollo-upload-client'
 
 export const getLink = () => {
-    // const httpLink = new HttpLink({ uri: 'http://192.168.0.42:4000/graphql' })
     const httpLink = new createUploadLink({
-        uri: 'http://192.168.0.42:4000/graphql',
-        // uri: 'http://151.248.115.92:4000/graphql',
+        uri: `http://${process.env.REACT_APP_IP}/graphql`,
     })
 
     const authMiddleware = new ApolloLink((operation, forward) => {
