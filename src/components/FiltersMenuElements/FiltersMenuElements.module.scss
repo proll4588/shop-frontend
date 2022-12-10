@@ -6,7 +6,10 @@
     &__container {
     }
     &__head {
+        position: relative;
+
         height: 80px;
+        padding-right: 40px;
 
         display: flex;
         flex-direction: row;
@@ -22,6 +25,10 @@
         color: var(--color-light-text);
     }
     &__icon {
+        position: absolute;
+
+        right: 10px;
+
         font-size: 18px;
         color: var(--color-grey-text);
     }

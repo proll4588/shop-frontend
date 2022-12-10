@@ -8,6 +8,8 @@ export default interface FiltersMenuElementsProps {
     type: 'range' | 'list'
     data: IFilterListData | IFilterRangeData
 
+    isOpen?: boolean
+
     onChange?: (data: { min: number; max: number } | number[]) => void
     value?: { min: number; max: number } | number[]
 }

@@ -95,6 +95,7 @@ const FilterPanel: FC<FilterPanelProps> = ({ filters, onChange, value }) => {
                         title={filter.name}
                         data={filter.data}
                         type={filter.type}
+                        isOpen={false}
                         key={filter.id}
                         onChange={(val) => {
                             typeFilterHandler(filter.id, val)
