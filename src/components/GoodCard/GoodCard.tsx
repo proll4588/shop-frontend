@@ -59,11 +59,13 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
             >
                 <div className={styles.GoodCard__container}>
                     {/* Фото товара */}
-                    <img
-                        src={main_photo ? main_photo.photo : NO_PHOTO}
-                        alt={name}
-                        className={styles.GoodCard__photo}
-                    />
+                    <Link to={`/good/${id}`}>
+                        <img
+                            src={main_photo ? main_photo.photo : NO_PHOTO}
+                            alt={name}
+                            className={styles.GoodCard__photo}
+                        />
+                    </Link>
                     {/* ======== */}
 
                     {/* Имя, райтинг, производитель, тип */}
