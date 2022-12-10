@@ -399,7 +399,16 @@ const CheckoutForm: FC<CheckoutFormProps> = ({ user }) => {
                                 : 'Ваш заказ оформлен'
                         }
                     >
-                        {isCreateLoading && <Loader />}
+                        {isCreateLoading ? (
+                            <Loader />
+                        ) : (
+                            <Link
+                                to={'/account/orders'}
+                                className={styles.CheckoutForm__link2}
+                            >
+                                Перейти к списку заказов
+                            </Link>
+                        )}
                     </CheckoutPart>
                 )}
 
@@ -546,19 +555,50 @@ const CheckoutPage: FC<CheckoutPageProps> = () => {
 
     const { userData: user } = userData
 
+    let isFullInfo = false
+    if (user.address && user.phone_number && user.fname && user.lname) {
+        const { address } = user
+        isFullInfo = !!(
+            address.city &&
+            address.street &&
+            address.country &&
+            address.ZIP
+        )
+    }
+
     return (
         <div className={styles.CheckoutPage}>
-            <div className={styles.CheckoutPage__container}>
-                <div className={styles.CheckoutPage__left}>
-                    <CheckoutForm user={user} />
-                </div>
-
-                {cartList.length !== 0 && (
-                    <div className={styles.CheckoutPage__right}>
-                        <Sammery cartInfo={cartList} />
+            {isFullInfo ? (
+                <div className={styles.CheckoutPage__container}>
+                    <div className={styles.CheckoutPage__left}>
+                        <CheckoutForm user={user} />
                     </div>
-                )}
-            </div>
+
+                    {cartList.length !== 0 && (
+                        <div className={styles.CheckoutPage__right}>
+                            <Sammery cartInfo={cartList} />
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <div className={styles.CheckoutPage__noData}>
+                    Для оформления заказа необходимо заполнить:
+                    <ul className={styles.CheckoutPage__ul}>
+                        <li className={styles.CheckoutPage__li}>ФИО</li>
+                        <li className={styles.CheckoutPage__li}>Адресс</li>
+                        <li className={styles.CheckoutPage__li}>
+                            Номер телефона
+                        </li>
+                    </ul>
+                    Это можно сделать{' '}
+                    <Link
+                        to={'/account/personalInfo'}
+                        className={styles.CheckoutPage__link}
+                    >
+                        на странице профиля
+                    </Link>{' '}
+                </div>
+            )}
         </div>
     )
 }

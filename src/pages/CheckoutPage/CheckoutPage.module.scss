@@ -9,6 +9,29 @@
         grid-template-columns: calc(100% - 320px) 300px;
         grid-column-gap: 20px;
     }
+    &__noData {
+        color: var(--color-light-text);
+        font-size: 16px;
+
+        border-left: 2px solid var(--color-border-5);
+        padding-left: 20px;
+    }
+    &__link {
+        font-size: 16px;
+        color: var(--color-accent);
+
+        transition: var(--trans-time);
+        &:hover {
+            color: var(--color-hover);
+        }
+    }
+    &__ul {
+        padding: 10px 0;
+    }
+    &__li {
+        font-size: 16px;
+        margin-left: 10px;
+    }
 }
 
 .CheckoutPart {
@@ -119,6 +142,10 @@
     }
     &__link {
         color: var(--color-accent);
+    }
+    &__link2 {
+        color: var(--color-accent);
+        font-size: 16px;
     }
 }
 

@@ -7,15 +7,19 @@ const FavoriteList: FC<FavoriteListProps> = ({ goods }) => {
     return (
         <div className={styles.FavoriteList}>
             <div className={styles.FavoriteList__container}>
-                {goods.length
-                    ? goods.map((good) => (
-                          <GoodCard
-                              data={good}
-                              isFull={true}
-                              key={good.id}
-                          />
-                      ))
-                    : 'Товаров пока нет'}
+                {goods.length ? (
+                    goods.map((good) => (
+                        <GoodCard
+                            data={good}
+                            isFull={true}
+                            key={good.id}
+                        />
+                    ))
+                ) : (
+                    <div className={styles.FavoriteList__noData}>
+                        У вас пока не товаров в избранном
+                    </div>
+                )}
             </div>
         </div>
     )

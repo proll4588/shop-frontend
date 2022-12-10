@@ -17,63 +17,47 @@ const GoodsList: FC<GoodsListProps> = ({ data, onPanelOpen }) => {
 
     return (
         <div className={styles.GoodsList}>
-            <div className={styles.GoodsList__container}>
-                <div className={styles.GoodsList__head}>
-                    <Button
-                        secondary
-                        onClick={onPanelOpen}
-                        className={styles.GoodsList__btnFilter}
+            {!data.length ? (
+                <div className={styles.GoodsList__noData}>Товаров пока нет</div>
+            ) : (
+                <div className={styles.GoodsList__container}>
+                    <div className={styles.GoodsList__head}>
+                        <Button
+                            secondary
+                            onClick={onPanelOpen}
+                            className={styles.GoodsList__btnFilter}
+                            disable={!data.length}
+                        >
+                            Фильтры
+                        </Button>
+                        <GoodCardTypeSwitcher
+                            value={isFull}
+                            onChange={setIsFull}
+                        />
+                        <Dropdown
+                            content={sortNames}
+                            defaultVal={0}
+                            className={styles.GoodsList__sortSelector}
+                        />
+                    </div>
+
+                    <div
+                        className={styles.GoodsList__goodsContainer}
+                        style={{
+                            gridTemplateColumns:
+                                isFull || !data.length ? '1fr' : '',
+                        }}
                     >
-                        Filters
-                    </Button>
-                    <GoodCardTypeSwitcher
-                        value={isFull}
-                        onChange={setIsFull}
-                    />
-                    <Dropdown
-                        content={sortNames}
-                        defaultVal={0}
-                        className={styles.GoodsList__sortSelector}
-                    />
+                        {data.map((good) => (
+                            <GoodCard
+                                data={good}
+                                isFull={isFull}
+                                key={good.id}
+                            />
+                        ))}
+                    </div>
                 </div>
-
-                <div
-                    className={styles.GoodsList__goodsContainer}
-                    style={{
-                        gridTemplateColumns: isFull ? '1fr' : '',
-                    }}
-                >
-                    {data.length
-                        ? data.map((good) => (
-                              <GoodCard
-                                  data={good}
-                                  isFull={isFull}
-                                  key={good.id}
-                              />
-                          ))
-                        : 'Товаров пока нет'}
-
-                    {data.length
-                        ? data.map((good) => (
-                              <GoodCard
-                                  data={good}
-                                  isFull={isFull}
-                                  key={good.id}
-                              />
-                          ))
-                        : 'Товаров пока нет'}
-
-                    {data.length
-                        ? data.map((good) => (
-                              <GoodCard
-                                  data={good}
-                                  isFull={isFull}
-                                  key={good.id}
-                              />
-                          ))
-                        : 'Товаров пока нет'}
-                </div>
-            </div>
+            )}
         </div>
     )
 }
