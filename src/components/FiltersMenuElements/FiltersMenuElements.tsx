@@ -54,11 +54,13 @@ const RangeMenu: FC<RangeMenuProps> = ({ data, onChange, value }) => {
     const [max, setMax] = useState<number>(value ? value.max : null)
 
     const minChangeHandler = (val) => {
+        if (val.length > 8) return
         let a = val === '' ? null : Number(val)
         setMin(a)
     }
 
     const maxChangeHandler = (val) => {
+        if (val.length > 8) return
         let a = val === '' ? null : Number(val)
         setMax(a)
     }
@@ -75,7 +77,7 @@ const RangeMenu: FC<RangeMenuProps> = ({ data, onChange, value }) => {
         <div className={styles.RangeMenu}>
             <Input
                 type='number'
-                placeholder={String(data.min)}
+                placeholder={String(data.min) + 'р'}
                 value={convert(min)}
                 onChange={minChangeHandler}
                 className={styles.RangeMenu__input}
@@ -83,7 +85,7 @@ const RangeMenu: FC<RangeMenuProps> = ({ data, onChange, value }) => {
             <div className={styles.RangeMenu__text}>-</div>
             <Input
                 type='number'
-                placeholder={String(data.max)}
+                placeholder={String(data.max) + 'р'}
                 value={convert(max)}
                 onChange={maxChangeHandler}
                 className={styles.RangeMenu__input}
@@ -98,8 +100,9 @@ const FiltersMenuElements: FC<FiltersMenuElementsProps> = ({
     data,
     onChange,
     value,
+    isOpen = true,
 }) => {
-    const [isFull, setIsFull] = useState<boolean>(true)
+    const [isFull, setIsFull] = useState<boolean>(isOpen)
     const [state, setState] = useState<number[] | { min: number; max: number }>(
         value ? value : null
     )
