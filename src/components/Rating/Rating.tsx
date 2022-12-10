@@ -5,6 +5,7 @@ import { GET_GOOD_RATING, GET_USER_DATA } from '../../apollo/fetchs'
 import RatingCreater from '../RatingCreater/RatingCreater'
 import RatingStatistics from '../RatingStatistics/RatingStatistics'
 import RatingWiever from '../RatingWiever/RatingWiever'
+import Loader from '../UI/Loader/Loader'
 import styles from './Rating.module.scss'
 import RatingProps from './Rating.props'
 
@@ -17,7 +18,7 @@ const Rating: FC<RatingProps> = () => {
     })
     const userData = useQuery(GET_USER_DATA)
 
-    if (loading) return <>Loading</>
+    if (loading) return <Loader />
     if (error) return <>error</>
 
     return (

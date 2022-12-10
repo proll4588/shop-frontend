@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import { AiFillStar } from 'react-icons/ai'
 import { MdDeleteOutline } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
+import { PHOTO_PAHT } from '../../apollo/fetchs'
 import useRating from '../../hooks/rating.hook'
 import Button from '../UI/Button/Button'
 import Square from '../UI/Square/Square'
@@ -61,7 +62,7 @@ const RatingCreater: FC<RatingCreaterProps> = ({ user, rating }) => {
     name += user.lname ? user.lname : ''
 
     if (!name.length) {
-        name = String(user.id)
+        name = 'id' + String(user.id)
     }
 
     const clickHandler = () => {
@@ -81,7 +82,7 @@ const RatingCreater: FC<RatingCreaterProps> = ({ user, rating }) => {
                         <div className={styles.RatingCreater__photoContaienr}>
                             {user.photo && (
                                 <img
-                                    src={user.photo}
+                                    src={PHOTO_PAHT + user.photo}
                                     alt={user.fname}
                                     className={styles.RatingCreater__photo}
                                 />

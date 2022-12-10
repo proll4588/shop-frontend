@@ -1,8 +1,6 @@
-import { useQuery } from '@apollo/client'
 import classNames from 'classnames'
 import React, { FC, useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { GET_ORDERS } from '../../apollo/fetchs'
 import Button from '../../components/UI/Button/Button'
 import Dropdown from '../../components/UI/Dropdown/Dropdown'
 import Input from '../../components/UI/Input/Input'
@@ -58,7 +56,7 @@ const FilterPanel: FC<FilterPanelProps> = ({ onChangeFilte, onChangeText }) => {
                     value={search}
                     onChange={setSearch}
                     icon={<AiOutlineSearch />}
-                    placeholder='Search for Order ID, item'
+                    placeholder='Поиск по ID заказа, названию товара'
                     className={styles.FilterPanel__input}
                 />
                 <Dropdown

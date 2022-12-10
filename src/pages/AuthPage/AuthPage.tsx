@@ -9,7 +9,7 @@ import AuthPageProps from './AuthPage.props'
 
 const AuthPage: FC<AuthPageProps> = () => {
     const token = useRecoilValue(tokenAtom)
-    const [isLogin, setIsLogin] = useState(false)
+    const [isLogin, setIsLogin] = useState(true)
 
     const changeAuthForm = () => {
         setIsLogin((prev) => !prev)
