@@ -121,7 +121,13 @@ const GoodTypeList: FC<GoodTypeListProps> = ({ localTypes }) => {
                                                 styles.GoodTypeList__subListElementName
                                             }
                                         >
-                                            {sub.name}
+                                            <div
+                                                className={
+                                                    styles.GoodTypeList__subListElementName
+                                                }
+                                            >
+                                                {sub.name}
+                                            </div>
                                         </Link>
                                     </li>
                                 ))}
