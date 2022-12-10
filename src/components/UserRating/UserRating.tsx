@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { PHOTO_PAHT } from '../../apollo/fetchs'
 import Stars from '../UI/Stars/Stars'
 import styles from './UserRating.module.scss'
 import UserRatingProps from './UserRating.props'
@@ -12,7 +13,7 @@ const UserRating: FC<UserRatingProps> = ({ rating }) => {
     name += user.lname ? user.lname : ''
 
     if (!name.length) {
-        name = String(user.id)
+        name = 'id' + String(user.id)
     }
 
     return (
@@ -22,7 +23,7 @@ const UserRating: FC<UserRatingProps> = ({ rating }) => {
                     <div className={styles.UserRating__photoContaienr}>
                         {user.photo && (
                             <img
-                                src={user.photo}
+                                src={PHOTO_PAHT + user.photo}
                                 alt={user.fname}
                                 className={styles.UserRating__photo}
                             />

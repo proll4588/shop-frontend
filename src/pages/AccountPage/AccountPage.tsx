@@ -3,7 +3,7 @@ import { errorMonitor } from 'events'
 import React, { FC } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { GET_USER_DATA } from '../../apollo/fetchs'
+import { GET_USER_DATA, PHOTO_PAHT } from '../../apollo/fetchs'
 import tokenAtom from '../../atoms/token.atom'
 import Loader from '../../components/UI/Loader/Loader'
 import UserNav from '../../components/UserNav/UserNav'
@@ -45,10 +45,11 @@ const AccountPage: FC<AccountPageProps> = () => {
                 {/* TODO: Может не быть имени и фамилии */}
                 <UserNav
                     userInfo={{
+                        id: userData.id,
                         email: userData.email,
                         fname: userData.fname,
                         lname: userData.lname,
-                        photo: userData.photo,
+                        photo: PHOTO_PAHT + userData.photo,
                     }}
                 />
                 <Routes>
