@@ -4,10 +4,15 @@ import React, { FC, useLayoutEffect, useState } from 'react'
 import { AiOutlineUnorderedList } from 'react-icons/ai'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import { GET_ALL_GOODS_TYPES, IGetAllGoodsTypes } from '../../apollo/fetchs'
+import {
+    GET_ALL_GOODS_TYPES,
+    IGetAllGoodsTypes,
+    TYPE_PATH,
+} from '../../apollo/fetchs'
 import {
     IGlobalGoodsTypes,
     ILocalGoodsTypes,
+    ISubGoodsTypes,
 } from '../../interfaces/goodsTypes.interface'
 import styles from './TypePage.module.scss'
 import TypePageProps from './TypePage.props'
@@ -90,6 +95,8 @@ interface GoodTypeListProps {
     localTypes: ILocalGoodsTypes[]
 }
 const GoodTypeList: FC<GoodTypeListProps> = ({ localTypes }) => {
+    console.log(localTypes)
+
     return (
         <div className={styles.GoodTypeList}>
             <div className={styles.GoodTypeList__container}>
@@ -121,13 +128,7 @@ const GoodTypeList: FC<GoodTypeListProps> = ({ localTypes }) => {
                                                 styles.GoodTypeList__subListElementName
                                             }
                                         >
-                                            <div
-                                                className={
-                                                    styles.GoodTypeList__subListElementName
-                                                }
-                                            >
-                                                {sub.name}
-                                            </div>
+                                            <SubTypeCard subType={sub} />
                                         </Link>
                                     </li>
                                 ))}
@@ -135,6 +136,28 @@ const GoodTypeList: FC<GoodTypeListProps> = ({ localTypes }) => {
                         </li>
                     ))}
                 </ul>
+            </div>
+        </div>
+    )
+}
+
+interface SubTypeCardProps {
+    subType: ISubGoodsTypes
+}
+const SubTypeCard: FC<SubTypeCardProps> = ({ subType }) => {
+    return (
+        <div className={styles.SubTypeCard}>
+            <div className={styles.SubTypeCard__container}>
+                <div className={styles.SubTypeCard__photoContainer}>
+                    {!!subType.photo && (
+                        <img
+                            src={TYPE_PATH + subType.photo}
+                            alt={subType.name}
+                            className={styles.SubTypeCard__img}
+                        />
+                    )}
+                </div>
+                <div className={styles.SubTypeCard__name}>{subType.name}</div>
             </div>
         </div>
     )
