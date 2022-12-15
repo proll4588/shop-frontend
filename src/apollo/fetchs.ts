@@ -5,6 +5,9 @@ import IAllFilters from '../interfaces/IResponseFilters.interface'
 import { ICharacteristics } from '../interfaces/characteristics.interface'
 
 export const PHOTO_PAHT = `http://${process.env.REACT_APP_IP}/images/usersPhoto/`
+export const GOODS_PATH = `http://${process.env.REACT_APP_IP}/images/goodsPhoto/`
+export const TYPE_PATH = `http://${process.env.REACT_APP_IP}/images/typePhoto/`
+
 export interface IGetAllGoodsTypes {
     types: IGlobalGoodsTypes[]
 }

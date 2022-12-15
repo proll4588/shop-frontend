@@ -129,9 +129,9 @@ const GoodsTable: FC<GoodsTableProps> = ({
         <div className={styles.GoodsTable}>
             <div className={styles.GoodsTable__container}>
                 <div className={styles.GoodsTable__head}>
-                    <h5 className={styles.GoodsTable__headItem}>Item</h5>
-                    <h5 className={styles.GoodsTable__headItem}>Qty</h5>
-                    <h5 className={styles.GoodsTable__headItem}>Subtotal</h5>
+                    <h5 className={styles.GoodsTable__headItem}>Товар</h5>
+                    <h5 className={styles.GoodsTable__headItem}>Кол-во</h5>
+                    <h5 className={styles.GoodsTable__headItem}>Цена</h5>
                 </div>
 
                 <div className={styles.GoodsTable__body}>

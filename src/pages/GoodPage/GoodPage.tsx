@@ -121,6 +121,7 @@ const GoodDescription: FC<GoodDescriptionProps> = ({ data }) => {
                             !!favoriteList &&
                             !!favoriteList.find((el) => el.id === data.id)
                         }
+                        disable={!isAuth}
                     />
                     {inCart ? (
                         <Button
