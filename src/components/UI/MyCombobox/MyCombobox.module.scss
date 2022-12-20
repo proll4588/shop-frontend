@@ -1,0 +1,74 @@
+.MyCombobox {
+    & {
+        width: 320px;
+    }
+    &__container {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &__inputContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    &__button {
+        width: 50px;
+
+        background-color: var(--color-bg);
+
+        border: 1px solid var(--color-border-1);
+        border-radius: 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: var(--color-grey-text);
+
+        cursor: pointer;
+
+        transition: var(--trans-time);
+
+        &:hover {
+            border-color: var(--color-border-2);
+            color: var(--color-light-text);
+        }
+    }
+    &__list {
+        position: absolute;
+
+        top: 60px;
+
+        width: 100%;
+
+        padding: 6px;
+
+        background-color: var(--color-bg);
+
+        border: 1px solid var(--color-border-1);
+        border-radius: 10px;
+    }
+    &__element {
+        // border: 1px solid var(--color-border-1);
+        padding: 10px 16px;
+
+        border-radius: 10px;
+
+        color: var(--color-light-text);
+
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--color-accent);
+        }
+
+        &_active {
+            background-color: var(--color-accent);
+        }
+    }
+    & {
+    }
+}
