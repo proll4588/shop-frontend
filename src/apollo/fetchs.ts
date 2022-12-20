@@ -33,8 +33,8 @@ export const GET_ALL_GOODS_TYPES = gql`
 
 // Марально устарело и вообще не надо
 export const GET_GOODS = gql`
-    query GetGoods($search: String, $subId: Int) {
-        goods(search: $search, subId: $subId) {
+    query GetGoods($search: String, $skip: Int, $take: Int) {
+        getGoods(search: $search, skip: $skip, take: $take) {
             id
             name
             description
@@ -846,6 +846,39 @@ export const GET_ORDERS = gql`
                     }
                 }
             }
+        }
+    }
+`
+
+export const SET_MAIN_GOOD_PHOTO = gql`
+    mutation UploadMainGoodPhoto($file: Upload!, $goodId: Int!) {
+        uploadMainGoodPhoto(file: $file, goodId: $goodId) {
+            id
+        }
+    }
+`
+
+export const ADD_GOOD_PHOTO = gql`
+    mutation UploadGoodPhoto($file: Upload!, $goodId: Int!) {
+        uploadGoodPhoto(file: $file, goodId: $goodId) {
+            id
+        }
+    }
+`
+
+export const REMOVE_GOOD_PHOTO = gql`
+    mutation DeleteGoodPhoto($photoId: Int!) {
+        deleteGoodPhoto(photoId: $photoId) {
+            id
+        }
+    }
+`
+
+export const GET_BRANDS = gql`
+    query GetBrands($search: String) {
+        getBrands(search: $search) {
+            id
+            name
         }
     }
 `
