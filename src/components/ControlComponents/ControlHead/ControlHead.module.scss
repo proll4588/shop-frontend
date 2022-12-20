@@ -1,6 +1,61 @@
 .ControlHead {
     & {
+        height: 50px;
+
+        border-bottom: 1px solid var(--color-border-1);
+
+        margin-bottom: 30px;
     }
     &__container {
+        position: relative;
+        height: 100%;
+
+        max-width: 1280px;
+        margin: auto;
+        padding: 10px 10px;
+    }
+    &__list {
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        flex-direction: row;
+        // gap: 20px;
+    }
+    &__element {
+        font-size: 16px;
+        color: var(--color-grey-text);
+
+        padding: 0 10px;
+
+        cursor: pointer;
+
+        transition: var(--trans-time);
+
+        &_active {
+            color: var(--color-light-text);
+        }
+    }
+    &__selector {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        height: 100%;
+        width: 100px;
+
+        border-radius: 10px;
+
+        background-color: var(--color-accent);
+
+        z-index: -1;
+
+        transition: var(--trans-time);
+    }
+    & {
+    }
+    & {
     }
 }
