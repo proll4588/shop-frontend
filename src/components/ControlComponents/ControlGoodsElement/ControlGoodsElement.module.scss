@@ -18,6 +18,8 @@
         // justify-content: space-between;
         display: grid;
         grid-template-columns: 0.2fr 1fr 1fr 1fr 0.4fr;
+
+        color: var(--color-grey-text);
     }
 
     &__id {

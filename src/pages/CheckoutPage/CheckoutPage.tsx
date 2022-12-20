@@ -10,9 +10,9 @@ import useOrder, { ORDER_TYPES, PAY_STATUSES } from '../../hooks/order.hook'
 import { IGood } from '../../interfaces/good.interface'
 import { IUser } from '../../interfaces/user.interface'
 import { SammeryLine } from '../CartPage'
-import { LabelInput } from '../PersonalInfoPage'
 import styles from './CheckoutPage.module.scss'
 import CheckoutPageProps from './CheckoutPage.props'
+import { LabelInput } from '../../components/LabelInput'
 
 const borderDefault = (e) => {
     e.target.className = ''

@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import ControlHead from '../components/ControlComponents/ControlHead/ControlHead'
 import GoodRedactorPage from '../pages/GoodRedactorPage/GoodRedactorPage'
 import GoodsRedactor from '../pages/GoodsRedactor/GoodsRedactor'
+import './ControlLayout.module.scss'
 
 const ControlLayout = () => {
     return (

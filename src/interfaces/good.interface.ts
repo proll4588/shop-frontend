@@ -25,7 +25,7 @@ export interface IGood {
 }
 
 export interface IPhoto {
-    id?: number
+    id: number
     goods_catalog_id?: number
     photo: string
 }

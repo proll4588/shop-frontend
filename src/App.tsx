@@ -9,13 +9,14 @@ export enum appTypes {
 }
 
 const App = () => {
+    const [appType, setAppType] = useState<appTypes>(appTypes.CONTROL)
     // const [appType, setAppType] = useState<appTypes>(appTypes.SHOP)
     // const appType = appTypes.SHOP
 
     return (
         <div className='App'>
-            {/* {appType === appTypes.SHOP ? <ShopLayout /> : <ControlLayout />} */}
-            <ShopLayout />
+            {appType === appTypes.SHOP ? <ShopLayout /> : <ControlLayout />}
+            {/* <ShopLayout /> */}
         </div>
     )
 }

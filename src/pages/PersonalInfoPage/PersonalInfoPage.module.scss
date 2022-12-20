@@ -21,18 +21,6 @@
     }
 }
 
-.LabelInput {
-    & {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    &__label {
-        font-size: 16px;
-        color: var(--color-light-text);
-    }
-}
-
 .DragPhoto {
     & {
         width: 100%;

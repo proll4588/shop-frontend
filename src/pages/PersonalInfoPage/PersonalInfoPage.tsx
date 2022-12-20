@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/client'
 import { UPDATE_USER_DATA, UPLOAD_USER_PHOTO } from '../../apollo/fetchs'
 import { AiOutlineFileImage } from 'react-icons/ai'
 import classNames from 'classnames'
+import { LabelInput } from '../../components/LabelInput'
 
 const generateUserDataObj = (data) => {
     let ans = { user: { ...data }, address: undefined }
@@ -64,19 +65,6 @@ const DragPhoto: FC<DragPhotoProps> = ({ isLight = false }) => {
                     Файл должен быть формата JPEG или PNG
                 </h5>
             </div>
-        </div>
-    )
-}
-
-interface LabelInputProps {
-    label: string
-    children: ReactNode
-}
-export const LabelInput: FC<LabelInputProps> = ({ label, children }) => {
-    return (
-        <div className={styles.LabelInput}>
-            <label className={styles.LabelInput__label}>{label}</label>
-            {children}
         </div>
     )
 }

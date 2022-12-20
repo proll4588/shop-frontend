@@ -4,6 +4,7 @@ import React, { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
     GET_DATA_FOR_GOOD_PAGE,
+    GOODS_PATH,
     IGetDataForGoodPage,
 } from '../../apollo/fetchs'
 import Button from '../../components/UI/Button/Button'
@@ -152,7 +153,7 @@ interface GoodPhotoProps {
 }
 const GoodPhoto: FC<GoodPhotoProps> = ({ photos }) => {
     const photoList = photos.map((p, i) => ({ id: i, photo: p }))
-    const photoGallary = photos.map((el) => ({ original: el }))
+    const photoGallary = photos.map((el) => ({ original: GOODS_PATH + el }))
     const [selectedPhoto, setSelectedPhoto] = useState(photoList[0])
 
     return (
@@ -173,7 +174,7 @@ const GoodPhoto: FC<GoodPhotoProps> = ({ photos }) => {
                                                 ? styles.GoodPhoto__photoElement_active
                                                 : ''
                                         )}
-                                        src={photo.photo}
+                                        src={GOODS_PATH + photo.photo}
                                         alt='p1'
                                         onClick={() => {
                                             setSelectedPhoto(photo)
@@ -192,7 +193,7 @@ const GoodPhoto: FC<GoodPhotoProps> = ({ photos }) => {
                         <>
                             <img
                                 className={styles.GoodPhoto__photo}
-                                src={selectedPhoto.photo}
+                                src={GOODS_PATH + selectedPhoto.photo}
                                 alt='photo1'
                             />
                             <div className={styles.GoodPhoto__gallaryContainer}>

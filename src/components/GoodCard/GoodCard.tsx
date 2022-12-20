@@ -10,6 +10,7 @@ import FavoriteButton from '../UI/FavoriteButton/FavoriteButton'
 import Rating from '../UI/Rating/Rating'
 import styles from './GoodCard.module.scss'
 import GoodCardProps from './GoodCard.props'
+import { GOODS_PATH } from '../../apollo/fetchs'
 
 const NO_PHOTO =
     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'
@@ -61,7 +62,11 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
                     {/* Фото товара */}
                     <Link to={`/good/${id}`}>
                         <img
-                            src={main_photo ? main_photo.photo : NO_PHOTO}
+                            src={
+                                main_photo
+                                    ? GOODS_PATH + main_photo.photo
+                                    : NO_PHOTO
+                            }
                             alt={name}
                             className={styles.GoodCard__photo}
                         />
@@ -166,11 +171,17 @@ const GoodCard: FC<GoodCardProps> = ({ data, isFull, className }) => {
             <div className={styles.FullGoodCard}>
                 <div className={styles.FullGoodCard__container}>
                     <div className={styles.FullGoodCard__photoContainer}>
-                        <img
-                            src={main_photo ? main_photo.photo : NO_PHOTO}
-                            alt={name}
-                            className={styles.FullGoodCard__photo}
-                        />
+                        <Link to={`/good/${id}`}>
+                            <img
+                                src={
+                                    main_photo
+                                        ? GOODS_PATH + main_photo.photo
+                                        : NO_PHOTO
+                                }
+                                alt={name}
+                                className={styles.FullGoodCard__photo}
+                            />
+                        </Link>
                     </div>
 
                     <div className={styles.FullGoodCard__infoContainer}>

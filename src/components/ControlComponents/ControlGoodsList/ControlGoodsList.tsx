@@ -18,6 +18,7 @@ const ControlGoodsList: FC<ControlGoodsListProps> = ({ data }) => {
                         <ControlGoodsElement data={good} />
                     </Link>
                 ))}
+                {/* <AddElement /> */}
 
                 {/* <TableContainer component={Paper}>
                     <Table
