@@ -50,6 +50,8 @@
 
         border: 1px solid var(--color-border-1);
         border-radius: 10px;
+
+        z-index: 1;
     }
     &__element {
         // border: 1px solid var(--color-border-1);
@@ -69,6 +71,7 @@
             background-color: var(--color-accent);
         }
     }
-    & {
+    &__input {
+        z-index: 0;
     }
 }
