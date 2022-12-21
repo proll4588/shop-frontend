@@ -7,6 +7,7 @@ import { ICharacteristics } from '../interfaces/characteristics.interface'
 export const PHOTO_PAHT = `http://${process.env.REACT_APP_IP}/images/usersPhoto/`
 export const GOODS_PATH = `http://${process.env.REACT_APP_IP}/images/goodsPhoto/`
 export const TYPE_PATH = `http://${process.env.REACT_APP_IP}/images/typePhoto/`
+export const LOGO_PATH = `http://${process.env.REACT_APP_IP}/images/brandsLogo/`
 
 export interface IGetAllGoodsTypes {
     types: IGlobalGoodsTypes[]
@@ -879,6 +880,88 @@ export const GET_BRANDS = gql`
         getBrands(search: $search) {
             id
             name
+        }
+    }
+`
+
+export const CREATE_BRAND = gql`
+    mutation CreateBrand($name: String!, $logo: String) {
+        createBrand(name: $name, logo: $logo) {
+            id
+            name
+            logo
+        }
+    }
+`
+
+export const UPLOAD_BRAND_LOGO = gql`
+    mutation UploadLogoForNewBrand($file: Upload!) {
+        uploadLogoForNewBrand(file: $file)
+    }
+`
+
+export const SEARCH_TYPE = gql`
+    query GetGoodTypesBySearch($search: String!) {
+        getGoodTypesBySearch(search: $search) {
+            name
+            id
+        }
+    }
+`
+
+export const UPDATE_GOOD_DATA = gql`
+    mutation UpdateGoodData(
+        $goodId: Int!
+        $description: String
+        $name: String
+        $subTypeId: Int
+        $brandId: Int
+    ) {
+        updateGoodData(
+            goodId: $goodId
+            description: $description
+            name: $name
+            subTypeId: $subTypeId
+            brandId: $brandId
+        ) {
+            id
+            name
+            main_photo {
+                id
+                goods_catalog_id
+                photo
+            }
+            all_photos {
+                id
+                goods_catalog_id
+                photo
+            }
+            current_price {
+                price
+                discount
+            }
+            all_prices {
+                price
+                discount
+            }
+            brands {
+                id
+                name
+                logo
+            }
+            sub_type_goods {
+                id
+                name
+                photo
+            }
+            avg_rating {
+                count
+                avg
+            }
+            storage {
+                count
+            }
+            description
         }
     }
 `
