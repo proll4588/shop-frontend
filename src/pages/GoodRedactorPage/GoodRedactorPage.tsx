@@ -5,12 +5,14 @@ import {
     ADD_GOOD_PHOTO,
     CREATE_BRAND,
     GET_BRANDS,
+    GET_DATA_FOR_GOOD_PAGE,
     GET_GOOD,
     GOODS_PATH,
     REMOVE_GOOD_PHOTO,
     SEARCH_TYPE,
     SET_MAIN_GOOD_PHOTO,
     UPDATE_GOOD_DATA,
+    UPDATE_GOOD_PRICE,
     UPLOAD_BRAND_LOGO,
 } from '../../apollo/fetchs'
 import styles from './GoodRedactorPage.module.scss'
@@ -24,6 +26,17 @@ import { LabelInput } from '../../components/LabelInput'
 import MyCombobox from '../../components/UI/MyCombobox/MyCombobox'
 import Button from '../../components/UI/Button/Button'
 import { Dialog, Transition } from '@headlessui/react'
+import {
+    AreaChart,
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from 'recharts'
 
 interface OtherPhotoProps {
     photo: {
@@ -147,20 +160,29 @@ const Photo: FC<PhotoProps> = ({ mainPhoto, otherPhoto }) => {
         SET_MAIN_GOOD_PHOTO,
         {
             refetchQueries: [
-                { query: GET_GOOD, variables: { goodId: Number(id) } },
+                {
+                    query: GET_DATA_FOR_GOOD_PAGE,
+                    variables: { goodId: Number(id) },
+                },
             ],
         }
     )
 
     const [addPhoto, addData] = useMutation(ADD_GOOD_PHOTO, {
         refetchQueries: [
-            { query: GET_GOOD, variables: { goodId: Number(id) } },
+            {
+                query: GET_DATA_FOR_GOOD_PAGE,
+                variables: { goodId: Number(id) },
+            },
         ],
     })
 
     const [removePhoto, removeData] = useMutation(REMOVE_GOOD_PHOTO, {
         refetchQueries: [
-            { query: GET_GOOD, variables: { goodId: Number(id) } },
+            {
+                query: GET_DATA_FOR_GOOD_PAGE,
+                variables: { goodId: Number(id) },
+            },
         ],
     })
 
@@ -416,7 +438,10 @@ const Description: FC<DescriptionProps> = ({ good }) => {
     } = useForm()
     const [update, updateData] = useMutation(UPDATE_GOOD_DATA, {
         refetchQueries: [
-            { query: GET_GOOD, variables: { goodId: Number(id) } },
+            {
+                query: GET_DATA_FOR_GOOD_PAGE,
+                variables: { goodId: Number(id) },
+            },
         ],
     })
 
@@ -500,29 +525,6 @@ const Description: FC<DescriptionProps> = ({ good }) => {
                             </LabelInput>
                         </div>
                     </div>
-
-                    {/* TODO: в отьельный раздел */}
-                    {/* <div className={styles.Description__priceContainer}>
-                        <LabelInput label='Цена'>
-                            <input
-                                type='number'
-                                defaultValue={good.current_price.price}
-                                {...register('price', { required: true })}
-                            />
-                        </LabelInput>
-
-                        <LabelInput label='Цена с учётом скидки'>
-                            <input
-                                type='number'
-                                defaultValue={
-                                    good.current_price.discount
-                                        ? good.current_price.discount
-                                        : ''
-                                }
-                                {...register('discount', { required: false })}
-                            />
-                        </LabelInput>
-                    </div> */}
                     <input
                         type='submit'
                         value={'Применить изменения'}
@@ -533,9 +535,140 @@ const Description: FC<DescriptionProps> = ({ good }) => {
     )
 }
 
+interface PriceChartProps {
+    allPrices: {
+        date: string
+        price: number
+        discount?: number
+    }[]
+}
+const PriceChart: FC<PriceChartProps> = ({ allPrices }) => {
+    const data = allPrices.map((el) => {
+        const date = new Date(el.date)
+        const dateStr =
+            date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate()
+        const price = el.discount || el.price
+
+        return { date: dateStr, price: price }
+    })
+
+    return (
+        <ResponsiveContainer
+            width={'100%'}
+            height={'100%'}
+        >
+            <LineChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                }}
+            >
+                <CartesianGrid strokeDasharray='3 3' />
+                <XAxis dataKey='date' />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                    type='monotone'
+                    dataKey='price'
+                    stroke='#8884d8'
+                    activeDot={{ r: 8 }}
+                />
+            </LineChart>
+        </ResponsiveContainer>
+    )
+}
+
+interface PriceProps {
+    currentPrice: {
+        date: string
+        price: number
+        discount?: number
+    }
+    allPrices: {
+        date: string
+        price: number
+        discount?: number
+    }[]
+}
+const Price: FC<PriceProps> = ({ allPrices, currentPrice }) => {
+    const { id } = useParams()
+
+    const [price, setPrice] = useState(String(currentPrice.price))
+    const [discount, setDiscount] = useState(
+        currentPrice.discount ? String(currentPrice.discount) : ''
+    )
+
+    const [updatePrice, updateData] = useMutation(UPDATE_GOOD_PRICE, {
+        refetchQueries: [
+            {
+                query: GET_DATA_FOR_GOOD_PAGE,
+                variables: { goodId: Number(id) },
+            },
+        ],
+    })
+
+    const priceChangeHandler = (e) => {
+        setPrice(e.target.value)
+    }
+
+    const discountChangeHandler = (e) => {
+        setDiscount(e.target.value)
+    }
+
+    const change = () => {
+        updatePrice({
+            variables: {
+                goodId: Number(id),
+                price: Number(price),
+                discount: discount.length === 0 ? undefined : Number(discount),
+            },
+        })
+    }
+
+    return (
+        <div className={styles.Price}>
+            <div className={styles.Price__container}>
+                <div className={styles.Price__left}>
+                    <LabelInput label='Цена'>
+                        <input
+                            type='number'
+                            value={price}
+                            onChange={priceChangeHandler}
+                        />
+                    </LabelInput>
+
+                    <LabelInput label='Цена с учётом скидки'>
+                        <input
+                            type='number'
+                            value={discount}
+                            onChange={discountChangeHandler}
+                        />
+                    </LabelInput>
+                </div>
+                <div className={styles.Price__right}>
+                    <PriceChart allPrices={allPrices} />
+                </div>
+            </div>
+            <Button
+                secondary
+                className={styles.Price__btn}
+                onClick={change}
+            >
+                Изменить цену
+            </Button>
+        </div>
+    )
+}
+
 const GoodRedactorPage: FC<GoodRedactorPageProps> = () => {
     const { id } = useParams()
-    const { loading, error, data } = useQuery(GET_GOOD, {
+    const { loading, error, data } = useQuery(GET_DATA_FOR_GOOD_PAGE, {
         variables: { goodId: Number(id) },
     })
 
@@ -552,6 +685,10 @@ const GoodRedactorPage: FC<GoodRedactorPageProps> = () => {
                     otherPhoto={good.all_photos}
                 />
                 <Description good={good} />
+                <Price
+                    allPrices={good.all_prices}
+                    currentPrice={good.current_price}
+                />
             </div>
         </div>
     )

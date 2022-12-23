@@ -43,6 +43,8 @@ export const GET_GOODS = gql`
                 photo
             }
             current_price {
+                id
+                date
                 price
                 discount
             }
@@ -81,6 +83,8 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
                 photo
             }
             current_price {
+                id
+                date
                 price
                 discount
             }
@@ -183,10 +187,14 @@ export const GET_GOOD = gql`
                 photo
             }
             current_price {
+                id
+                date
                 price
                 discount
             }
             all_prices {
+                id
+                date
                 price
                 discount
             }
@@ -233,10 +241,14 @@ export const GET_DATA_FOR_GOOD_PAGE = gql`
                 photo
             }
             current_price {
+                id
+                date
                 price
                 discount
             }
             all_prices {
+                id
+                date
                 price
                 discount
             }
@@ -332,10 +344,14 @@ export const GET_FAVORITE = gql`
                 photo
             }
             current_price {
+                id
+                date
                 price
                 discount
             }
             all_prices {
+                id
+                date
                 price
                 discount
             }
@@ -437,6 +453,8 @@ export const GET_CART = gql`
                     photo
                 }
                 current_price {
+                    id
+                    date
                     price
                     discount
                 }
@@ -475,6 +493,8 @@ export const ADD_TO_CART = gql`
                     photo
                 }
                 current_price {
+                    id
+                    date
                     price
                     discount
                 }
@@ -513,6 +533,8 @@ export const REMOVE_FROM_CART = gql`
                     photo
                 }
                 current_price {
+                    id
+                    date
                     price
                     discount
                 }
@@ -551,6 +573,8 @@ export const CHANGE_CART = gql`
                     photo
                 }
                 current_price {
+                    id
+                    date
                     price
                     discount
                 }
@@ -589,6 +613,8 @@ export const GET_START_DATA = gql`
                     photo
                 }
                 current_price {
+                    id
+                    date
                     price
                     discount
                 }
@@ -626,10 +652,14 @@ export const GET_START_DATA = gql`
                 photo
             }
             current_price {
+                id
+                date
                 price
                 discount
             }
             all_prices {
+                id
+                date
                 price
                 discount
             }
@@ -756,10 +786,14 @@ export const CREATE_ORDER = gql`
                         photo
                     }
                     current_price {
+                        id
+                        date
                         price
                         discount
                     }
                     all_prices {
+                        id
+                        date
                         price
                         discount
                     }
@@ -824,10 +858,14 @@ export const GET_ORDERS = gql`
                             photo
                         }
                         current_price {
+                            id
+                            date
                             price
                             discount
                         }
                         all_prices {
+                            id
+                            date
                             price
                             discount
                         }
@@ -937,10 +975,14 @@ export const UPDATE_GOOD_DATA = gql`
                 photo
             }
             current_price {
+                id
+                date
                 price
                 discount
             }
             all_prices {
+                id
+                date
                 price
                 discount
             }
@@ -962,6 +1004,17 @@ export const UPDATE_GOOD_DATA = gql`
                 count
             }
             description
+        }
+    }
+`
+
+export const UPDATE_GOOD_PRICE = gql`
+    mutation UpdateGoodPrice($goodId: Int!, $discount: Float, $price: Float!) {
+        updateGoodPrice(goodId: $goodId, discount: $discount, price: $price) {
+            id
+            date
+            price
+            discount
         }
     }
 `

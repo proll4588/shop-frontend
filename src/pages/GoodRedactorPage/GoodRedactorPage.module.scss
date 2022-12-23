@@ -304,6 +304,31 @@
     gap: 10px;
 }
 
+.Price {
+    & {
+        margin-top: 40px;
+        width: 100%;
+    }
+    &__container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+    }
+    &__left {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    &__btn {
+        margin-top: 20px;
+        width: 100%;
+    }
+    & {
+    }
+    & {
+    }
+}
+
 @media (max-width: 850px) {
     .Description {
         &__formContainer {

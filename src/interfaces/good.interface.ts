@@ -37,6 +37,7 @@ export interface IBrand {
 }
 
 export interface Price {
+    date: string
     price: number
     discount: number
 }
