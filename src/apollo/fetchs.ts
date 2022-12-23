@@ -1018,3 +1018,46 @@ export const UPDATE_GOOD_PRICE = gql`
         }
     }
 `
+
+export const GET_CHARACTERISTIC_GROUPS = gql`
+    query GetCharacteristicGroupsByGoodId($goodId: Int!, $search: String) {
+        getCharacteristicGroupsByGoodId(goodId: $goodId, search: $search) {
+            id
+            name
+        }
+    }
+`
+
+export const GET_CHARACTERISTIC_LIST = gql`
+    query GetCharacteristicItem($groupId: Int!, $search: String) {
+        getCharacteristicList(groupId: $groupId, search: $search) {
+            id
+            name
+        }
+    }
+`
+
+export const GET_CHARACTERISTIC_VALUES = gql`
+    query GetCharacteristicValues($listId: Int!, $search: String) {
+        getCharacteristicValues(listId: $listId, search: $search) {
+            id
+            value
+        }
+    }
+`
+
+export const ADD_CHARACTERISTIC = gql`
+    mutation AddCharacteristicToGood(
+        $goodId: Int!
+        $valueId: Int!
+        $listId: Int!
+    ) {
+        addCharacteristicToGood(
+            goodId: $goodId
+            valueId: $valueId
+            listId: $listId
+        ) {
+            id
+        }
+    }
+`

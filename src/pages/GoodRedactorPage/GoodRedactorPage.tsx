@@ -2,9 +2,13 @@ import { useMutation, useQuery } from '@apollo/client'
 import React, { FC, Fragment, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
+    ADD_CHARACTERISTIC,
     ADD_GOOD_PHOTO,
     CREATE_BRAND,
     GET_BRANDS,
+    GET_CHARACTERISTIC_GROUPS,
+    GET_CHARACTERISTIC_LIST,
+    GET_CHARACTERISTIC_VALUES,
     GET_DATA_FOR_GOOD_PAGE,
     GET_GOOD,
     GOODS_PATH,
@@ -20,7 +24,7 @@ import GoodRedactorPageProps from './GoodRedactorPage.props'
 import Dropzone from 'react-dropzone'
 import classNames from 'classnames'
 import { IGood } from '../../interfaces/good.interface'
-import { BiTrashAlt } from 'react-icons/bi'
+import { BiTrash, BiTrashAlt } from 'react-icons/bi'
 import { Controller, useForm } from 'react-hook-form'
 import { LabelInput } from '../../components/LabelInput'
 import MyCombobox from '../../components/UI/MyCombobox/MyCombobox'
@@ -37,6 +41,12 @@ import {
     XAxis,
     YAxis,
 } from 'recharts'
+import {
+    ICharacteristics,
+    ICharacteristicGroup,
+    ICharacteristicItem,
+} from '../../interfaces/characteristics.interface'
+import { GrAdd } from 'react-icons/gr'
 
 interface OtherPhotoProps {
     photo: {
@@ -666,6 +676,284 @@ const Price: FC<PriceProps> = ({ allPrices, currentPrice }) => {
     )
 }
 
+interface CharacteristicItemProps {
+    characteristicsItem: ICharacteristicItem
+}
+const CharacteristicItem: FC<CharacteristicItemProps> = ({
+    characteristicsItem,
+}) => {
+    return (
+        <div className={styles.CharacteristicItem}>
+            <Button
+                secondary
+                className={styles.CharacteristicItem__delBtn}
+            >
+                <BiTrash />
+            </Button>
+            <div className={styles.CharacteristicItem__name}>
+                {characteristicsItem.name}
+            </div>
+            <div className={styles.CharacteristicItem__param}>
+                {characteristicsItem.value}
+            </div>
+        </div>
+    )
+}
+
+interface CharacteristicGroupProps {
+    characteristicGroup: ICharacteristicGroup
+}
+const CharacteristicGroup: FC<CharacteristicGroupProps> = ({
+    characteristicGroup,
+}) => {
+    return (
+        <div className={styles.CharacteristicGroup}>
+            <h3 className={styles.CharacteristicGroup__title}>
+                {characteristicGroup.name}
+            </h3>
+
+            <ul className={styles.CharacteristicGroup__list}>
+                {characteristicGroup.items.map((el) => (
+                    <li
+                        key={el.id}
+                        className={styles.CharacteristicGroup__el}
+                    >
+                        <CharacteristicItem characteristicsItem={el} />
+                    </li>
+                ))}
+                {/* <li>
+                    <Button>
+                        <GrAdd />
+                    </Button>
+                </li> */}
+            </ul>
+        </div>
+    )
+}
+
+interface CharacteristicGroupsComboboxProps {
+    // defaultValue?: {
+    //     id: number
+    //     name: string
+    // }
+    onChange?: (id: number) => void
+}
+const CharacteristicGroupsCombobox: FC<CharacteristicGroupsComboboxProps> = ({
+    // defaultValue,
+    onChange,
+}) => {
+    const { id } = useParams()
+    const [query, setQuery] = useState('')
+
+    const { data, error, loading } = useQuery(GET_CHARACTERISTIC_GROUPS, {
+        variables: { goodId: Number(id), search: query },
+    })
+
+    const types = data ? data.getCharacteristicGroupsByGoodId : []
+
+    return (
+        <div className={styles.BrandsCombobox}>
+            <MyCombobox
+                elements={types}
+                onQuering={setQuery}
+                onSelect={onChange}
+                // defaultValue={defaultValue}
+                loading={loading || !!error}
+            />
+        </div>
+    )
+}
+
+interface CharacteristicListComboboxProps {
+    // defaultValue?: {
+    //     id: number
+    //     name: string
+    // }
+    groupId: number
+    onChange?: (id: number) => void
+}
+const CharacteristicListCombobox: FC<CharacteristicListComboboxProps> = ({
+    // defaultValue,
+    onChange,
+    groupId,
+}) => {
+    const [query, setQuery] = useState('')
+
+    const { data, error, loading } = useQuery(GET_CHARACTERISTIC_LIST, {
+        variables: { groupId: groupId, search: query },
+    })
+
+    const types = data ? data.getCharacteristicList : []
+
+    return (
+        <div className={styles.BrandsCombobox}>
+            <MyCombobox
+                elements={types}
+                onQuering={setQuery}
+                onSelect={onChange}
+                // defaultValue={defaultValue}
+                loading={loading || !!error}
+            />
+        </div>
+    )
+}
+
+interface CharacteristicValueComboboxProps {
+    // defaultValue?: {
+    //     id: number
+    //     name: string
+    // }
+    listId: number
+    onChange?: (id: number) => void
+}
+const CharacteristicValueCombobox: FC<CharacteristicValueComboboxProps> = ({
+    // defaultValue,
+    onChange,
+    listId,
+}) => {
+    const [query, setQuery] = useState('')
+
+    const { data, error, loading } = useQuery(GET_CHARACTERISTIC_VALUES, {
+        variables: { listId: listId, search: query },
+    })
+
+    const types = data
+        ? data.getCharacteristicValues.map((el) => ({
+              name: el.value,
+              id: el.id,
+          }))
+        : []
+
+    return (
+        <div className={styles.BrandsCombobox}>
+            <MyCombobox
+                elements={types}
+                onQuering={setQuery}
+                onSelect={onChange}
+                // defaultValue={defaultValue}
+                loading={loading || !!error}
+            />
+        </div>
+    )
+}
+
+const CharacteristicAdder = () => {
+    const { id } = useParams()
+
+    const [creating, setCreating] = useState(false)
+    const [groupId, setGroupId] = useState(null)
+    const [characteristicId, setCharacteristicId] = useState(null)
+    const [valueId, setValueId] = useState(null)
+
+    const [add, addData] = useMutation(ADD_CHARACTERISTIC, {
+        refetchQueries: [
+            {
+                query: GET_DATA_FOR_GOOD_PAGE,
+                variables: { goodId: Number(id) },
+            },
+        ],
+    })
+
+    useEffect(() => {
+        setCharacteristicId(-1)
+        setValueId(-1)
+    }, [groupId])
+
+    useEffect(() => {
+        setValueId(-1)
+    }, [characteristicId])
+
+    const clickHandler = () => {
+        add({
+            variables: {
+                goodId: Number(id),
+                listId: characteristicId,
+                valueId: valueId,
+            },
+        })
+
+        setGroupId(-1)
+        setCreating(false)
+    }
+
+    return (
+        <div className={styles.Characteristics__adder}>
+            {creating ? (
+                <>
+                    <LabelInput label='Группа характеристик'>
+                        <span style={{ display: 'flex', gap: 10 }}>
+                            <CharacteristicGroupsCombobox
+                                onChange={setGroupId}
+                            />
+                            <Button>+</Button>
+                        </span>
+                    </LabelInput>
+
+                    {groupId !== null && groupId !== -1 && (
+                        <LabelInput label='Характеристика'>
+                            <span style={{ display: 'flex', gap: 10 }}>
+                                <CharacteristicListCombobox
+                                    groupId={groupId}
+                                    onChange={setCharacteristicId}
+                                />
+                                <Button>+</Button>
+                            </span>
+                        </LabelInput>
+                    )}
+
+                    {characteristicId !== null && characteristicId !== -1 && (
+                        <LabelInput label='Значение'>
+                            <span style={{ display: 'flex', gap: 10 }}>
+                                <CharacteristicValueCombobox
+                                    listId={characteristicId}
+                                    onChange={setValueId}
+                                />
+                                <Button>+</Button>
+                            </span>
+                        </LabelInput>
+                    )}
+
+                    {groupId !== -1 &&
+                        characteristicId !== -1 &&
+                        valueId !== -1 && (
+                            <Button
+                                secondary
+                                onClick={clickHandler}
+                            >
+                                Добавить
+                            </Button>
+                        )}
+                </>
+            ) : (
+                <Button onClick={() => setCreating(true)}>
+                    Добавить характеристику
+                </Button>
+            )}
+        </div>
+    )
+}
+
+interface CharacteristicsProps {
+    characteristics: ICharacteristics
+}
+const Characteristics: FC<CharacteristicsProps> = ({ characteristics }) => {
+    return (
+        <div className={styles.Characteristics}>
+            <div className={styles.Characteristics__container}>
+                <CharacteristicAdder />
+                <div className={styles.Characteristics__viewer}>
+                    {characteristics.map((el) => (
+                        <CharacteristicGroup
+                            characteristicGroup={el}
+                            key={el.id}
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const GoodRedactorPage: FC<GoodRedactorPageProps> = () => {
     const { id } = useParams()
     const { loading, error, data } = useQuery(GET_DATA_FOR_GOOD_PAGE, {
@@ -675,6 +963,7 @@ const GoodRedactorPage: FC<GoodRedactorPageProps> = () => {
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error :(</p>
     const good: IGood = data.good
+    const characteristics: ICharacteristics = data.goodCharacteristics
     // console.log(data)
 
     return (
@@ -689,6 +978,7 @@ const GoodRedactorPage: FC<GoodRedactorPageProps> = () => {
                     allPrices={good.all_prices}
                     currentPrice={good.current_price}
                 />
+                <Characteristics characteristics={characteristics} />
             </div>
         </div>
     )

@@ -329,6 +329,68 @@
     }
 }
 
+.Characteristics {
+    & {
+        margin-top: 30px;
+    }
+    &__container {
+    }
+    &__adder {
+        // height: 200px;
+    }
+    &__viewer {
+        margin-top: 20px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    &__adder {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.CharacteristicGroup {
+    & {
+    }
+    &__title {
+        color: var(--color-light-text);
+        margin-bottom: 10px;
+    }
+    &__list {
+        padding-left: 20px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    & {
+    }
+}
+
+.CharacteristicItem {
+    & {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        align-items: center;
+    }
+    &__delBtn {
+    }
+    &__name {
+        color: var(--color-grey-text);
+        font-size: 16px;
+    }
+    &__param {
+        color: var(--color-accent);
+        font-size: 16px;
+    }
+    & {
+    }
+}
+
 @media (max-width: 850px) {
     .Description {
         &__formContainer {
