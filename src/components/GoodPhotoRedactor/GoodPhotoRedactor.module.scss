@@ -1,0 +1,217 @@
+.GoodPhotoRedactor {
+    & {
+    }
+    &__container {
+    }
+}
+
+.Photo {
+    & {
+        height: 300px;
+        width: 100%;
+
+        margin-bottom: 40px;
+        // border: 1px solid white;
+    }
+    &__container {
+        height: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    &__mainPhotoContainer {
+        position: relative;
+
+        overflow: hidden;
+
+        height: 300px;
+        width: 300px;
+
+        background-color: var(--color-gray-5);
+        border-radius: 10px;
+    }
+    &__allPhotoContainer {
+        position: relative;
+
+        height: 100%;
+        width: calc(100% - 320px);
+
+        padding: 10px;
+
+        background-color: var(--color-gray-5);
+        border-radius: 10px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        overflow: auto;
+    }
+}
+
+.MainPhotoDrag {
+    & {
+        width: 100%;
+        // height: 300px;
+        height: 100%;
+        z-index: 2;
+    }
+    &__container {
+        width: 100%;
+        height: 100%;
+
+        color: var(--color-light-text);
+        font-size: 36px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 2px solid var(--color-border-1);
+        border-radius: 10px;
+
+        background-color: rgba($color: #000000, $alpha: 0.3);
+
+        cursor: pointer;
+
+        opacity: 0;
+        transition: var(--trans-time);
+
+        &_active {
+            opacity: 1;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.OtherPhotoDrag {
+    & {
+        // position: absolute;
+
+        left: 0;
+        top: 0;
+
+        // width: 100%;
+        // height: 300px;
+
+        width: 100px;
+        height: 100px;
+
+        z-index: 1;
+    }
+    &__container {
+        width: 100%;
+        height: 100%;
+
+        color: var(--color-grey-text);
+        font-size: 36px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 2px solid var(--color-border-1);
+        border-radius: 10px;
+
+        // background-color: rgba($color: #000000, $alpha: 0.3);
+
+        cursor: pointer;
+
+        // opacity: 0;
+        transition: var(--trans-time);
+
+        &_active {
+            background-color: rgba($color: #000000, $alpha: 0.3);
+            border-color: var(--color-accent);
+        }
+
+        &:hover {
+            // background-color: rgba($color: #000000, $alpha: 0.3);
+            // border-color: var(--color-accent);
+            border: 2px solid var(--color-border-2);
+            color: var(--color-light-text);
+        }
+    }
+}
+
+.OtherPhoto {
+    & {
+        z-index: 2;
+
+        width: 100px;
+        height: 100px;
+
+        border-radius: 10px;
+    }
+    &__container {
+        width: 100%;
+        height: 100%;
+
+        position: relative;
+    }
+    &__photo {
+        width: 100%;
+        height: 100%;
+
+        border-radius: 10px;
+    }
+    &__del {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        left: 0;
+        top: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: rgba($color: #000000, $alpha: 0.4);
+
+        // border: 2px solid var(--color-border-2);
+        border-radius: 10px;
+
+        cursor: pointer;
+
+        transition: var(--trans-time);
+        opacity: 0;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+    &__icon {
+        font-size: 30px;
+        color: var(--color-light-text);
+    }
+}
+
+@media (max-width: 600px) {
+    .Photo {
+        & {
+            width: 100%;
+            height: 500px;
+        }
+        &__container {
+            height: 100%;
+            width: 100%;
+
+            flex-direction: column;
+        }
+        &__mainPhotoContainer {
+            width: 100%;
+            height: 400px;
+        }
+        &__allPhotoContainer {
+            width: 100%;
+        }
+    }
+}
