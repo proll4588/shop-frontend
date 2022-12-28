@@ -12,7 +12,7 @@ const MyCombobox: FC<MyComboboxProps> = ({
     defaultValue,
     loading = false,
 }) => {
-    const list = [{ id: -1, name: 'nothing' }, ...elements]
+    const list = [{ id: -1, name: '' }, ...elements]
 
     const [selected, setSelected] = useState(
         defaultValue ? defaultValue : list[0]
@@ -26,6 +26,13 @@ const MyCombobox: FC<MyComboboxProps> = ({
     useEffect(() => {
         onQuering && onQuering(query)
     }, [query])
+
+    useEffect(() => {
+        if (defaultValue && defaultValue.id && defaultValue.name) {
+            setQuery('')
+            setSelected(defaultValue)
+        }
+    }, [defaultValue])
 
     const inputChangeHandler = (e) => {
         setQuery(e.target.value)
@@ -45,6 +52,7 @@ const MyCombobox: FC<MyComboboxProps> = ({
                                 displayValue={(person) => person.name}
                                 onChange={inputChangeHandler}
                                 className={styles.MyCombobox__input}
+                                autoComplete='off'
                             />
                             <Combobox.Button
                                 className={styles.MyCombobox__button}
