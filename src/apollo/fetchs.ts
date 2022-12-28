@@ -167,10 +167,6 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
     }
 `
 
-// export interface IGetGood {
-//     good: IGood
-//     goodCharacteristics: ICharacteristics
-// }
 export const GET_GOOD = gql`
     query GetGood($goodId: Int!) {
         good(id: $goodId) {
@@ -1070,6 +1066,7 @@ export const ADD_CHARACTERISTIC_GROUP = gql`
         }
     }
 `
+
 export const ADD_CHARACTERISTIC_LIST = gql`
     mutation AddCharacteristicList($groupId: Int!, $name: String!) {
         addCharacteristicList(groupId: $groupId, name: $name) {
@@ -1078,6 +1075,7 @@ export const ADD_CHARACTERISTIC_LIST = gql`
         }
     }
 `
+
 export const ADD_CHARACTERISTIC_VALUE = gql`
     mutation AddCharacteristicValue($listId: Int!, $value: String!) {
         addCharacteristicValue(listId: $listId, value: $value) {
