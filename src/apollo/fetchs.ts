@@ -1061,3 +1061,34 @@ export const ADD_CHARACTERISTIC = gql`
         }
     }
 `
+
+export const ADD_CHARACTERISTIC_GROUP = gql`
+    mutation Mutation($subId: Int!, $name: String!) {
+        addCharacteristicGroup(subId: $subId, name: $name) {
+            id
+            name
+        }
+    }
+`
+export const ADD_CHARACTERISTIC_LIST = gql`
+    mutation AddCharacteristicList($groupId: Int!, $name: String!) {
+        addCharacteristicList(groupId: $groupId, name: $name) {
+            id
+            name
+        }
+    }
+`
+export const ADD_CHARACTERISTIC_VALUE = gql`
+    mutation AddCharacteristicValue($listId: Int!, $value: String!) {
+        addCharacteristicValue(listId: $listId, value: $value) {
+            id
+            value
+        }
+    }
+`
+
+export const DELETE_GOOD_CHARACTERISTIC = gql`
+    mutation Mutation($itemId: Int!, $goodId: Int!) {
+        deleteGoodCharacteristic(itemId: $itemId, goodId: $goodId)
+    }
+`
