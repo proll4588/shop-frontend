@@ -6,10 +6,13 @@ import { useLayoutEffect, useState } from 'react'
 import { CHECK_TOKEN } from '../apollo/fetchs'
 import tokenAtom from '../atoms/token.atom'
 import countsAtom from '../atoms/counts.atom'
+import adminAtom from '../atoms/admin.atom'
 
 const useStart = () => {
     /* Atoms */
     const [token, setToken] = useRecoilState(tokenAtom)
+    // const [admin, setAdmin] = useRecoilState(adminAtom)
+    const setAdmin = useSetRecoilState(adminAtom)
     const setCounts = useSetRecoilState(countsAtom)
     /* ===== */
 
@@ -52,6 +55,7 @@ const useStart = () => {
             }
 
             setVeryfied(true)
+            setAdmin(verData.data.verifyToken.isAdmin)
         }
     }, [verData.data])
 

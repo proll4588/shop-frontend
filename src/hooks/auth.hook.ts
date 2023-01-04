@@ -4,9 +4,11 @@ import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 import tokenAtom from '../atoms/token.atom'
 import { getLink } from '../apollo/link'
+import adminAtom from '../atoms/admin.atom'
 
 const useAuth = () => {
     const setToken = useSetRecoilState(tokenAtom)
+    const setAdmin = useSetRecoilState(adminAtom)
     const client = useApolloClient()
 
     const [registrateUser, regStatus] = useMutation(REGISTRATION_ACCOUNT)
@@ -27,10 +29,12 @@ const useAuth = () => {
     useEffect(() => {
         if (loginStatus.data) {
             const t = loginStatus.data.login.token
+            const isAdmin = loginStatus.data.login.isAdmin
 
             localStorage.setItem('token', t)
             client.setLink(getLink())
             setToken(t)
+            setAdmin(isAdmin)
         }
     }, [loginStatus.data])
 

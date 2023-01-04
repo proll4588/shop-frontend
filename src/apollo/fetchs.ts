@@ -291,6 +291,7 @@ export const LOGIN = gql`
     query Login($email: String!, $password: String!) {
         login(email: $email, password: $password) {
             token
+            isAdmin
         }
     }
 `
@@ -299,6 +300,7 @@ export const CHECK_TOKEN = gql`
     query VerifyToken {
         verifyToken {
             verify
+            isAdmin
         }
     }
 `
@@ -1088,5 +1090,13 @@ export const ADD_CHARACTERISTIC_VALUE = gql`
 export const DELETE_GOOD_CHARACTERISTIC = gql`
     mutation Mutation($itemId: Int!, $goodId: Int!) {
         deleteGoodCharacteristic(itemId: $itemId, goodId: $goodId)
+    }
+`
+
+export const CREATE_GOOD = gql`
+    mutation CreateGood($subId: Int!, $name: String!) {
+        createGood(subId: $subId, name: $name) {
+            id
+        }
     }
 `
