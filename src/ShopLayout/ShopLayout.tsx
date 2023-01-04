@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, ScrollRestoration } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import tokenAtom from '../atoms/token.atom'
 import Footer from '../components/Footer/Footer'
@@ -95,6 +95,7 @@ const ShopLayout = () => {
                                 )
                             }
                         />
+                        {/* <ScrollRestoration /> */}
                     </Routes>
                 </div>
 

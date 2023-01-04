@@ -73,9 +73,13 @@ export const Price: FC<PriceProps> = () => {
     const { all_prices: allPrices, current_price: currentPrice } =
         useContext(GoodContext)
 
-    const [price, setPrice] = useState(String(currentPrice.price))
+    const [price, setPrice] = useState(
+        currentPrice ? String(currentPrice.price) : ''
+    )
     const [discount, setDiscount] = useState(
-        currentPrice.discount ? String(currentPrice.discount) : ''
+        currentPrice && currentPrice.discount
+            ? String(currentPrice.discount)
+            : ''
     )
 
     const [updatePrice, updateData] = useMutation(UPDATE_GOOD_PRICE, {

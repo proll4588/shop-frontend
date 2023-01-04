@@ -95,8 +95,6 @@ interface GoodTypeListProps {
     localTypes: ILocalGoodsTypes[]
 }
 const GoodTypeList: FC<GoodTypeListProps> = ({ localTypes }) => {
-    console.log(localTypes)
-
     return (
         <div className={styles.GoodTypeList}>
             <div className={styles.GoodTypeList__container}>

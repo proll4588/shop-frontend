@@ -1,6 +1,6 @@
 .ControlHead {
     & {
-        height: 50px;
+        height: 70px;
 
         border-bottom: 1px solid var(--color-border-1);
 
@@ -13,6 +13,10 @@
         max-width: 1280px;
         margin: auto;
         padding: 10px 10px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
     &__list {
         height: 100%;

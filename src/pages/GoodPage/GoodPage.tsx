@@ -153,7 +153,10 @@ interface GoodPhotoProps {
 }
 const GoodPhoto: FC<GoodPhotoProps> = ({ photos }) => {
     const photoList = photos.map((p, i) => ({ id: i, photo: p }))
-    const photoGallary = photos.map((el) => ({ original: GOODS_PATH + el }))
+    const photoGallary = photos.map((el) => ({
+        original: GOODS_PATH + el,
+        // sizes: '350px',
+    }))
     const [selectedPhoto, setSelectedPhoto] = useState(photoList[0])
 
     return (
@@ -199,6 +202,9 @@ const GoodPhoto: FC<GoodPhotoProps> = ({ photos }) => {
                             <div className={styles.GoodPhoto__gallaryContainer}>
                                 <ImageGallery
                                     items={photoGallary}
+                                    originalClass={
+                                        styles.GoodPhoto__ImageGalleryPhoto
+                                    }
                                     showThumbnails={false}
                                     swipeThreshold={0}
                                 />

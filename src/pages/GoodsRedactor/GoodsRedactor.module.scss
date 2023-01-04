@@ -9,26 +9,6 @@
 }
 
 .AddElement {
-    border: 1px solid var(--color-border-1);
-    border-radius: 10px;
-
-    padding: 6px;
+    width: 100%;
     margin-top: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: var(--color-grey-text);
-    font-size: 16px;
-
-    cursor: pointer;
-
-    transition: var(--trans-time);
-
-    &:hover {
-        color: var(--color-light-text);
-        border-color: var(--color-border-2);
-        background-color: var(--color-gray-5);
-    }
 }

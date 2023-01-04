@@ -63,7 +63,7 @@ const CharacteristicItem: FC<CharacteristicItemProps> = ({
                 <BiTrash />
             </Button>
             <div className={styles.CharacteristicItem__name}>
-                {characteristicsItem.id} : {characteristicsItem.name}
+                {characteristicsItem.name}
             </div>
             <div className={styles.CharacteristicItem__param}>
                 {characteristicsItem.value}

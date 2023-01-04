@@ -174,7 +174,7 @@ interface SubTypesComboboxProps {
     }
     onChange?: (id: number) => void
 }
-const SubTypesCombobox: FC<SubTypesComboboxProps> = ({
+export const SubTypesCombobox: FC<SubTypesComboboxProps> = ({
     defaultValue,
     onChange,
 }) => {
@@ -229,10 +229,11 @@ export const Description: FC<DescriptionProps> = () => {
                     data.subTypeId === good.sub_type_goods.id
                         ? undefined
                         : Number(data.subTypeId),
-                brandId:
-                    data.brandId === good.brands.id
+                brandId: good.brands
+                    ? data.brandId === good.brands.id
                         ? undefined
-                        : Number(data.brandId),
+                        : Number(data.brandId)
+                    : Number(data.brandId),
                 description:
                     data.description === good.description
                         ? undefined
@@ -270,7 +271,9 @@ export const Description: FC<DescriptionProps> = () => {
                                             onChange={field.onChange}
                                         />
                                     )}
-                                    defaultValue={good.brands.id}
+                                    defaultValue={
+                                        good.brands ? good.brands.id : undefined
+                                    }
                                 />
                             </LabelInput>
 
@@ -284,7 +287,9 @@ export const Description: FC<DescriptionProps> = () => {
                                             onChange={field.onChange}
                                         />
                                     )}
-                                    defaultValue={good.brands.id}
+                                    defaultValue={
+                                        good.brands ? good.brands.id : undefined
+                                    }
                                 />
                             </LabelInput>
                         </div>

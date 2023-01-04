@@ -77,15 +77,15 @@ const RangeMenu: FC<RangeMenuProps> = ({ data, onChange, value }) => {
         <div className={styles.RangeMenu}>
             <Input
                 type='number'
-                placeholder={String(data.min) + 'р'}
+                placeholder={'От ' + String(data.min) + 'р'}
                 value={convert(min)}
                 onChange={minChangeHandler}
                 className={styles.RangeMenu__input}
             />
-            <div className={styles.RangeMenu__text}>-</div>
+            {/* <div className={styles.RangeMenu__text}>-</div> */}
             <Input
                 type='number'
-                placeholder={String(data.max) + 'р'}
+                placeholder={'До ' + String(data.max) + 'р'}
                 value={convert(max)}
                 onChange={maxChangeHandler}
                 className={styles.RangeMenu__input}
