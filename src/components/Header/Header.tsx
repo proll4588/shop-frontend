@@ -16,10 +16,13 @@ import tokenAtom from '../../atoms/token.atom'
 import countsAtom from '../../atoms/counts.atom'
 import Square from '../UI/Square/Square'
 import { IconContext } from 'react-icons'
+import AppSwither from '../AppSwither/AppSwither'
+import adminAtom from '../../atoms/admin.atom'
 
 const Header: FC<HeaderProps> = () => {
     const token = useRecoilValue(tokenAtom)
     const isAuth = token && token !== 'null'
+    const isAdmin = useRecoilValue(adminAtom)
     const counts = useRecoilValue(countsAtom)
 
     return (
@@ -80,6 +83,7 @@ const Header: FC<HeaderProps> = () => {
                                 // title={'Войти'}
                                 // text={'или зарегестрироватся'}
                             />
+                            {isAdmin && <AppSwither />}
                         </div>
                     </div>
                 </div>

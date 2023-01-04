@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import Button from '../../UI/Button/Button'
 import styles from './ControlHead.module.scss'
 import ControlHeadProps from './ControlHead.props'
+import AppSwither from '../../AppSwither/AppSwither'
 
 const menu = [
     { id: 1, name: 'Редактирование товаров', route: 'goodsRedactor', w: 210 },
@@ -14,23 +15,6 @@ const menu = [
 ]
 
 const ControlHead: FC<ControlHeadProps> = () => {
-    // const location = useLocation().pathname.substring(1)
-
-    // const getW = () => {
-    //     return menu.find((el) => el.route === location).w + 10
-    // }
-
-    // const getLeft = () => {
-    //     let sum = 10
-    //     const selected = menu.find((el) => el.route === location).id
-
-    //     menu.filter((el) => el.id < selected).forEach(
-    //         (el) => (sum += el.w + 10)
-    //     )
-
-    //     return sum
-    // }
-
     return (
         <div className={styles.ControlHead}>
             <div className={styles.ControlHead__container}>
@@ -53,13 +37,7 @@ const ControlHead: FC<ControlHeadProps> = () => {
                         </li>
                     ))}
                 </ul>
-                {/* <div
-                    className={styles.ControlHead__selector}
-                    // style={{
-                    //     width: getW(),
-                    //     left: getLeft(),
-                    // }}
-                /> */}
+                <AppSwither />
             </div>
         </div>
     )
