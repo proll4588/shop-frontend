@@ -10,6 +10,7 @@ const menu = [
     { id: 1, name: 'Редактирование товаров', route: 'goodsRedactor', w: 210 },
     { id: 2, name: 'Статистика', route: 'statistics', w: 110 },
     { id: 3, name: 'Работа с заказами', route: 'orders', w: 150 },
+    { id: 4, name: 'Типы товаров', route: 'typesRedactor', w: 150 },
     // { id: 4, name: '', route: '' },
     // { id: 5, name: '', route: '' },
 ]
