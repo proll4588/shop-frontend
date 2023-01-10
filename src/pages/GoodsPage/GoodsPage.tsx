@@ -18,6 +18,7 @@ import GoodsPageProps from './GoodsPage.props'
 /* Запросы */
 import {
     GET_DATA_FOR_GOODS_PAGE,
+    GET_FILTERS_BY_TYPE,
     IGetDataForGoodsPage,
 } from '../../apollo/fetchs'
 
@@ -47,9 +48,8 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     // Получаем id типа товара из адресса страницы
     const { subGoodsTypeId } = useParams()
 
-    // Состояние действующих и полученных. Поседний нужен для кэширования
+    // Состояние фильтра поиска
     const [filtersState, setFiltersState] = useState<IAllFilterState>(null)
-    const [cacheFilters, setCacheFilters] = useState<IAllFilters>(null)
 
     // Состояние открытости боковой панели
     const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false)
@@ -64,13 +64,13 @@ const GoodsPage: FC<GoodsPageProps> = () => {
             },
         }
     )
+    const filtersData = useQuery(GET_FILTERS_BY_TYPE, {
+        variables: { subId: Number(subGoodsTypeId) },
+    })
 
-    // Кэширование фильтров для избежания обновления интерфейса и
-    // создание объекта фильтров
+    // Инициальзация фильтра
     useLayoutEffect(() => {
         if (!loading && !error) {
-            setCacheFilters(data.filters)
-
             if (filtersState === null)
                 setFiltersState(createFilterState(data.filters))
         }
@@ -78,8 +78,7 @@ const GoodsPage: FC<GoodsPageProps> = () => {
 
     // В случае ошибки выводить грустный смайлик
     // TODO: Сделать компонент для отображения ошибок
-    if (loading) return <Loader page />
-    if (error) return <p>Error :(</p>
+    if (error || filtersData.error) return <p>Error :(</p>
 
     return (
         <div
@@ -95,9 +94,11 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                         isPanelOpen ? styles.GoodsPage__FilterPanel_open : ''
                     )}
                 >
-                    {!!cacheFilters && !!filtersState && (
+                    {filtersData.loading || filtersState === null ? (
+                        <Loader page />
+                    ) : (
                         <FilterPanel
-                            filters={cacheFilters}
+                            filters={filtersData.data.filters}
                             onChange={(ans) => {
                                 setIsPanelOpen(false)
                                 setFiltersState(ans)
@@ -115,12 +116,16 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                 </div>
 
                 <div className={styles.GoodsPage__GoodsList}>
-                    <GoodsList
-                        onPanelOpen={() => {
-                            setIsPanelOpen(true)
-                        }}
-                        data={data.filteredGoods}
-                    />
+                    {loading ? (
+                        <Loader page />
+                    ) : (
+                        <GoodsList
+                            onPanelOpen={() => {
+                                setIsPanelOpen(true)
+                            }}
+                            data={data.filteredGoods}
+                        />
+                    )}
                 </div>
             </div>
         </div>

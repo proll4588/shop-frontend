@@ -71,22 +71,27 @@ const FilterPanel: FC<FilterPanelProps> = ({ filters, onChange, value }) => {
                 </Button>
 
                 {/* Производители */}
-                <FiltersMenuElements
-                    title={brand.name}
-                    data={'values' in brand.data && brand.data}
-                    type={brand.type}
-                    onChange={brandsFilterHandler}
-                    value={filtersValue.generalFilters.brand}
-                />
+                {'values' in brand.data && (
+                    <FiltersMenuElements
+                        title={brand.name}
+                        data={brand.data}
+                        type={brand.type}
+                        onChange={brandsFilterHandler}
+                        value={filtersValue.generalFilters.brand}
+                    />
+                )}
 
                 {/* Цены */}
-                <FiltersMenuElements
-                    title={price.name}
-                    data={'max' in price.data && price.data}
-                    type={price.type}
-                    onChange={priceFilterHandler}
-                    value={filtersValue.generalFilters.price}
-                />
+                {'max' in price.data && 'min' in price.data && (
+                    <FiltersMenuElements
+                        title={price.name}
+                        data={price.data}
+                        type={price.type}
+                        onChange={priceFilterHandler}
+                        value={filtersValue.generalFilters.price}
+                    />
+                )}
+
                 {/* ... */}
 
                 {/* Фильиры типа */}

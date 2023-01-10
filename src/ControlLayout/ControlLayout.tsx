@@ -3,6 +3,7 @@ import ControlHead from '../components/ControlComponents/ControlHead/ControlHead
 import GoodRedactorPage from '../pages/GoodRedactorPage/GoodRedactorPage'
 import GoodsRedactor from '../pages/GoodsRedactor/GoodsRedactor'
 import './ControlLayout.module.scss'
+import TypesRedactor from '../pages/TypesRedactor/TypesRedactor'
 
 const ControlLayout = () => {
     return (
@@ -17,6 +18,10 @@ const ControlLayout = () => {
                     <Route
                         path={'/goodsRedactor/:id'}
                         element={<GoodRedactorPage />}
+                    />
+                    <Route
+                        path={'/typesRedactor'}
+                        element={<TypesRedactor />}
                     />
                 </Routes>
             </div>

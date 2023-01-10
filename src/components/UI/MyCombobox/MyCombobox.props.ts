@@ -4,4 +4,6 @@ export default interface MyComboboxProps {
     onSelect?: (id: number) => void
     defaultValue?: { id: number; name: string }
     loading?: boolean
+    placeholder?: string
+    disableButton?: boolean
 }

@@ -11,6 +11,8 @@ const MyCombobox: FC<MyComboboxProps> = ({
     onSelect,
     defaultValue,
     loading = false,
+    placeholder = '',
+    disableButton = false,
 }) => {
     const list = [{ id: -1, name: '' }, ...elements]
 
@@ -53,12 +55,15 @@ const MyCombobox: FC<MyComboboxProps> = ({
                                 onChange={inputChangeHandler}
                                 className={styles.MyCombobox__input}
                                 autoComplete='off'
+                                placeholder={placeholder}
                             />
-                            <Combobox.Button
-                                className={styles.MyCombobox__button}
-                            >
-                                <AiFillCaretDown />
-                            </Combobox.Button>
+                            {!disableButton && (
+                                <Combobox.Button
+                                    className={styles.MyCombobox__button}
+                                >
+                                    <AiFillCaretDown />
+                                </Combobox.Button>
+                            )}
                         </div>
 
                         <Transition
@@ -68,27 +73,38 @@ const MyCombobox: FC<MyComboboxProps> = ({
                             leaveTo='opacity-0'
                             afterLeave={() => setQuery('')}
                         >
-                            <Combobox.Options
-                                className={styles.MyCombobox__list}
-                            >
-                                {!loading &&
-                                    elements.map((el) => (
-                                        <Combobox.Option
-                                            key={el.id}
-                                            value={el}
-                                            className={({ active }) =>
-                                                classNames(
-                                                    styles.MyCombobox__element,
-                                                    active
-                                                        ? styles.MyCombobox__element_active
-                                                        : ''
-                                                )
-                                            }
-                                        >
-                                            {el.name}
-                                        </Combobox.Option>
-                                    ))}
-                            </Combobox.Options>
+                            {!!elements.length ? (
+                                <Combobox.Options
+                                    className={styles.MyCombobox__list}
+                                >
+                                    {!loading &&
+                                        elements.map((el) => (
+                                            <Combobox.Option
+                                                key={el.id}
+                                                value={el}
+                                                className={({ active }) =>
+                                                    classNames(
+                                                        styles.MyCombobox__element,
+                                                        active
+                                                            ? styles.MyCombobox__element_active
+                                                            : ''
+                                                    )
+                                                }
+                                            >
+                                                {el.name}
+                                            </Combobox.Option>
+                                        ))}
+                                </Combobox.Options>
+                            ) : (
+                                <Combobox.Options
+                                    className={classNames(
+                                        styles.MyCombobox__NotFound,
+                                        styles.MyCombobox__list
+                                    )}
+                                >
+                                    Not found
+                                </Combobox.Options>
+                            )}
                         </Transition>
                     </div>
                 </Combobox>
