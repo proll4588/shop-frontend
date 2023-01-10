@@ -167,6 +167,69 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
     }
 `
 
+export const GET_FILTERS_BY_TYPE = gql`
+    query GetDataForGoodsPage($subId: Int!) {
+        filters(subId: $subId) {
+            typeFilters {
+                id
+                name
+                type
+                data {
+                    ... on FilterListData {
+                        values {
+                            id
+                            value
+                        }
+                    }
+                    ... on FilterRangeData {
+                        id
+                        max
+                        min
+                    }
+                }
+            }
+            generalFilters {
+                price {
+                    id
+                    name
+                    type
+                    data {
+                        ... on FilterListData {
+                            values {
+                                id
+                                value
+                            }
+                        }
+                        ... on FilterRangeData {
+                            id
+                            max
+                            min
+                        }
+                    }
+                }
+                brand {
+                    id
+                    name
+                    type
+                    data {
+                        ... on FilterListData {
+                            values {
+                                id
+                                value
+                            }
+                        }
+                        ... on FilterRangeData {
+                            id
+                            max
+                            min
+                        }
+                    }
+                }
+            }
+        }
+    }
+`
+
 export const GET_GOOD = gql`
     query GetGood($goodId: Int!) {
         good(id: $goodId) {
@@ -1097,6 +1160,117 @@ export const CREATE_GOOD = gql`
     mutation CreateGood($subId: Int!, $name: String!) {
         createGood(subId: $subId, name: $name) {
             id
+        }
+    }
+`
+
+export const UPDATE_GLOBAL_TYPE = gql`
+    mutation UpdateGlobalType($globalTypeId: Int!, $name: String!) {
+        updateGlobalType(globalTypeId: $globalTypeId, name: $name) {
+            id
+            name
+        }
+    }
+`
+
+export const UPDATE_LOCAL_TYPE = gql`
+    mutation UpdateLocalType($localTypeId: Int!, $name: String!) {
+        updateLocalType(localTypeId: $localTypeId, name: $name) {
+            id
+            name
+        }
+    }
+`
+
+export const UPDATE_SUB_TYPE = gql`
+    mutation UpdateSubType($subTypeId: Int!, $name: String!) {
+        updateSubType(subTypeId: $subTypeId, name: $name) {
+            id
+            name
+            photo
+        }
+    }
+`
+
+export const UPDATE_SUB_TYPE_PHOTO = gql`
+    mutation UploadSubPhoto($subTypeId: Int!, $file: Upload!) {
+        uploadSubPhoto(subTypeId: $subTypeId, file: $file) {
+            id
+            name
+            photo
+        }
+    }
+`
+
+export const CREATE_GLOBAL_TYPE = gql`
+    mutation AddGlobalType($name: String!) {
+        addGlobalType(name: $name) {
+            id
+            name
+        }
+    }
+`
+
+export const CREATE_LOCAL_TYPE = gql`
+    mutation AddLocalType($name: String!, $globalTypeId: Int!) {
+        addLocalType(name: $name, globalTypeId: $globalTypeId) {
+            id
+            name
+        }
+    }
+`
+
+export const CREATE_SUB_TYPE = gql`
+    mutation AddSubType($name: String!, $localTypeId: Int!) {
+        addSubType(name: $name, localTypeId: $localTypeId) {
+            id
+            name
+            photo
+        }
+    }
+`
+
+export const FIND_GLOBAL_TYPES = gql`
+    query FindGlobalType($search: String!) {
+        findGlobalType(search: $search) {
+            id
+            name
+        }
+    }
+`
+
+export const FIND_LOCAL_TYPES = gql`
+    query FindLocalType($search: String!) {
+        findLocalType(search: $search) {
+            id
+            name
+        }
+    }
+`
+
+export const DELETE_GLOBAL_TYPE = gql`
+    mutation DeleteGlobalType($globalTypeId: Int!) {
+        deleteGlobalType(globalTypeId: $globalTypeId) {
+            id
+            name
+        }
+    }
+`
+
+export const DELETE_LOCAL_TYPE = gql`
+    mutation DeleteLocalType($localTypeId: Int!) {
+        deleteLocalType(localTypeId: $localTypeId) {
+            id
+            name
+        }
+    }
+`
+
+export const DELETE_SUB_TYPE = gql`
+    mutation DeleteSubType($subTypeId: Int!) {
+        deleteSubType(subTypeId: $subTypeId) {
+            id
+            name
         }
     }
 `
