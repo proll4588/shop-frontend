@@ -18,6 +18,7 @@ import Square from '../UI/Square/Square'
 import { IconContext } from 'react-icons'
 import AppSwither from '../AppSwither/AppSwither'
 import adminAtom from '../../atoms/admin.atom'
+import SearchCombobox from '../SearchCombobox/SearchCombobox'
 
 const Header: FC<HeaderProps> = () => {
     const token = useRecoilValue(tokenAtom)
@@ -47,19 +48,21 @@ const Header: FC<HeaderProps> = () => {
                             <DiReact className={styles.Header__logoIcon} />
                         </Link>
 
-                        <Input
+                        {/* <Input
                             value=''
                             type='text'
                             placeholder='Поиск который не работает'
                             icon={<AiOutlineSearch />}
                             className={styles.Header__searchInput}
-                        />
+                        /> */}
+
+                        <SearchCombobox />
 
                         <div className={styles.Header__iconCardList}>
-                            <Square
+                            {/* <Square
                                 icon={<AiOutlineSearch />}
                                 className={styles.Header__searchSq}
-                            />
+                            /> */}
                             <IconCard
                                 icon={<AiOutlineShoppingCart />}
                                 to={'/cart'}

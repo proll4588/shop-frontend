@@ -64,28 +64,28 @@
     &__logoIcon {
         font-size: 70px;
     }
-    &__searchSq {
-        display: none;
-    }
-    &__searchInput {
-        display: block;
-    }
+    // &__searchSq {
+    //     display: none;
+    // }
+    // &__searchInput {
+    //     display: block;
+    // }
 }
 
-@media (max-width: 650px) {
-    .Header {
-        &__searchSq {
-            display: flex;
-        }
-        &__searchInput {
-            display: none;
-            // opacity: 0;
-            // position: absolute;
-            // top: -100px;
-        }
-        &__searchIcon {
-            // display: none !important;
-            opacity: 0;
-        }
-    }
-}
+// @media (max-width: 650px) {
+//     .Header {
+//         &__searchSq {
+//             display: flex;
+//         }
+//         &__searchInput {
+//             display: none;
+//             // opacity: 0;
+//             // position: absolute;
+//             // top: -100px;
+//         }
+//         &__searchIcon {
+//             // display: none !important;
+//             opacity: 0;
+//         }
+//     }
+// }
