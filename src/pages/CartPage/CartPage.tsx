@@ -11,6 +11,7 @@ import { MdDeleteOutline } from 'react-icons/md'
 import CartMiniCardList from '../../components/CartMiniCardList/CartMiniCardList'
 import NumberInput from '../../components/UI/NumberInput/NumberInput'
 import { useNavigate } from 'react-router-dom'
+import { GOODS_PATH } from '../../apollo/fetchs'
 
 interface TableLineProps {
     good: IGood
@@ -46,7 +47,7 @@ const TableLine: FC<TableLineProps> = ({ good, col, onChangeCol, onDel }) => {
                     <div className={styles.TableLine__photoContainer}>
                         {good.main_photo && (
                             <img
-                                src={good.main_photo.photo}
+                                src={GOODS_PATH + good.main_photo.photo}
                                 alt={good.name}
                                 className={styles.TableLine__photo}
                             />

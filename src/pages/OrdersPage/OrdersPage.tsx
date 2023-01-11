@@ -96,7 +96,7 @@ const OrderTable: FC<OrderTableProps> = ({ orders, loading }) => {
                 {loading && <Loader className={styles.OrderTable__loader} />}
                 {!!orders && orders.length === 0 && (
                     <div className={styles.OrderTable__noData}>
-                        Тут будут отображатся ваши заказы
+                        Тут будут отображаться ваши заказы
                     </div>
                 )}
             </div>
@@ -122,7 +122,9 @@ const OrdersTableRaw: FC<OrdersTableRawProps> = ({ order }) => {
         sum += info.prices.discount || info.prices.price
     })
 
-    const strDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
+    const strDate = `${date.getDate()}.${
+        date.getMonth() + 1
+    }.${date.getFullYear()}`
 
     return (
         <>
