@@ -9,12 +9,16 @@ import Button from '../UI/Button/Button'
 /* Описание компонента */
 import styles from './FilterPanel.module.scss'
 import FilterPanelProps, { IAllFilterState } from './FilterPanel.props'
+import { useNavigate, useParams } from 'react-router-dom'
 
 // TODO: При изменении фильтра, как-то показывать это пользователю
 // Панель фильтров товароы
 const FilterPanel: FC<FilterPanelProps> = ({ filters, onChange, value }) => {
     const { generalFilters, typeFilters } = filters
     const { brand, price } = generalFilters
+
+    const { subGoodsTypeId, page } = useParams()
+    const nav = useNavigate()
 
     // Состояние фильтра
     const [filtersValue, setFiltersValue] = useState<IAllFilterState>(value)
@@ -56,6 +60,9 @@ const FilterPanel: FC<FilterPanelProps> = ({ filters, onChange, value }) => {
 
     // Применении фильтра
     const doChange = () => {
+        // При применении фильтра перенаправляем пользователья на первую страницу
+        nav(`/goods/${subGoodsTypeId}/${1}`)
+
         onChange && onChange(filtersValue)
     }
 

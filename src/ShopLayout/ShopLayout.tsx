@@ -40,7 +40,7 @@ const ShopLayout = () => {
 
                         {/* Список товаров по типу */}
                         <Route
-                            path={'/goods/:subGoodsTypeId'}
+                            path={'/goods/:subGoodsTypeId/:page'}
                             element={<GoodsPage />}
                         />
 

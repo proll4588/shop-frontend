@@ -121,7 +121,7 @@ const GoodTypeList: FC<GoodTypeListProps> = ({ localTypes }) => {
                                         key={sub.id}
                                     >
                                         <Link
-                                            to={`/goods/${sub.id}`}
+                                            to={`/goods/${sub.id}/1`}
                                             className={
                                                 styles.GoodTypeList__subListElementName
                                             }

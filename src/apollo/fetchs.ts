@@ -70,40 +70,58 @@ export const GET_GOODS = gql`
 `
 
 export interface IGetDataForGoodsPage {
-    filteredGoods: IGood[]
+    filteredGoods: {
+        goods: IGood[]
+        totalCount: number
+    }
     filters: IAllFilters
 }
 export const GET_DATA_FOR_GOODS_PAGE = gql`
-    query GetDataForGoodsPage($subId: Int!, $filters: AllFilterState) {
-        filteredGoods(subId: $subId, filters: $filters) {
-            id
-            name
-            description
-            main_photo {
-                photo
-            }
-            current_price {
-                id
-                date
-                price
-                discount
-            }
-            brands {
-                id
-                name
-                logo
-            }
-            sub_type_goods {
+    query GetDataForGoodsPage(
+        $subId: Int!
+        $filters: AllFilterState
+        $skip: Int
+        $take: Int
+        $sort: Int
+    ) {
+        filteredGoods(
+            subId: $subId
+            filters: $filters
+            skip: $skip
+            take: $take
+            sort: $sort
+        ) {
+            totalCount
+            goods {
                 id
                 name
-                photo
-            }
-            avg_rating {
-                count
-                avg
-            }
-            storage {
-                count
+                description
+                main_photo {
+                    photo
+                }
+                current_price {
+                    id
+                    date
+                    price
+                    discount
+                }
+                brands {
+                    id
+                    name
+                    logo
+                }
+                sub_type_goods {
+                    id
+                    name
+                    photo
+                }
+                avg_rating {
+                    count
+                    avg
+                }
+                storage {
+                    count
+                }
             }
         }
         filters(subId: $subId) {
