@@ -10,6 +10,7 @@ const Button: FC<ButtonProps> = ({
     large = false,
     secondary = false,
     className,
+    isSubmite = false,
     ...props
 }) => {
     const addClassName = classNames(
@@ -31,7 +32,7 @@ const Button: FC<ButtonProps> = ({
                 {...props}
                 className={addClassName}
                 onClick={disable ? () => {} : props.onClick}
-                type={'button'}
+                type={isSubmite ? 'submit' : 'button'}
             >
                 {children}
             </button>

@@ -3,6 +3,7 @@ import styles from './AppSwither.module.scss'
 import AppSwitherProps from './AppSwither.props'
 import Button from '../UI/Button/Button'
 import { AiOutlineEdit } from 'react-icons/ai'
+import { GoKebabVertical } from 'react-icons/go'
 import { useRecoilState } from 'recoil'
 import appTypesAtom, { appTypes } from '../../atoms/appType.atom'
 import { useNavigate } from 'react-router-dom'
@@ -22,7 +23,9 @@ const AppSwither: FC<AppSwitherProps> = () => {
         <div className={styles.AppSwither}>
             <div className={styles.AppSwither__container}>
                 <Button onClick={change}>
-                    <AiOutlineEdit />
+                    {/* <AiOutlineEdit /> */}
+                    <GoKebabVertical />
+                    {/* Переключить приложение */}
                 </Button>
             </div>
         </div>

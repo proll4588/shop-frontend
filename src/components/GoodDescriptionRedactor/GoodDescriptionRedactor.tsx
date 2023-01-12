@@ -305,10 +305,12 @@ export const Description: FC<DescriptionProps> = () => {
                             </LabelInput>
                         </div>
                     </div>
-                    <input
-                        type='submit'
-                        value={'Применить изменения'}
-                    />
+                    <Button
+                        isSubmite
+                        secondary
+                    >
+                        Применить изменения
+                    </Button>
                 </form>
             </div>
         </div>

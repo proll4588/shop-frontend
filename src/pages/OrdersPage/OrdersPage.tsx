@@ -31,8 +31,13 @@ const statuses = [
 interface FilterPanelProps {
     onChangeText?: (value) => void
     onChangeFilte?: (type) => void
+    defaultValue?: number
 }
-const FilterPanel: FC<FilterPanelProps> = ({ onChangeFilte, onChangeText }) => {
+export const FilterPanel: FC<FilterPanelProps> = ({
+    onChangeFilte,
+    onChangeText,
+    defaultValue,
+}) => {
     const [search, setSearch] = useState('')
     const [filter, setFilter] = useState(null)
 
@@ -63,6 +68,7 @@ const FilterPanel: FC<FilterPanelProps> = ({ onChangeFilte, onChangeText }) => {
                     content={headMenu.map((el) => el.name)}
                     placeholder={'Сортировать'}
                     onChange={setFilter}
+                    defaultVal={defaultValue}
                 />
             </div>
         </div>
@@ -172,7 +178,7 @@ const InfoTableRaw: FC<InfoTableRawProps> = ({ info }) => {
 interface OrderStatusProps {
     statusId: number
 }
-const OrderStatus: FC<OrderStatusProps> = ({ statusId }) => {
+export const OrderStatus: FC<OrderStatusProps> = ({ statusId }) => {
     const getStr = () => {
         return statuses.find((el) => el.id === statusId).name || 'Null'
     }
@@ -192,7 +198,7 @@ const OrderStatus: FC<OrderStatusProps> = ({ statusId }) => {
 interface InfoTableProps {
     info: IDeliveryInfo[]
 }
-const InfoTable: FC<InfoTableProps> = ({ info }) => {
+export const InfoTable: FC<InfoTableProps> = ({ info }) => {
     return (
         <>
             <tr
@@ -244,10 +250,10 @@ const OrdersPage: FC<OrdersPageProps> = () => {
         setPage((prev) => prev - 1)
     }
 
-    // переход на первую страницу при изменении фильтра
+    // переход на первую страницу при изменении фильтра или поиска
     useEffect(() => {
         setPage(1)
-    }, [filter])
+    }, [filter, search])
 
     const orders = orderList ? orderList.getOrders.data : null
     const count = orderList ? orderList.getOrders.count : null

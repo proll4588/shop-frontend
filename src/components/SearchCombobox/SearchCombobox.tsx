@@ -25,7 +25,7 @@ const SearchCombobox: FC<SearchComboboxProps> = () => {
         <div className={styles.SearchCombobox}>
             <div className={styles.SearchCombobox__container}>
                 <MyCombobox
-                    elements={data ? data.getGoods : []}
+                    elements={data ? data.getGoods.goods : []}
                     onQuering={setQuery}
                     onSelect={select}
                     loading={loading || !!error}

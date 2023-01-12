@@ -158,6 +158,8 @@
 
 .OrderStatus {
     & {
+        // max-width: 200px
+        width: 150px;
     }
     &__container {
         color: var(--color-grey-text);
