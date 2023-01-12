@@ -32,38 +32,40 @@ export const GET_ALL_GOODS_TYPES = gql`
     }
 `
 
-// Марально устарело и вообще не надо
 export const GET_GOODS = gql`
     query GetGoods($search: String, $skip: Int, $take: Int) {
         getGoods(search: $search, skip: $skip, take: $take) {
-            id
-            name
-            description
-            main_photo {
-                photo
-            }
-            current_price {
-                id
-                date
-                price
-                discount
-            }
-            brands {
+            count
+            goods {
                 id
                 name
-                logo
-            }
-            sub_type_goods {
-                id
-                name
-                photo
-            }
-            avg_rating {
-                count
-                avg
-            }
-            storage {
-                count
+                description
+                main_photo {
+                    photo
+                }
+                current_price {
+                    id
+                    date
+                    price
+                    discount
+                }
+                brands {
+                    id
+                    name
+                    logo
+                }
+                sub_type_goods {
+                    id
+                    name
+                    photo
+                }
+                avg_rating {
+                    count
+                    avg
+                }
+                storage {
+                    count
+                }
             }
         }
     }
@@ -1289,6 +1291,58 @@ export const DELETE_SUB_TYPE = gql`
         deleteSubType(subTypeId: $subTypeId) {
             id
             name
+        }
+    }
+`
+
+export const GET_ADMIN_ORDERS = gql`
+    query GetAdminOrders(
+        $take: Int
+        $skip: Int
+        $operStatus: String
+        $search: String
+    ) {
+        getAdminOrders(
+            take: $take
+            skip: $skip
+            operStatus: $operStatus
+            search: $search
+        ) {
+            count
+            data {
+                id
+                date
+                delivery_info {
+                    id
+                    goods_catalog {
+                        id
+                        name
+                    }
+                    count
+                    prices {
+                        id
+                        price
+                        discount
+                    }
+                }
+                payment_status_id
+                operations_status_id
+                order_types_id
+                users {
+                    id
+                    email
+                    photo
+                    phone_number
+                }
+            }
+        }
+    }
+`
+
+export const UPDATE_ORDER_STATUS = gql`
+    mutation Mutation($orderId: Int!, $status: String!) {
+        updateOrderStatus(orderId: $orderId, status: $status) {
+            id
         }
     }
 `

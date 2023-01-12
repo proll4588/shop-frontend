@@ -7,6 +7,12 @@ export interface IOrder {
     payment_status_id: number
     order_types_id: number
     delivery_info: IDeliveryInfo[]
+    users: {
+        id: number
+        email: string
+        photo: string
+        phone_number: string
+    }
 }
 
 export interface IDeliveryInfo {
