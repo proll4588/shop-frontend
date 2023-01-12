@@ -1,0 +1,79 @@
+.MyMenu {
+    & {
+        // width: 200px;
+        position: relative;
+    }
+    &__mainContainer {
+        // width: 100%;
+    }
+    &__openButton {
+        width: 25px;
+        height: 25px;
+
+        background: none;
+        border-radius: 4px;
+        border: 1px solid var(--color-border-1);
+
+        cursor: pointer;
+
+        &:hover {
+            background: var(--color-gray-4);
+        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__dotIcon {
+        font-size: 16px;
+
+        color: var(--color-accent);
+    }
+    &__list {
+        margin-top: 10px;
+
+        width: 200px;
+
+        display: flex;
+        flex-direction: column;
+
+        background: var(--color-bg);
+
+        border: 2px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 4px;
+
+        position: absolute;
+
+        // left: 0;
+        right: 0;
+        z-index: 10;
+    }
+    &__item {
+        position: relative;
+        height: 30px;
+
+        cursor: pointer;
+
+        background: none;
+        border: 1px solid var(--color-border-1);
+        border-radius: 10px;
+
+        &:hover {
+            background: var(--color-gray-4);
+        }
+    }
+    &__btnIcon {
+        position: absolute;
+
+        left: 4px;
+        top: 3px;
+
+        font-size: 20px;
+
+        color: var(--color-accent);
+    }
+    &__itemText {
+        font-size: 14px;
+        color: var(--color-gray-3);
+    }
+}
