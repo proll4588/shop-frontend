@@ -105,7 +105,7 @@ const OrdersTableRaw: FC<OrdersTableRawProps> = ({ order }) => {
 
     order.delivery_info.forEach((info) => {
         // TODO: Общую цену доставки надо хранить в инфо о даставке
-        sum += info.prices.discount || info.prices.price
+        sum += info.price
     })
 
     const strDate = `${date.getDate()}.${
@@ -167,7 +167,10 @@ const OrdersTableRaw: FC<OrdersTableRawProps> = ({ order }) => {
                 </td>
                 <td style={{ display: 'inline-flex', gap: '10px' }}>
                     <OrderStatus statusId={order.operations_status_id} />
-                    <MyMenu items={items} />
+                    {(order.operations_status_id === 5 ||
+                        order.operations_status_id === 1) && (
+                        <MyMenu items={items} />
+                    )}
                 </td>
             </tr>
             {showItems && <InfoTable info={order.delivery_info} />}

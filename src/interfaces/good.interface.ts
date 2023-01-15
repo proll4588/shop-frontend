@@ -4,6 +4,7 @@ export interface IGood {
     id: number
     name: string
     description?: string
+    show: boolean
 
     main_photo: IPhoto
     all_photos?: IPhoto[]

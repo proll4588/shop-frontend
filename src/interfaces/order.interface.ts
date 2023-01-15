@@ -19,5 +19,5 @@ export interface IDeliveryInfo {
     id: number
     goods_catalog: IGood
     count: number
-    prices: Price
+    price: number
 }

@@ -268,7 +268,9 @@ const GoodsPage: FC<GoodsPageProps> = () => {
                         <Loader page />
                     ) : (
                         <GoodsList
-                            data={data.filteredGoods.goods}
+                            data={data.filteredGoods.goods.filter(
+                                (good) => good.show
+                            )}
                             isFull={isFull}
                         />
                     )}

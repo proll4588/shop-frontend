@@ -17,17 +17,6 @@
     &__input {
         width: calc(100% - 180px);
     }
-    &__navPanel {
-        margin-top: 10px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-    &__navInfo {
-        font-size: 16px;
-        color: var(--color-grey-text);
-    }
     &__title {
         color: var(--color-light-text);
         margin-bottom: 20px;
@@ -87,6 +76,9 @@
         // border-radius: 10px;
     }
     &__imgContainer {
+        background-color: var(--color-bg);
+        border-radius: 10px;
+
         width: 60px;
         height: 60px;
     }
@@ -97,7 +89,13 @@
     &__link {
         color: var(--color-light-text);
     }
-    & {
+    &__icon {
+        font-size: 24px;
+        color: var(--color-accent);
+
+        &_error {
+            color: var(--color-border-4);
+        }
     }
     & {
     }
