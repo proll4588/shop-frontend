@@ -1,7 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client'
-import React, { FC, useState } from 'react'
-import { CREATE_GOOD, GET_GOODS, GOODS_PATH } from '../../apollo/fetchs'
-import ControlGoodsList from '../../components/ControlComponents/ControlGoodsList/ControlGoodsList'
+import React, { FC, useEffect, useState } from 'react'
+import {
+    CHANGE_GOOD_STATUS,
+    CREATE_GOOD,
+    GET_GOODS,
+    GOODS_PATH,
+} from '../../apollo/fetchs'
 import Input from '../../components/UI/Input/Input'
 import styles from './GoodsRedactor.module.scss'
 import GoodsRedactorProps from './GoodsRedactor.props'
@@ -11,9 +15,12 @@ import Button from '../../components/UI/Button/Button'
 import { SubTypesCombobox } from '../../components/GoodDescriptionRedactor'
 import Loader from '../../components/UI/Loader/Loader'
 import { Link, Navigate } from 'react-router-dom'
-import { AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlineCheckCircle, AiOutlineSearch } from 'react-icons/ai'
+import { VscError } from 'react-icons/vsc'
 import useDebounce from '../../hooks/debounce.hook'
 import { IGood } from '../../interfaces/good.interface'
+import classNames from 'classnames'
+import Pagination from '../../components/Pagination/Pagination'
 
 interface GoodsAddPopupProps {
     close: () => void
@@ -24,7 +31,9 @@ const GoodsAddPopup: FC<GoodsAddPopupProps> = ({ close, isOpen, onCreate }) => {
     const [name, setName] = useState('')
     const [typeId, setTypeId] = useState(null)
 
-    const [create, { loading, error, data }] = useMutation(CREATE_GOOD)
+    const [create, { loading, error, data }] = useMutation(CREATE_GOOD, {
+        refetchQueries: [GET_GOODS],
+    })
 
     const createGood = () => {
         if (!!name.length && typeId !== -1)
@@ -105,6 +114,7 @@ const GoodsTable: FC<GoodsTableProps> = ({ goods }) => {
                         <th>Название</th>
                         <th>Производитель</th>
                         <th>Цена</th>
+                        <th>В продаже</th>
                     </tr>
 
                     {goods &&
@@ -124,6 +134,42 @@ interface GoodsTableRawProps {
     good: IGood
 }
 const GoodsTableRaw: FC<GoodsTableRawProps> = ({ good }) => {
+    /* TODO: Изменяит статус на true только тогда когда
+     * у товара есть все нужные атрибуты
+     */
+    const [change] = useMutation(CHANGE_GOOD_STATUS, {
+        // TODO: БАГ, почему-то не работает хотя должно
+        /* Мы вручную изменяем состояние отображения товара в кэшэ,
+         * чтобы повторно не отпровлять запросы на сервер
+         */
+        /*
+        update: (cache, change) => {
+            cache.modify({
+                id: cache.identify(change.data.changeGoodStatus),
+                fields: {
+                    show: change.data.changeGoodStatus.show,
+                },
+            })
+        },
+        */
+
+        /* Из-за того что код выше не работает, приходится
+         * заного отправлять запросы (((
+         */
+        refetchQueries: [GET_GOODS],
+    })
+
+    // При нажатии на кнопку, отправляется запрос на
+    // изменение статуса отображения товара
+    const changeStatus = () => {
+        change({
+            variables: {
+                goodId: good.id,
+                status: !good.show,
+            },
+        })
+    }
+
     return (
         <tr className={styles.GoodsTableRaw}>
             <td>{good.id}</td>
@@ -148,8 +194,27 @@ const GoodsTableRaw: FC<GoodsTableRawProps> = ({ good }) => {
                     {good.name}
                 </Link>
             </td>
-            <td>{good.brands.name}</td>
-            <td>{good.current_price.price}р</td>
+            <td>{good.brands ? good.brands.name : <>-</>}</td>
+            <td>
+                {good.current_price ? <>{good.current_price.price}p</> : <>-</>}
+            </td>
+            <td
+                onClick={changeStatus}
+                style={{ cursor: 'pointer' }}
+            >
+                {good.show ? (
+                    <AiOutlineCheckCircle
+                        className={styles.GoodsTableRaw__icon}
+                    />
+                ) : (
+                    <VscError
+                        className={classNames(
+                            styles.GoodsTableRaw__icon,
+                            styles.GoodsTableRaw__icon_error
+                        )}
+                    />
+                )}
+            </td>
         </tr>
     )
 }
@@ -161,7 +226,6 @@ const GoodsRedactor: FC<GoodsRedactorProps> = () => {
     const dbSearch = useDebounce(search)
 
     const [page, setPage] = useState(1)
-    const [cacheCount, setCacheCount] = useState(null)
 
     const { loading, error, data } = useQuery(GET_GOODS, {
         variables: {
@@ -175,18 +239,12 @@ const GoodsRedactor: FC<GoodsRedactorProps> = () => {
         setSearch(e)
     }
 
-    const nextPage = () => {
-        setPage((prev) => prev + 1)
-    }
-    const prevPage = () => {
-        setPage((prev) => prev - 1)
-    }
+    useEffect(() => {
+        setPage(1)
+    }, [dbSearch])
 
     const goods = data ? data.getGoods.goods : null
     const count = data ? data.getGoods.count : null
-
-    // Кэшируем кол-во заказов
-    if (count !== null && count !== cacheCount) setCacheCount(count)
 
     return (
         <div className={styles.GoodsRedactor}>
@@ -195,7 +253,6 @@ const GoodsRedactor: FC<GoodsRedactorProps> = () => {
                     Управление товарами
                 </h3>
                 <div className={styles.GoodsRedactor__tableHeader}>
-                    {/* TODO:Сделать задержку поиска */}
                     <Input
                         onChange={searchHandler}
                         placeholder='Поиск по названию или id товара'
@@ -208,36 +265,13 @@ const GoodsRedactor: FC<GoodsRedactorProps> = () => {
                     <AddElement />
                 </div>
 
-                {!loading && !error ? (
-                    <>
-                        <GoodsTable goods={goods} />
-                        <div className={styles.GoodsRedactor__navPanel}>
-                            <Button
-                                disable={page === 1}
-                                onClick={prevPage}
-                            >
-                                Назад
-                            </Button>
+                {!loading ? <GoodsTable goods={goods} /> : <Loader page />}
 
-                            <div className={styles.GoodsRedactor__navInfo}>
-                                {viewCount * (page - 1) + 1} -{' '}
-                                {viewCount * page > cacheCount
-                                    ? cacheCount
-                                    : viewCount * page}{' '}
-                                из {cacheCount}
-                            </div>
-
-                            <Button
-                                disable={viewCount * page >= cacheCount}
-                                onClick={nextPage}
-                            >
-                                Далее
-                            </Button>
-                        </div>
-                    </>
-                ) : (
-                    ''
-                )}
+                <Pagination
+                    totalCount={count}
+                    onChangePage={setPage}
+                    startPage={page}
+                />
             </div>
         </div>
     )
