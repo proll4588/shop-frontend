@@ -40,6 +40,7 @@ export const GET_GOODS = gql`
                 id
                 name
                 description
+                show
                 main_photo {
                     photo
                 }
@@ -98,6 +99,7 @@ export const GET_DATA_FOR_GOODS_PAGE = gql`
                 id
                 name
                 description
+                show
                 main_photo {
                     photo
                 }
@@ -848,10 +850,7 @@ export const CREATE_ORDER = gql`
             delivery_info {
                 id
                 count
-                prices {
-                    price
-                    discount
-                }
+                price
                 goods_catalog {
                     id
                     name
@@ -920,10 +919,7 @@ export const GET_ORDERS = gql`
                 delivery_info {
                     id
                     count
-                    prices {
-                        price
-                        discount
-                    }
+                    price
                     goods_catalog {
                         id
                         name
@@ -1319,11 +1315,7 @@ export const GET_ADMIN_ORDERS = gql`
                         name
                     }
                     count
-                    prices {
-                        id
-                        price
-                        discount
-                    }
+                    price
                 }
                 payment_status_id
                 operations_status_id
@@ -1343,6 +1335,44 @@ export const UPDATE_ORDER_STATUS = gql`
     mutation Mutation($orderId: Int!, $status: String!) {
         updateOrderStatus(orderId: $orderId, status: $status) {
             id
+        }
+    }
+`
+
+export const CHANGE_GOOD_STATUS = gql`
+    mutation ChangeGoodStatus($goodId: Int!, $status: Boolean!) {
+        changeGoodStatus(goodId: $goodId, status: $status) {
+            id
+            name
+            show
+        }
+    }
+`
+
+export const GET_BUY_DYNAMIC_BY_YEAR = gql`
+    query GetBuyDynamicByYear($year: Int!) {
+        getBuyDynamicByYear(year: $year) {
+            date
+            profit
+        }
+    }
+`
+
+export const GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE = gql`
+    query GetGlobalTypeBuyDynamicByRange($startDate: date!, $endDate: date!) {
+        getGlobalTypeBuyDynamicByRange(
+            startDate: $startDate
+            endDate: $endDate
+        ) {
+            data {
+                profit
+                globalType {
+                    id
+                    name
+                }
+            }
+            startDate
+            endDate
         }
     }
 `
