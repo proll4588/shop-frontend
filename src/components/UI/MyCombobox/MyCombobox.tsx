@@ -13,8 +13,11 @@ const MyCombobox: FC<MyComboboxProps> = ({
     loading = false,
     placeholder = '',
     disableButton = false,
+    canBeNull = false,
+    nullValue = '',
 }) => {
-    const list = [{ id: -1, name: '' }, ...elements]
+    // TODO: Вместо -1 поставить null
+    const list = [{ id: -1, name: nullValue }, ...elements]
 
     const [selected, setSelected] = useState(
         defaultValue ? defaultValue : list[0]
@@ -39,6 +42,8 @@ const MyCombobox: FC<MyComboboxProps> = ({
     const inputChangeHandler = (e) => {
         setQuery(e.target.value)
     }
+
+    const iter = canBeNull ? list : elements
 
     return (
         <div className={styles.MyCombobox}>
@@ -78,7 +83,8 @@ const MyCombobox: FC<MyComboboxProps> = ({
                                     className={styles.MyCombobox__list}
                                 >
                                     {!loading &&
-                                        elements.map((el) => (
+                                        // elements.map((el) => (
+                                        iter.map((el) => (
                                             <Combobox.Option
                                                 key={el.id}
                                                 value={el}

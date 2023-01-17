@@ -6,4 +6,6 @@ export default interface MyComboboxProps {
     loading?: boolean
     placeholder?: string
     disableButton?: boolean
+    canBeNull?: boolean
+    nullValue?: string
 }

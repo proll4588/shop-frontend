@@ -30,7 +30,6 @@ import Loader from '../../components/UI/Loader/Loader'
 import Dropzone from 'react-dropzone'
 import classNames from 'classnames'
 import MyCombobox from '../../components/UI/MyCombobox/MyCombobox'
-import { set } from 'react-hook-form'
 import { MdDeleteForever } from 'react-icons/md'
 
 interface GlobalListProps {
@@ -524,6 +523,8 @@ const GlobalTypesCombobox: FC<GlobalTypesComboboxProps> = ({ onChange }) => {
                 onQuering={setQuery}
                 onSelect={onChange}
                 loading={loading || !!error}
+                // canBeNull
+                nullValue='Выберети тип'
             />
         </div>
     )
@@ -586,7 +587,9 @@ const LocalCreatorPopup: FC<LocalCreatorPopupProps> = ({ close, isOpen }) => {
 interface LocalTypesComboboxProps {
     onChange?: (id: number) => void
 }
-const LocalTypesCombobox: FC<LocalTypesComboboxProps> = ({ onChange }) => {
+export const LocalTypesCombobox: FC<LocalTypesComboboxProps> = ({
+    onChange,
+}) => {
     const [query, setQuery] = useState('')
 
     const { data, error, loading } = useQuery(FIND_LOCAL_TYPES, {

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from './BuyDynamic.module.scss'
 import BuyDynamicProps from './BuyDynamic.props'
 import { useQuery } from '@apollo/client'
@@ -15,6 +15,8 @@ import {
     YAxis,
 } from 'recharts'
 import MyCombobox from '../UI/MyCombobox/MyCombobox'
+import { LabelInput } from '../LabelInput'
+import Loader from '../UI/Loader/Loader'
 
 const monthes = [
     'Янв',
@@ -40,19 +42,46 @@ const yearRange = (start, end) => {
     return range
 }
 
+// :-)
 interface BuyGraphProps {
-    data: IBuyStats[]
+    year: number
 }
-const BuyGraph: FC<BuyGraphProps> = ({ data }) => {
-    const dateForrander = data.map((el) => {
-        const date = new Date(el.date)
-        const month = date.getMonth()
+export const BuyGraph: FC<BuyGraphProps> = ({ year }) => {
+    const [cacheData, setCacheData] = useState(null)
 
-        return {
-            month: monthes[month],
-            profit: el.profit || 0,
-        }
+    const { data, loading, error } = useQuery(GET_BUY_DYNAMIC_BY_YEAR, {
+        variables: {
+            year: year,
+        },
     })
+
+    // При получении новыйх данных, помещаем их
+    // в кешь для дальнейшего отображения. Это сделано для того что
+    // при взаимодействии с data напрямую в момент получения данных
+    // data = undef и график ничего не отображает, поэтому мы
+    // кэшируем данные для их отображения вовремя загрузки новых
+    useEffect(() => {
+        if (data) {
+            // Преобразуем данные в нужный формат
+            const ans = data.getBuyDynamicByYear.map((el) => {
+                const date = new Date(el.date)
+                const month = date.getMonth()
+
+                return {
+                    month: monthes[month],
+                    profit: el.profit || 0,
+                }
+            })
+
+            setCacheData(ans)
+        }
+    }, [data])
+
+    // При ошибке отображаем ошибку
+    // При отсутсвии в кеше данных и загрузке новых
+    // отображаем loader
+    if (error) return <>Error</>
+    if (!cacheData && loading) return <Loader page />
 
     return (
         <ResponsiveContainer
@@ -62,20 +91,17 @@ const BuyGraph: FC<BuyGraphProps> = ({ data }) => {
             <LineChart
                 width={500}
                 height={300}
-                data={dateForrander}
-                margin={{
-                    top: 30,
-                    right: 0,
-                    left: 0,
-                    bottom: 5,
-                }}
+                data={cacheData}
             >
                 <CartesianGrid strokeDasharray='3 3' />
                 <XAxis
                     dataKey='month'
                     stroke='#ffffff'
                 />
-                <YAxis stroke='#ffffff' />
+                <YAxis
+                    stroke='#ffffff'
+                    width={50}
+                />
                 <Tooltip />
                 <Legend />
                 <Line
@@ -84,6 +110,8 @@ const BuyGraph: FC<BuyGraphProps> = ({ data }) => {
                     name='Прибыль'
                     stroke='#00b5ff'
                     activeDot={{ r: 8 }}
+                    dot={{ r: 5 }}
+                    strokeWidth={3}
                 />
             </LineChart>
         </ResponsiveContainer>
@@ -97,12 +125,6 @@ const BuyDynamic: FC<BuyDynamicProps> = () => {
     const [range] = useState(yearRange(startYear, currentYear))
     const [selectedYear, setSelectedYear] = useState(currentYear)
 
-    const { data, loading, error } = useQuery(GET_BUY_DYNAMIC_BY_YEAR, {
-        variables: {
-            year: Number(selectedYear),
-        },
-    })
-
     const yearChange = (id) => {
         setSelectedYear(range[id].name)
     }
@@ -110,16 +132,17 @@ const BuyDynamic: FC<BuyDynamicProps> = () => {
     return (
         <div className={styles.BuyDynamic}>
             <div className={styles.BuyDynamic__container}>
-                <MyCombobox
-                    elements={range}
-                    defaultValue={range.at(-1)}
-                    onSelect={yearChange}
-                />
-                {data ? (
-                    <BuyGraph data={data.getBuyDynamicByYear} />
-                ) : (
-                    <>Loading</>
-                )}
+                <div className={styles.BuyDynamic__head}>
+                    <MyCombobox
+                        elements={range}
+                        defaultValue={range.at(-1)}
+                        onSelect={yearChange}
+                    />
+                </div>
+
+                <div className={styles.BuyDynamic__graph}>
+                    <BuyGraph year={selectedYear} />
+                </div>
             </div>
         </div>
     )
