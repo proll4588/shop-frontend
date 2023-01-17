@@ -1376,3 +1376,93 @@ export const GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE = gql`
         }
     }
 `
+
+export const GET_LOCAL_TYPE_BY_DYNAMIC_BY_RANGE = gql`
+    query GetLocalTypeBuyDynamicByRange(
+        $startDate: date!
+        $endDate: date!
+        $globalTypeId: Int
+    ) {
+        getLocalTypeBuyDynamicByRange(
+            startDate: $startDate
+            endDate: $endDate
+            globalTypeId: $globalTypeId
+        ) {
+            startDate
+            endDate
+            data {
+                profit
+                localType {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`
+
+export const GET_SUB_TYPE_BY_DYNAMIC_BY_RANGE = gql`
+    query GetSubTypeBuyDynamicByRange(
+        $startDate: date!
+        $endDate: date!
+        $localTypeId: Int
+    ) {
+        getSubTypeBuyDynamicByRange(
+            startDate: $startDate
+            endDate: $endDate
+            localTypeId: $localTypeId
+        ) {
+            startDate
+            endDate
+            data {
+                profit
+                subType {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`
+
+export const GET_MONTH_STATS = gql`
+    query GetMonthStats($date: date) {
+        getProfitByMonth(date: $date) {
+            currentMonth {
+                profit
+            }
+            lastMonth {
+                profit
+            }
+        }
+
+        getVisitMonth {
+            curVisits
+            lastVisits
+        }
+
+        getOrderCountMonth {
+            curOrderCount
+            lastOrderCount
+        }
+    }
+`
+
+export const GET_PROFIT_BY_MONTH = gql`
+    query GetProfitByMonth($date: date) {
+        getProfitByMonth(date: $date) {
+            currentMonth {
+                profit
+            }
+            lastMonth {
+                profit
+            }
+        }
+    }
+`
+
+export const ADD_VISIT = gql`
+    mutation Mutation {
+        addVisit
+    }
+`
