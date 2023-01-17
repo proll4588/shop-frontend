@@ -14,6 +14,7 @@ import {
     Bar,
 } from 'recharts'
 import { IGlobalTypeStats } from '../../interfaces/statistic.interface'
+import useDebounce from '../../hooks/debounce.hook'
 
 interface GlobalGraphProps {
     data: IGlobalTypeStats
@@ -63,22 +64,48 @@ const GlobalTypesBuyDynamic: FC<GlobalTypesBuyDynamicProps> = () => {
     const startYear = 2022
     const currentYear = new Date().getFullYear()
 
-    const [startDate, setStartDate] = useState(new Date(startYear, 0, 2))
-    const [endDate, setEndDate] = useState(new Date(currentYear, 0, 2))
+    const [startDate, setStartDate] = useState(
+        new Date(startYear, 0, 2).toISOString().substring(0, 10)
+    )
+    const [endDate, setEndDate] = useState(
+        new Date(currentYear, 0, 2).toISOString().substring(0, 10)
+    )
+    const dbStartDate = useDebounce(startDate, 600)
+    const dbEndDate = useDebounce(endDate, 600)
+
+    // console.log(startDate)
 
     const { data, error, loading } = useQuery(
         GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE,
         {
             variables: {
-                startDate: startDate.toISOString(),
-                endDate: endDate.toISOString(),
+                startDate: dbStartDate,
+                endDate: dbEndDate,
             },
         }
     )
 
+    const startDateChange = (e) => {
+        setStartDate(e.target.value)
+    }
+
+    const endDateChange = (e) => {
+        setEndDate(e.target.value)
+    }
+
     return (
         <div className={styles.GlobalTypesBuyDynamic}>
             <div className={styles.GlobalTypesBuyDynamic__container}>
+                <input
+                    type={'date'}
+                    onChange={startDateChange}
+                    defaultValue={startDate}
+                />
+                <input
+                    type={'date'}
+                    onChange={endDateChange}
+                    defaultValue={endDate}
+                />
                 {data ? (
                     <GlobalGraph data={data.getGlobalTypeBuyDynamicByRange} />
                 ) : (
