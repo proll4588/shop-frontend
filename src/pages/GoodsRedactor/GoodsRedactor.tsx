@@ -114,6 +114,7 @@ const GoodsTable: FC<GoodsTableProps> = ({ goods }) => {
                         <th>Название</th>
                         <th>Производитель</th>
                         <th>Цена</th>
+                        <th>Cклад</th>
                         <th>В продаже</th>
                     </tr>
 
@@ -138,25 +139,19 @@ const GoodsTableRaw: FC<GoodsTableRawProps> = ({ good }) => {
      * у товара есть все нужные атрибуты
      */
     const [change] = useMutation(CHANGE_GOOD_STATUS, {
-        // TODO: БАГ, почему-то не работает хотя должно
         /* Мы вручную изменяем состояние отображения товара в кэшэ,
          * чтобы повторно не отпровлять запросы на сервер
          */
-        /*
-        update: (cache, change) => {
+        update: async (cache, change) => {
             cache.modify({
                 id: cache.identify(change.data.changeGoodStatus),
                 fields: {
-                    show: change.data.changeGoodStatus.show,
+                    show: (cachedShow) => {
+                        return cachedShow
+                    },
                 },
             })
         },
-        */
-
-        /* Из-за того что код выше не работает, приходится
-         * заного отправлять запросы (((
-         */
-        refetchQueries: [GET_GOODS],
     })
 
     // При нажатии на кнопку, отправляется запрос на
@@ -198,6 +193,7 @@ const GoodsTableRaw: FC<GoodsTableRawProps> = ({ good }) => {
             <td>
                 {good.current_price ? <>{good.current_price.price}p</> : <>-</>}
             </td>
+            <td>{good.storage.count}</td>
             <td
                 onClick={changeStatus}
                 style={{ cursor: 'pointer' }}
@@ -227,13 +223,26 @@ const GoodsRedactor: FC<GoodsRedactorProps> = () => {
 
     const [page, setPage] = useState(1)
 
-    const { loading, error, data } = useQuery(GET_GOODS, {
+    const { loading, error, data, fetchMore } = useQuery(GET_GOODS, {
         variables: {
             search: dbSearch,
-            skip: viewCount * (page - 1),
+            skip: 0,
             take: viewCount,
         },
     })
+
+    const getMore = (page) => {
+        fetchMore({
+            variables: {
+                search: dbSearch,
+                skip: viewCount * (page - 1),
+                take: viewCount,
+            },
+            updateQuery(previousQueryResult, options) {
+                return options.fetchMoreResult
+            },
+        })
+    }
 
     const searchHandler = (e) => {
         setSearch(e)
@@ -269,8 +278,12 @@ const GoodsRedactor: FC<GoodsRedactorProps> = () => {
 
                 <Pagination
                     totalCount={count}
-                    onChangePage={setPage}
+                    onChangePage={(p) => {
+                        setPage(p)
+                        if (page !== p) getMore(p)
+                    }}
                     startPage={page}
+                    step={viewCount}
                 />
             </div>
         </div>

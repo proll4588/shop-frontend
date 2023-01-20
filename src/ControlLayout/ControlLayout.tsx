@@ -13,6 +13,7 @@ import { BsType } from 'react-icons/bs'
 import { IconContext } from 'react-icons'
 import classNames from 'classnames'
 import AppSwither from '../components/AppSwither/AppSwither'
+import SupplyPage from '../pages/SupplyPage/SupplyPage'
 
 const menu = [
     { id: 2, name: 'Статистика', route: 'statistics', icon: <IoIosStats /> },
@@ -29,7 +30,7 @@ const menu = [
         route: 'orders',
         icon: <AiOutlineShoppingCart />,
     },
-    { id: 5, name: 'Поставки', route: 'typesRedactor', icon: <BsType /> },
+    { id: 5, name: 'Поставки', route: 'supply', icon: <BsType /> },
 ]
 
 const SideBar = () => {
@@ -101,6 +102,10 @@ const ControlLayout = () => {
                         <Route
                             path={'/'}
                             element={<Dashboard />}
+                        />
+                        <Route
+                            path={'/supply'}
+                            element={<SupplyPage />}
                         />
                     </Routes>
                 </div>

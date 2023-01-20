@@ -48,7 +48,7 @@ const useOrder = (
 ) => {
     /* == Запросы == */
     // Получение списка заказов
-    const { data, loading, error } = useQuery(GET_ORDERS, {
+    const { data, loading, error, fetchMore } = useQuery(GET_ORDERS, {
         variables: {
             skip,
             take,
@@ -91,6 +91,7 @@ const useOrder = (
         isCreateLoading: createData.loading,
         error: error || createData.error,
         createOrder,
+        fetchMore,
     }
 }
 

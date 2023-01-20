@@ -4,13 +4,20 @@ import OrdersRedactorPageProps from './OrdersRedactorPage.props'
 import { IOrder } from '../../interfaces/order.interface'
 import useDebounce from '../../hooks/debounce.hook'
 import { useMutation, useQuery } from '@apollo/client'
-import { GET_ADMIN_ORDERS, UPDATE_ORDER_STATUS } from '../../apollo/fetchs'
+import {
+    GET_ADMIN_ORDERS,
+    GET_BUY_DYNAMIC_BY_YEAR,
+    GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE,
+    GET_MONTH_STATS,
+    UPDATE_ORDER_STATUS,
+} from '../../apollo/fetchs'
 import { FilterPanel, InfoTable, OrderStatus } from '../OrdersPage'
 import MyMenu from '../../components/MyMenu/MyMenu'
 import { TiDeleteOutline } from 'react-icons/ti'
 import Loader from '../../components/UI/Loader/Loader'
 import { AiOutlineCheck } from 'react-icons/ai'
 import Button from '../../components/UI/Button/Button'
+import Pagination from '../../components/Pagination/Pagination'
 
 interface OrderTableProps {
     orders?: IOrder[]
@@ -56,8 +63,22 @@ interface OrdersTableRawProps {
 const OrdersTableRaw: FC<OrdersTableRawProps> = ({ order }) => {
     const [showItems, setShowItems] = useState(false)
 
-    const [update, updateData] = useMutation(UPDATE_ORDER_STATUS, {
-        refetchQueries: [{ query: GET_ADMIN_ORDERS }],
+    const [update] = useMutation(UPDATE_ORDER_STATUS, {
+        update: async (cache, change) => {
+            cache.modify({
+                id: cache.identify(change.data.updateOrderStatus),
+                fields: {
+                    operations_status_id: (cachedData) => {
+                        return cachedData
+                    },
+                },
+            })
+        },
+        refetchQueries: [
+            GET_MONTH_STATS,
+            GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE,
+            GET_BUY_DYNAMIC_BY_YEAR,
+        ],
     })
 
     const getted = () => {
@@ -123,18 +144,20 @@ const OrdersTableRaw: FC<OrdersTableRawProps> = ({ order }) => {
 
     if (order.order_types_id === 2) {
         items.push({
-            id: 2,
-            icon: <AiOutlineCheck />,
-            text: 'Готово к получению',
-            onClick: ready,
-        })
-
-        items.push({
             id: 3,
             icon: <AiOutlineCheck />,
             text: 'Получено',
             onClick: getted,
         })
+
+        if (order.operations_status_id === 1) {
+            items.push({
+                id: 2,
+                icon: <AiOutlineCheck />,
+                text: 'Готово к получению',
+                onClick: ready,
+            })
+        }
     } else {
         items.push({
             id: 4,
@@ -181,32 +204,39 @@ const OrdersTableRaw: FC<OrdersTableRawProps> = ({ order }) => {
 const OrdersRedactorPage: FC<OrdersRedactorPageProps> = () => {
     const viewCount = 10
 
-    const [filter, setFulter] = useState(null)
+    const [filter, setFulter] = useState('inProc')
     const [search, setSearch] = useState('')
     const [page, setPage] = useState(1)
     const [cacheCount, setCacheCount] = useState(null)
 
     const dbSearch = useDebounce(search)
 
-    const { data, error, loading } = useQuery(GET_ADMIN_ORDERS, {
+    const { data, error, loading, fetchMore } = useQuery(GET_ADMIN_ORDERS, {
         variables: {
-            skip: viewCount * (page - 1),
+            skip: 0,
             take: viewCount,
             operStatus: filter,
             search: dbSearch,
         },
     })
 
+    const getMore = (page) => {
+        fetchMore({
+            variables: {
+                skip: viewCount * (page - 1),
+                take: viewCount,
+                operStatus: filter,
+                search: dbSearch,
+            },
+            updateQuery(previousQueryResult, options) {
+                return options.fetchMoreResult
+            },
+        })
+    }
+
     useEffect(() => {
         setPage(1)
-    }, [filter])
-
-    const nextPage = () => {
-        setPage((prev) => prev + 1)
-    }
-    const prevPage = () => {
-        setPage((prev) => prev - 1)
-    }
+    }, [filter, dbSearch])
 
     const orders = data ? data.getAdminOrders.data : null
     const count = data ? data.getAdminOrders.count : null
@@ -227,35 +257,17 @@ const OrdersRedactorPage: FC<OrdersRedactorPageProps> = () => {
                             loading={loading}
                         />
 
-                        <div className={styles.OrdersRedactorPage__navPanel}>
-                            <Button
-                                disable={page === 1}
-                                onClick={prevPage}
-                            >
-                                Назад
-                            </Button>
-
-                            <div className={styles.OrdersRedactorPage__navInfo}>
-                                {viewCount * (page - 1) + 1} -{' '}
-                                {viewCount * page > cacheCount
-                                    ? cacheCount
-                                    : viewCount * page}{' '}
-                                из {cacheCount}
-                            </div>
-
-                            <Button
-                                disable={viewCount * page >= cacheCount}
-                                onClick={nextPage}
-                            >
-                                Далее
-                            </Button>
-                        </div>
+                        <Pagination
+                            startPage={page}
+                            totalCount={cacheCount}
+                            onChangePage={(p) => {
+                                setPage(p)
+                                if (page !== p) getMore(p)
+                            }}
+                            step={viewCount}
+                        />
                     </>
                 )}
-
-                {/* <MyMenu items={items} /> */}
-
-                {/* <OrdersList /> */}
             </div>
         </div>
     )

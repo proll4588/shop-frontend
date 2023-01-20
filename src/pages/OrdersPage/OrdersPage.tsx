@@ -10,6 +10,7 @@ import useOrder from '../../hooks/order.hook'
 import { IOrder, IDeliveryInfo } from '../../interfaces/order.interface'
 import styles from './OrdersPage.module.scss'
 import OrdersPageProps from './OrdersPage.props'
+import Pagination from '../../components/Pagination/Pagination'
 
 const headMenu = [
     { id: 1, name: 'Все заказы', operStatus: null },
@@ -234,20 +235,30 @@ const OrdersPage: FC<OrdersPageProps> = () => {
 
     const dbSearch = useDebounce(search)
 
-    const variables = {
-        skip: viewCount * (page - 1),
+    const {
+        orderList,
+        error,
+        isGetLoading: loading,
+        fetchMore,
+    } = useOrder({
+        skip: 0,
         take: viewCount,
         operStatus: filter,
         search: dbSearch,
-    }
+    })
 
-    const { orderList, error, isGetLoading: loading } = useOrder(variables)
-
-    const nextPage = () => {
-        setPage((prev) => prev + 1)
-    }
-    const prevPage = () => {
-        setPage((prev) => prev - 1)
+    const getMore = (page) => {
+        fetchMore({
+            variables: {
+                skip: viewCount * (page - 1),
+                take: viewCount,
+                operStatus: filter,
+                search: dbSearch,
+            },
+            updateQuery(_, options) {
+                return options.fetchMoreResult
+            },
+        })
     }
 
     // переход на первую страницу при изменении фильтра или поиска
@@ -275,29 +286,15 @@ const OrdersPage: FC<OrdersPageProps> = () => {
                             orders={orders}
                             loading={loading}
                         />
-                        <div className={styles.OrdersPage__navPanel}>
-                            <Button
-                                disable={page === 1}
-                                onClick={prevPage}
-                            >
-                                Назад
-                            </Button>
-
-                            <div className={styles.OrdersPage__navInfo}>
-                                {viewCount * (page - 1) + 1} -{' '}
-                                {viewCount * page > cacheCount
-                                    ? cacheCount
-                                    : viewCount * page}{' '}
-                                из {cacheCount}
-                            </div>
-
-                            <Button
-                                disable={viewCount * page >= cacheCount}
-                                onClick={nextPage}
-                            >
-                                Далее
-                            </Button>
-                        </div>
+                        <Pagination
+                            startPage={page}
+                            totalCount={cacheCount}
+                            onChangePage={(p) => {
+                                setPage(p)
+                                if (page !== p) getMore(p)
+                            }}
+                            step={viewCount}
+                        />
                     </>
                 )}
             </div>

@@ -6,7 +6,7 @@ import { GET_GOODS } from '../../apollo/fetchs'
 import { useQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 
-const SearchCombobox: FC<SearchComboboxProps> = () => {
+export const SearchCombobox: FC<SearchComboboxProps> = () => {
     const [query, setQuery] = useState('')
     const nav = useNavigate()
 

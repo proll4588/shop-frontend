@@ -107,7 +107,7 @@ export const BuyGraph: FC<BuyGraphProps> = ({ year }) => {
                 <Line
                     type='monotone'
                     dataKey='profit'
-                    name='Прибыль'
+                    name='Доход'
                     stroke='#00b5ff'
                     activeDot={{ r: 8 }}
                     dot={{ r: 5 }}

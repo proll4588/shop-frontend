@@ -154,18 +154,34 @@ const GoodsPage: FC<GoodsPageProps> = () => {
     const [sort, setSort] = useState(1)
 
     // Запрашиваем данные с сервера с учётом фильтров и типа товара
-    const { loading, error, data } = useQuery<IGetDataForGoodsPage>(
+    const { loading, error, data, fetchMore } = useQuery<IGetDataForGoodsPage>(
         GET_DATA_FOR_GOODS_PAGE,
         {
             variables: {
                 subId: Number(subGoodsTypeId),
                 filters: filtersState,
                 take: 9,
-                skip: (Number(page) - 1) * 9,
+                skip: 0,
                 sort,
             },
+            notifyOnNetworkStatusChange: true,
         }
     )
+
+    const getMore = (page) => {
+        fetchMore({
+            variables: {
+                subId: Number(subGoodsTypeId),
+                filters: filtersState,
+                take: 9,
+                skip: (page - 1) * 9,
+                sort,
+            },
+            updateQuery(_, options) {
+                return options.fetchMoreResult
+            },
+        })
+    }
 
     // Получение данных для отображения фильтров
     const filtersData = useQuery(GET_FILTERS_BY_TYPE, {
@@ -181,12 +197,21 @@ const GoodsPage: FC<GoodsPageProps> = () => {
 
     // Переход на следёщую страницу
     const nextPage = () => {
-        if (canNext) nav(`/goods/${subGoodsTypeId}/${Number(page) + 1}`)
+        if (canNext) {
+            const nextPage = Number(page) + 1
+            nav(`/goods/${subGoodsTypeId}/${nextPage}`)
+            getMore(nextPage)
+        }
+        // getMore
     }
 
     // Переход на предыдущую страницу
     const prevPage = () => {
-        if (canPrev) nav(`/goods/${subGoodsTypeId}/${Number(page) - 1}`)
+        if (canPrev) {
+            const prevPage = Number(page) - 1
+            nav(`/goods/${subGoodsTypeId}/${prevPage}`)
+            getMore(prevPage)
+        }
     }
 
     // Инициализация данных

@@ -20,13 +20,6 @@ const Pagination: FC<PaginationProps> = ({
         onChangePage && onChangePage(page)
     }, [page])
 
-    useEffect(() => {
-        console.log('pag >> mount')
-        return () => {
-            console.log('pag >> Un mount')
-        }
-    }, [])
-
     return (
         <div className={styles.Pagination}>
             <Button

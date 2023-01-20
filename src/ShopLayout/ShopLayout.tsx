@@ -12,6 +12,7 @@ import GoodPage from '../pages/GoodPage/GoodPage'
 import GoodsPage from '../pages/GoodsPage/GoodsPage'
 import TypePage from '../pages/TypePage/TypePage'
 import styles from './ShopLayout.module.scss'
+import Loader from '../components/UI/Loader/Loader'
 
 /*
  * Компонент ShopLayout - это layout для магазинной части приложения
@@ -22,7 +23,7 @@ const ShopLayout = () => {
     const isAuth = token && token !== 'null'
 
     if (error) return <>Oops)</>
-    if (!isInit) return <>Loading</>
+    if (!isInit) return <Loader page />
 
     return (
         <div className={styles.ShopLayout}>
