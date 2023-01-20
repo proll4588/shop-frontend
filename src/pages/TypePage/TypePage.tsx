@@ -16,6 +16,7 @@ import {
 } from '../../interfaces/goodsTypes.interface'
 import styles from './TypePage.module.scss'
 import TypePageProps from './TypePage.props'
+import Loader from '../../components/UI/Loader/Loader'
 
 /*============================================*/
 interface TypeNameProps {
@@ -172,7 +173,7 @@ const TypePage: FC<TypePageProps> = () => {
         !!data && setActiveGlobalType(data.types[0])
     }, [data])
 
-    if (loading) return <p>Loading...</p>
+    if (loading) return <Loader page />
     if (error) return <p>{JSON.stringify(error)}</p>
     const { types } = data
 

@@ -6,6 +6,7 @@ import { GET_ALL_GOODS_TYPES } from '../../apollo/fetchs'
 import { useQuery } from '@apollo/client'
 import GoodsTypeList from '../../components/GoodsTypeList/GoodsTypeList'
 import { useSetRecoilState } from 'recoil'
+import Loader from '../../components/UI/Loader/Loader'
 
 enum TypesType {
     global = 'global',
@@ -81,7 +82,7 @@ const GoodsTypePage: FC<GoodsTypePageProps> = () => {
         }
     }, [type, data])
 
-    if (loading) return <p>Loading...</p>
+    if (loading) return <Loader page />
     if (error) return <p>Error :(</p>
 
     return (

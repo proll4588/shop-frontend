@@ -9,14 +9,18 @@ const RatingWiever: FC<RatingWieverProps> = ({ ratings }) => {
     return (
         <div className={styles.RatingWiever}>
             <div className={styles.RatingWiever__container}>
-                {withText.length
-                    ? withText.map((rating) => (
-                          <UserRating
-                              rating={rating}
-                              key={rating.id}
-                          />
-                      ))
-                    : 'No coments'}
+                {withText.length ? (
+                    withText.map((rating) => (
+                        <UserRating
+                            rating={rating}
+                            key={rating.id}
+                        />
+                    ))
+                ) : (
+                    <h3 className={styles.RatingWiever__no}>
+                        У товара пока нет отзывов
+                    </h3>
+                )}
             </div>
         </div>
     )

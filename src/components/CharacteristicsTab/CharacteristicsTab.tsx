@@ -56,14 +56,20 @@ const CharacteristicsTab: FC<CharacteristicsTabProps> = ({
     return (
         <div className={styles.CharacteristicsTab}>
             <div className={styles.CharacteristicsTab__container}>
-                {characteristics.map((group) => {
-                    return (
-                        <CharacteristicsGroup
-                            group={group}
-                            key={group.id}
-                        />
-                    )
-                })}
+                {characteristics && characteristics.length ? (
+                    characteristics.map((group) => {
+                        return (
+                            <CharacteristicsGroup
+                                group={group}
+                                key={group.id}
+                            />
+                        )
+                    })
+                ) : (
+                    <h3 className={styles.CharacteristicsTab__no}>
+                        У товара пока нет харакетристик
+                    </h3>
+                )}
             </div>
         </div>
     )

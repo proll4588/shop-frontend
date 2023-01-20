@@ -11,6 +11,7 @@ import { GET_ALL_GOODS_TYPES, IGetAllGoodsTypes } from '../../apollo/fetchs'
 /* Основные атрибуты */
 import styles from './MainShopPage.module.scss'
 import MainShopPageProps from './MainShopPage.props'
+import Loader from '../../components/UI/Loader/Loader'
 
 /*
  * Компонент MainShopPage - главная страница магазина
@@ -19,7 +20,7 @@ const MainShopPage: FC<MainShopPageProps> = () => {
     const { loading, error, data } =
         useQuery<IGetAllGoodsTypes>(GET_ALL_GOODS_TYPES)
 
-    if (loading) return <p>Loading...</p>
+    if (loading) return <Loader page />
     if (error) return <p>Error :(</p>
 
     return (

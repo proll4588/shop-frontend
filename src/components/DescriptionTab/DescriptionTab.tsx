@@ -6,7 +6,9 @@ const DescriptionTab: FC<DescriptionTabProps> = ({ descriprion }) => {
     return (
         <div className={styles.DescriptionTab}>
             <div className={styles.DescriptionTab__container}>
-                {descriprion}
+                {descriprion.length
+                    ? descriprion
+                    : 'У товара пока нет описания'}
             </div>
         </div>
     )

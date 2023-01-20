@@ -10,6 +10,9 @@
         justify-content: space-between;
         flex-wrap: wrap;
     }
+    &__no {
+        color: var(--color-grey-text);
+    }
 }
 
 @media (max-width: 1050px) {
