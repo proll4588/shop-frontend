@@ -16,10 +16,10 @@ import { AiFillDollarCircle, AiOutlineShoppingCart } from 'react-icons/ai'
 import {
     PieChart,
     Pie,
-    Sector,
     ResponsiveContainer,
-    Cell,
     Tooltip,
+    Legend,
+    Cell,
 } from 'recharts'
 import { useQuery } from '@apollo/client'
 import {
@@ -27,6 +27,46 @@ import {
     GET_MONTH_STATS,
 } from '../../apollo/fetchs'
 import Loader from '../../components/UI/Loader/Loader'
+import StatisticTabs from '../../components/StatisticTabs/StatisticTabs'
+
+const COLORS = [
+    '#ff595e',
+    '#ffca3a',
+    '#8ac926',
+    '#1982c4',
+    '#6a4c93',
+    '#ff595e',
+    '#ffca3a',
+    '#8ac926',
+    '#1982c4',
+    '#6a4c93',
+]
+const RADIAN = Math.PI / 180
+const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+}) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+    const x = cx + radius * Math.cos(-midAngle * RADIAN)
+    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+
+    return (
+        <text
+            x={x}
+            y={y}
+            fill='white'
+            textAnchor={x > cx ? 'start' : 'end'}
+            dominantBaseline='central'
+        >
+            {`${(percent * 100).toFixed(0)}%`}
+        </text>
+    )
+}
 
 const GlobalPie = () => {
     const curDate = new Date()
@@ -38,8 +78,6 @@ const GlobalPie = () => {
         start.toISOString().substring(0, 10)
     )
     const [endDate, setEndDate] = useState(end.toISOString().substring(0, 10))
-
-    console.log(startDate, endDate)
 
     const { data, error, loading } = useQuery(
         GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE,
@@ -53,8 +91,6 @@ const GlobalPie = () => {
 
     if (loading) return <Loader page />
     if (error) return <>Error</>
-
-    console.log(data)
 
     const rendData = data.getGlobalTypeBuyDynamicByRange.data.map((el) => ({
         name: el.globalType.name,
@@ -77,10 +113,18 @@ const GlobalPie = () => {
                     cx='50%'
                     cy='50%'
                     outerRadius={80}
-                    fill='#00b5ff'
-                    label
-                />
+                    label={renderCustomizedLabel}
+                    labelLine={false}
+                >
+                    {rendData.map((entry, index) => (
+                        <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                        />
+                    ))}
+                </Pie>
                 <Tooltip />
+                <Legend />
             </PieChart>
         </ResponsiveContainer>
     )
@@ -181,8 +225,6 @@ const DashboardHead: FC = () => {
     // ===========
     const curProfit = data.getProfitByMonth.currentMonth.profit | 0
     const lastProfit = data.getProfitByMonth.lastMonth.profit | 0
-    // const curProfit = 90000
-    // const lastProfit = 100000
     const proc =
         lastProfit !== 0
             ? Math.abs(
@@ -262,29 +304,35 @@ const Dashboard: FC<DashboardProps> = () => {
     return (
         <div className={styles.Dashboard}>
             <div className={styles.Dashboard__container}>
-                {/* <div className={styles.Dashboard__BuyDynamic}>
-                    <GlobalPie />
-                </div> */}
-
+                <h3 className={styles.Dashboard__title}>
+                    Статистика за текущий месяц
+                </h3>
                 <DashboardHead />
                 <div className={styles.Dashboard__BuyDynamic}>
                     <div className={styles.Dashboard__BuyDynamicGraph}>
+                        <h4 className={styles.Dashboard__title}>
+                            Доход по месяцам
+                        </h4>
                         <BuyGraph year={2022} />
                     </div>
                     <div className={styles.Dashboard__BuyDynamicPie}>
+                        <h4 className={styles.Dashboard__title}>
+                            Доход по категориям
+                        </h4>
                         <GlobalPie />
                     </div>
-                    {/* <BuyDynamic /> */}
                 </div>
-                <div className={styles.Dashboard__GlobalTypesBuyDynamic}>
-                    <GlobalTypesBuyDynamic />
-                </div>
-                <div className={styles.Dashboard__LocalTypesBuyDynamic}>
-                    <LocalTypesBuyDynamic />
-                </div>
-                <div className={styles.Dashboard__SubTypesBuyDynamic}>
-                    <SubTypesBuyDynamic />
-                </div>
+                <h4 className={styles.Dashboard__title}>
+                    Гибкие графики доходов
+                </h4>
+                <StatisticTabs
+                    tabs={[
+                        <BuyDynamic />,
+                        <GlobalTypesBuyDynamic />,
+                        <LocalTypesBuyDynamic />,
+                        <SubTypesBuyDynamic />,
+                    ]}
+                />
             </div>
         </div>
     )
