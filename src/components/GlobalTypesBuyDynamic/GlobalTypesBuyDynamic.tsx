@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from './GlobalTypesBuyDynamic.module.scss'
 import GlobalTypesBuyDynamicProps from './GlobalTypesBuyDynamic.props'
 import { useQuery } from '@apollo/client'
@@ -13,19 +13,42 @@ import {
     Legend,
     Bar,
 } from 'recharts'
-import { IGlobalTypeStats } from '../../interfaces/statistic.interface'
 import useDebounce from '../../hooks/debounce.hook'
+import Loader from '../UI/Loader/Loader'
 
 interface GlobalGraphProps {
-    data: IGlobalTypeStats
+    startDate: string
+    endDate: string
 }
-const GlobalGraph: FC<GlobalGraphProps> = ({ data }) => {
-    const renderData = data.data.map((el) => {
-        return {
-            name: el.globalType.name,
-            profit: el.profit,
+const GlobalGraph: FC<GlobalGraphProps> = ({ startDate, endDate }) => {
+    const [cacheData, setCacheData] = useState(null)
+
+    const { data, error, loading } = useQuery(
+        GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE,
+        {
+            variables: {
+                startDate: startDate,
+                endDate: endDate,
+            },
         }
-    })
+    )
+
+    useEffect(() => {
+        if (data) {
+            const ans = data.getGlobalTypeBuyDynamicByRange.data.map((el) => {
+                return {
+                    name: el.globalType.name,
+                    profit: el.profit,
+                }
+            })
+
+            setCacheData(ans)
+        }
+    }, [data])
+
+    if (error) return <>Error</>
+    if (!cacheData && loading) return <Loader page />
+
     return (
         <ResponsiveContainer
             width='100%'
@@ -34,7 +57,7 @@ const GlobalGraph: FC<GlobalGraphProps> = ({ data }) => {
             <BarChart
                 width={500}
                 height={300}
-                data={renderData}
+                data={cacheData}
                 margin={{
                     top: 5,
                     right: 0,
@@ -73,18 +96,6 @@ const GlobalTypesBuyDynamic: FC<GlobalTypesBuyDynamicProps> = () => {
     const dbStartDate = useDebounce(startDate, 600)
     const dbEndDate = useDebounce(endDate, 600)
 
-    // console.log(startDate)
-
-    const { data, error, loading } = useQuery(
-        GET_GLOBAL_TYPE_BY_DYNAMIC_BY_RANGE,
-        {
-            variables: {
-                startDate: dbStartDate,
-                endDate: dbEndDate,
-            },
-        }
-    )
-
     const startDateChange = (e) => {
         setStartDate(e.target.value)
     }
@@ -96,21 +107,24 @@ const GlobalTypesBuyDynamic: FC<GlobalTypesBuyDynamicProps> = () => {
     return (
         <div className={styles.GlobalTypesBuyDynamic}>
             <div className={styles.GlobalTypesBuyDynamic__container}>
-                <input
-                    type={'date'}
-                    onChange={startDateChange}
-                    defaultValue={startDate}
+                <div className={styles.GlobalTypesBuyDynamic__head}>
+                    <input
+                        type={'date'}
+                        onChange={startDateChange}
+                        defaultValue={startDate}
+                    />
+                    -
+                    <input
+                        type={'date'}
+                        onChange={endDateChange}
+                        defaultValue={endDate}
+                    />
+                </div>
+
+                <GlobalGraph
+                    startDate={dbStartDate}
+                    endDate={dbEndDate}
                 />
-                <input
-                    type={'date'}
-                    onChange={endDateChange}
-                    defaultValue={endDate}
-                />
-                {data ? (
-                    <GlobalGraph data={data.getGlobalTypeBuyDynamicByRange} />
-                ) : (
-                    <>loading</>
-                )}
             </div>
         </div>
     )

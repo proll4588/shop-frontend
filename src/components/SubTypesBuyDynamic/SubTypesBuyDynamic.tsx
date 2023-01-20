@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from './SubTypesBuyDynamic.module.scss'
 import SubTypesBuyDynamicProps from './SubTypesBuyDynamic.props'
 import useDebounce from '../../hooks/debounce.hook'
@@ -49,15 +49,37 @@ export const LocalTypesCombobox: FC<LocalTypesComboboxProps> = ({
 }
 
 interface SubGraphProps {
-    data: ISubTypeStats
+    localId: number
+    startDate: string
+    endDate: string
 }
-const SubGraph: FC<SubGraphProps> = ({ data }) => {
-    const renderData = data.data.map((el) => {
-        return {
-            name: el.subType.name,
-            profit: el.profit,
+const SubGraph: FC<SubGraphProps> = ({ startDate, endDate, localId }) => {
+    const [cacheData, setCacheData] = useState(null)
+
+    const { data, error, loading } = useQuery(
+        GET_SUB_TYPE_BY_DYNAMIC_BY_RANGE,
+        {
+            variables: {
+                localTypeId: localId === -1 ? null : localId,
+                startDate: startDate,
+                endDate: endDate,
+            },
         }
-    })
+    )
+
+    useEffect(() => {
+        if (data) {
+            const ans = data.getSubTypeBuyDynamicByRange.data.map((el) => {
+                return {
+                    name: el.subType.name,
+                    profit: el.profit,
+                }
+            })
+
+            setCacheData(ans)
+        }
+    }, [data])
+
     return (
         <ResponsiveContainer
             width='100%'
@@ -66,7 +88,7 @@ const SubGraph: FC<SubGraphProps> = ({ data }) => {
             <BarChart
                 width={500}
                 height={300}
-                data={renderData}
+                data={cacheData}
                 margin={{
                     top: 5,
                     right: 0,
@@ -108,17 +130,6 @@ const SubTypesBuyDynamic: FC<SubTypesBuyDynamicProps> = () => {
 
     const [localId, setLocalId] = useState(null)
 
-    const { data, error, loading } = useQuery(
-        GET_SUB_TYPE_BY_DYNAMIC_BY_RANGE,
-        {
-            variables: {
-                localTypeId: localId === -1 ? null : localId,
-                startDate: dbStartDate,
-                endDate: dbEndDate,
-            },
-        }
-    )
-
     const startDateChange = (e) => {
         setStartDate(e.target.value)
     }
@@ -130,22 +141,26 @@ const SubTypesBuyDynamic: FC<SubTypesBuyDynamicProps> = () => {
     return (
         <div className={styles.SubTypesBuyDynamic}>
             <div className={styles.SubTypesBuyDynamic__container}>
-                <input
-                    type={'date'}
-                    onChange={startDateChange}
-                    defaultValue={startDate}
+                <div className={styles.SubTypesBuyDynamic__head}>
+                    <input
+                        type={'date'}
+                        onChange={startDateChange}
+                        defaultValue={startDate}
+                    />
+                    -
+                    <input
+                        type={'date'}
+                        onChange={endDateChange}
+                        defaultValue={endDate}
+                    />
+                    <LocalTypesCombobox onChange={setLocalId} />
+                </div>
+
+                <SubGraph
+                    startDate={dbStartDate}
+                    endDate={dbEndDate}
+                    localId={localId}
                 />
-                <input
-                    type={'date'}
-                    onChange={endDateChange}
-                    defaultValue={endDate}
-                />
-                <LocalTypesCombobox onChange={setLocalId} />
-                {data ? (
-                    <SubGraph data={data.getSubTypeBuyDynamicByRange} />
-                ) : (
-                    <>loading</>
-                )}
             </div>
         </div>
     )
