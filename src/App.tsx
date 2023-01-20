@@ -11,9 +11,9 @@ const App = () => {
     const appType = useRecoilValue(appTypesAtom)
     const [visit] = useMutation(ADD_VISIT)
 
-    // useEffect(() => {
-    //     visit()
-    // }, [])
+    useEffect(() => {
+        visit()
+    }, [])
 
     return (
         <div className='App'>
