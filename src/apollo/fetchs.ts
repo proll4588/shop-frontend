@@ -1335,6 +1335,7 @@ export const UPDATE_ORDER_STATUS = gql`
     mutation Mutation($orderId: Int!, $status: String!) {
         updateOrderStatus(orderId: $orderId, status: $status) {
             id
+            operations_status_id
         }
     }
 `
@@ -1464,5 +1465,49 @@ export const GET_PROFIT_BY_MONTH = gql`
 export const ADD_VISIT = gql`
     mutation Mutation {
         addVisit
+    }
+`
+
+export const CREATE_SUPPLIER = gql`
+    mutation CreateSuppliers(
+        $name: String!
+        $addres: String!
+        $phone: String!
+        $email: String!
+    ) {
+        createSuppliers(
+            name: $name
+            addres: $addres
+            phone: $phone
+            email: $email
+        ) {
+            id
+            name
+            addres
+            phone
+            email
+        }
+    }
+`
+
+export const GET_SUPPLIERS = gql`
+    query GetSuppliers($search: String, $take: Int, $skip: Int) {
+        getSuppliers(search: $search, take: $take, skip: $skip) {
+            name
+            id
+            addres
+            phone
+            email
+        }
+    }
+`
+
+export const CREATE_SUPPLIE = gql`
+    mutation CreateSupplies($supId: Int!, $supData: [SupplieData]!) {
+        createSupplies(supId: $supId, supData: $supData) {
+            id
+            date
+            suppliers_id
+        }
     }
 `
